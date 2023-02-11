@@ -14,7 +14,7 @@
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
-| 1.0.1.4 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/release/download/V1.0.1.4Release.Nebula-R)
+| 1.0.1.4 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/V1.0.1.4-Release/Nebula-R.V1.0.1.4.Release.dll)
 | 1.0.1.3-2 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/V1.0.1.3Release/Nebula-R.V1.0.1.3.Release.zip) |
 | 1.0.1.2 | 2022.12.14s | [Download](https://github.com/Dolly1016/Nebula/releases/download/2.1,2022.12.8/Nebula_v2.1.zip)|
 | 全版本 |               | [Download](https://www.aliyundrive.com/s/w6m5DNFkPWx)

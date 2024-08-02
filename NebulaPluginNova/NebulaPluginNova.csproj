@@ -1,0 +1,106 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>Nebula</RootNamespace>
+		<AssemblyName>Nebula</AssemblyName>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+		<AllowedReferenceRelatedFileExtensions>none</AllowedReferenceRelatedFileExtensions>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+		<Platforms>AnyCPU;x86;x64</Platforms>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<AmongUs>D:\SteamLibrary\steamapps\common\NoS</AmongUs>
+	</PropertyGroup>
+	
+	
+	
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<WarningLevel>4</WarningLevel>
+		<DefineConstants>$(DefineConstants);STEAM</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+	  <WarningLevel>4</WarningLevel>
+	  <DefineConstants>$(DefineConstants);STEAM</DefineConstants>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	  <Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+	  <WarningLevel>4</WarningLevel>
+	  <DefineConstants>$(DefineConstants);STEAM</DefineConstants>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+	  <Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<WarningLevel>4</WarningLevel>
+		<DefineConstants>STEAM</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<WarningLevel>4</WarningLevel>
+		<DefineConstants>STEAM</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+		<WarningLevel>4</WarningLevel>
+		<DefineConstants>STEAM</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="$(AmongUs)\BepInEx\core\*.dll" />
+		<Reference Include="$(AmongUs)\BepInEx\interop\*.dll" />
+		<Compile Remove="Resources\**" />
+		<Compile Remove="Roles\Perks\**" />
+		<EmbeddedResource Remove="Roles\Perks\**" />
+		<None Remove="Roles\Perks\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\*\*.*" />
+		<EmbeddedResource Include="Resources\*.*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
+	  <PackageReference Include="NAudio.Core" Version="2.2.1" />
+	  <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+	  <PackageReference Include="NAudio.WinMM" Version="2.2.1" />
+	  <PackageReference Include="OpusDotNet" Version="1.0.3" />
+	  <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+	  <PackageReference Include="System.Reflection.Metadata" Version="8.0.0" />
+	  <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\NebulaAPI\NebulaAPI.csproj" />
+	</ItemGroup>
+
+	<Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+		<Message Text="Second occurrence" />
+		<Copy SourceFiles="bin\x86\Release\net6.0\Nebula.dll" DestinationFolder="$(AmongUs)\BepInEx\plugins\" />
+	</Target>
+
+</Project>

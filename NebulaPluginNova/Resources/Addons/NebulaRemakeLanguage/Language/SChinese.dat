@@ -1,0 +1,25 @@
+# Roles
+
+"role.judge.name" : "法官"
+"role.judge.short" : "法"
+"role.judge.blurb" : "无情地执行正义"
+"options.role.judge.detail" : "法官可以在会议上直接处决其他玩家，但有限制。<br>处决错误的玩家将会导致法官死亡。"
+"options.role.judge.numOfGuess" : "处决次数"
+"options.role.judge.canJudgeNeutralRoles" : "可以处决中立阵营"
+"options.role.judge.canJudgeMadmate" : "可以处决叛徒"
+"options.role.judge.canJudgeLovers" : "可以处决恋人"
+"options.role.judge.canCallEmergencyMeeting" : "可以发起紧急会议"
+
+# Achievements
+
+"achievement.judge.common1.title" : "庭审入门"
+"achievement.judge.common1.goal" : "成功审判一人。"
+"achievement.judge.common1.cond" : ""
+
+"achievement.judge.another1.title" : "太失败了"
+"achievement.judge.another1.goal" : "审判失败。"
+"achievement.judge.another1.cond" : ""
+
+"achievement.judge.challenge.title" : "审判长"
+"achievement.judge.challenge.goal" : "成功审判三人并存活到最后取得胜利。"
+"achievement.judge.challenge.cond" : "条件：游戏结束时存活且成功审判三人"

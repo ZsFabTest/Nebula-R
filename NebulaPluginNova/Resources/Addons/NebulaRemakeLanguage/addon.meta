@@ -1,0 +1,11 @@
+{
+	"Id" : "NebulaRemakeSChinese",
+	"Name" : "Nebula Remake SChinese Language Pack",
+	"Author" : "凛",
+	"Description" : "为星云R提供语言文件",
+	"Version" : "",
+	"Build" : 0,
+	"Dependency" : [
+	],
+	"Hidden" : False
+}

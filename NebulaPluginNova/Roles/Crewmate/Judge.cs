@@ -12,7 +12,7 @@ namespace Nebula.Roles.Crewmate;
 
 static file class JudgeSystem
 {
-    static private SpriteLoader targetSprite = SpriteLoader.FromResource("Nebula.Resources.TargetIcon.png", 115f);
+    static private SpriteLoader targetSprite = SpriteLoader.FromResource("Nebula.Resources.JudgeIcon.png", 115f);
     static public void OnMeetingStart(int leftGuess, bool canJudgeNeutralRoles, bool canJudgeMadmate, bool canJudgeLovers)
     {
         bool hasGuessed = false;

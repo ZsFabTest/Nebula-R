@@ -1,4 +1,5 @@
 ﻿using Nebula.Behaviour;
+using Nebula.Roles.Crewmate;
 using Nebula.Roles.Impostor;
 using Nebula.Roles.Modifier;
 using Nebula.Roles.Neutral;
@@ -108,6 +109,7 @@ public class NebulaEndCriteria
         {
             int impostors = 0;
             int totalAlive = 0;
+            int madmates = 0;
             
             foreach (var p in NebulaGameManager.Instance!.AllPlayerInfo())
             {
@@ -117,11 +119,17 @@ public class NebulaEndCriteria
                 //Loversではないインポスターのみカウントに入れる
                 if (p.Role.Role.Team == Impostor.MyTeam && !p.Unbox().TryGetModifier<Lover.Instance>(out _)) impostors++;
 
+                if (p.TryGetModifier<MadmateModifier.Instance>(out _))
+                {
+                    madmates++;
+                    continue;
+                }
+
                 //ジャッカル陣営が生存している間は勝利できない
                 if (p.Role.Role.Team == Jackal.MyTeam || p.Unbox().AllModifiers.Any(m => m.Modifier == SidekickModifier.MyRole)) return;
             }
 
-            if(impostors * 2 >= totalAlive) NebulaAPI.CurrentGame?.TriggerGameEnd(NebulaGameEnd.ImpostorWin, GameEndReason.Situation);
+            if(impostors * 2 >= (totalAlive - madmates)) NebulaAPI.CurrentGame?.TriggerGameEnd(NebulaGameEnd.ImpostorWin, GameEndReason.Situation);
         }
     };
 
@@ -140,7 +148,7 @@ public class NebulaEndCriteria
             {
                 if (p.IsDead) continue;
 
-                if (isJackalTeam(p)) totalAliveAllJackals++;
+                if (isJackalTeam(p) && !p.TryGetModifier<MadmateModifier.Instance>(out _)) totalAliveAllJackals++;
 
                 //ラバーズが生存している間は勝利できない
                 if (p.Unbox().TryGetModifier<Lover.Instance>(out _)) return;

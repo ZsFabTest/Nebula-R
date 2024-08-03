@@ -10,6 +10,10 @@
 "options.role.judge.canJudgeLovers" : "可以处决恋人"
 "options.role.judge.canCallEmergencyMeeting" : "可以发起紧急会议"
 
+"options.role.madmate.numToSpawn" : "生成个数"
+"role.madmate.prefix" : "叛变的"
+"role.madmate.prefix.short" : "叛"
+
 # Achievements
 
 "achievement.judge.common1.title" : "庭审入门"

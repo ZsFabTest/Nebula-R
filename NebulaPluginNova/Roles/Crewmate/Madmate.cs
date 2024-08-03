@@ -1,6 +1,9 @@
 ﻿using Epic.OnlineServices;
 using Nebula.Game.Statistics;
 using Nebula.Modules.GUIWidget;
+using Nebula.Roles.Impostor;
+using Nebula.Roles.Modifier;
+using Nebula.VoiceChat;
 using UnityEngine;
 using Virial;
 using Virial.Assignable;
@@ -21,21 +24,21 @@ public class Madmate : DefinedRoleTemplate, HasCitation, DefinedRole
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 
-    static private BoolConfiguration EmbroilVotersOnExileOption = NebulaAPI.Configurations.Configuration("options.role.madmate.embroilPlayersOnExile", false);
-    static private BoolConfiguration LimitEmbroiledPlayersToVotersOption = NebulaAPI.Configurations.Configuration("options.role.madmate.limitEmbroiledPlayersToVoters", true);
+    static internal BoolConfiguration EmbroilVotersOnExileOption = NebulaAPI.Configurations.Configuration("options.role.madmate.embroilPlayersOnExile", false);
+    static internal BoolConfiguration LimitEmbroiledPlayersToVotersOption = NebulaAPI.Configurations.Configuration("options.role.madmate.limitEmbroiledPlayersToVoters", true);
 
     static private BoolConfiguration CanFixLightOption = NebulaAPI.Configurations.Configuration("options.role.madmate.canFixLight", false);
     static private BoolConfiguration CanFixCommsOption = NebulaAPI.Configurations.Configuration("options.role.madmate.canFixComms", false);
     static private BoolConfiguration HasImpostorVisionOption = NebulaAPI.Configurations.Configuration("options.role.madmate.hasImpostorVision", false);
     static private BoolConfiguration CanUseVentsOption = NebulaAPI.Configurations.Configuration("options.role.madmate.canUseVents", false);
     static private BoolConfiguration CanMoveInVentsOption = NebulaAPI.Configurations.Configuration("options.role.madmate.canMoveInVents", false);
-    static private IntegerConfiguration CanIdentifyImpostorsOption = NebulaAPI.Configurations.Configuration("options.role.madmate.canIdentifyImpostors", (0, 3), 0);
-    static private IOrderedSharableVariable<int>[] NumOfTasksToIdentifyImpostorsOptions = [
+    static internal IntegerConfiguration CanIdentifyImpostorsOption = NebulaAPI.Configurations.Configuration("options.role.madmate.canIdentifyImpostors", (0, 3), 0);
+    static internal IOrderedSharableVariable<int>[] NumOfTasksToIdentifyImpostorsOptions = [
         NebulaAPI.Configurations.SharableVariable("numOfTasksToIdentifyImpostors0",(0,10),2),
         NebulaAPI.Configurations.SharableVariable("numOfTasksToIdentifyImpostors1",(0,10),4),
         NebulaAPI.Configurations.SharableVariable("numOfTasksToIdentifyImpostors2",(0,10),6)
         ];
-    static private IConfiguration CanIdentifyImpostorsOptionEditor = NebulaAPI.Configurations.Configuration(
+    static internal IConfiguration CanIdentifyImpostorsOptionEditor = NebulaAPI.Configurations.Configuration(
         () => CanIdentifyImpostorsOption.GetDisplayText() + StringExtensions.Color(
             " (" +
             NumOfTasksToIdentifyImpostorsOptions
@@ -160,9 +163,6 @@ public class Madmate : DefinedRoleTemplate, HasCitation, DefinedRole
                 var voters = NebulaGameManager.Instance!.AllPlayerInfo().Where(p => !p.IsDead && !p.AmOwner && p.Role.Role.Category != RoleCategory.ImpostorRole).ToArray();
                 if (voters.Length > 0) voters.Random().VanillaPlayer.ModMarkAsExtraVictim(MyPlayer.VanillaPlayer, PlayerState.Embroiled, EventDetail.Embroil);
             }
-
-            
-
         }
 
         [Local, OnlyMyPlayer]
@@ -194,3 +194,177 @@ public class Madmate : DefinedRoleTemplate, HasCitation, DefinedRole
     }
 }
 
+public class MadmateModifier : DefinedModifierTemplate, DefinedAllocatableModifier, HasCitation, RoleFilter
+{
+    private MadmateModifier() : base("madmate", Virial.Color.ImpostorColor, [NumToSpawnOption, RoleChanceOption, Madmate.EmbroilVotersOnExileOption, Madmate.LimitEmbroiledPlayersToVotersOption, Madmate.CanIdentifyImpostorsOptionEditor])
+    {
+        ConfigurationHolder?.SetDisplayState(() => NumToSpawnOption == 0 ? ConfigurationHolderState.Inactivated : RoleChanceOption == 100 ? ConfigurationHolderState.Emphasized : ConfigurationHolderState.Activated);
+    }
+
+    private static IntegerConfiguration NumToSpawnOption = NebulaAPI.Configurations.Configuration("options.role.madmate.numToSpawn", (0, 15), 1);
+    static private IntegerConfiguration RoleChanceOption = NebulaAPI.Configurations.Configuration("options.role.madmate.roleChance", (10, 100, 10), 100, decorator: num => num + "%", title: new TranslateTextComponent("options.role.chance"));
+
+    string ICodeName.CodeName => "MDAM";
+    Citation? HasCitation.Citaion => Citations.TheOtherRoles;
+    bool AssignableFilter<DefinedRole>.Test(DefinedRole role) => role.ModifierFilter?.Test(this) ?? false;
+    void AssignableFilter<DefinedRole>.ToggleAndShare(DefinedRole role) => role.ModifierFilter?.ToggleAndShare(this);
+    void AssignableFilter<DefinedRole>.SetAndShare(Virial.Assignable.DefinedRole role, bool val) => role.ModifierFilter?.SetAndShare(this, val);
+    RoleFilter HasRoleFilter.RoleFilter => this;
+    bool ISpawnable.IsSpawnable => NumToSpawnOption > 0;
+
+    int HasAssignmentRoutine.AssignPriority => 1;
+    static public MadmateModifier MyRole = new MadmateModifier();
+    RuntimeModifier RuntimeAssignableGenerator<RuntimeModifier>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
+
+    void HasAssignmentRoutine.TryAssign(Virial.Assignable.IRoleTable roleTable)
+    {
+        var crewmates = roleTable.GetPlayers(RoleCategory.CrewmateRole).Where(p => p.role.CanLoad(this)).OrderBy(_ => Guid.NewGuid()).ToArray();
+        int index = 0;
+
+        int maxNum = NumToSpawnOption;
+        (byte playerId, DefinedRole role)? target;
+
+        int assigned = 0;
+        for (int i = 0; i < maxNum; i++)
+        {
+            float chance = RoleChanceOption / 100f;
+            if ((float)System.Random.Shared.NextDouble() >= chance) continue;
+
+            try
+            {
+                target = crewmates[index++];
+
+                roleTable.SetModifier(target.Value.playerId, this, new int[] { });
+
+                assigned++;
+            }
+            catch
+            {
+                //範囲外アクセス(これ以上割り当てできない)
+                break;
+            }
+        }
+    }
+
+    void IAssignToCategorizedRole.GetAssignProperties(RoleCategory category, out int assign100, out int assignRandom, out int assignChance)
+    {
+        assign100 = 0;
+        assignRandom = 0;
+        assignChance = 0;
+    }
+
+    public class Instance : RuntimeAssignableTemplate, RuntimeModifier
+    {
+        DefinedModifier RuntimeModifier.Modifier => MyRole;
+        List<byte> impostors = new();
+        public Instance(GamePlayer player) : base(player) { }
+
+        [OnlyMyPlayer]
+        void CheckWins(PlayerCheckWinEvent ev) => ev.IsWin |= ev.GameEnd == NebulaGameEnd.ImpostorWin;
+
+        [OnlyMyPlayer]
+        void BlockWins(PlayerBlockWinEvent ev) => ev.IsBlocked |= ev.GameEnd != NebulaGameEnd.ImpostorWin;
+
+        void SetMadmateTask()
+        {
+            if (AmOwner)
+            {
+                if (Madmate.CanIdentifyImpostorsOption > 0)
+                {
+                    var numOfTasksOptions = Madmate.NumOfTasksToIdentifyImpostorsOptions.Take(Madmate.CanIdentifyImpostorsOption);
+                    int max = numOfTasksOptions.Max(option => option.Value);
+
+                    using (RPCRouter.CreateSection("MadmateTask"))
+                    {
+                        MyPlayer.Tasks.Unbox().ReplaceTasksAndRecompute(max, 0, 0);
+                        MyPlayer.Tasks.Unbox().BecomeToOutsider();
+                    }
+                }
+            }
+        }
+
+        void RuntimeAssignable.OnActivated()
+        {
+            SetMadmateTask();
+            if (AmOwner) IdentifyImpostors();
+        }
+
+        public void OnGameStart(GameStartEvent ev)
+        {
+            SetMadmateTask();
+            if (AmOwner) IdentifyImpostors();
+        }
+
+        private void IdentifyImpostors()
+        {
+            //インポスター判別のチャンスだけ繰り返す
+            while (Madmate.CanIdentifyImpostorsOption > impostors.Count && MyPlayer.Tasks.CurrentCompleted >= Madmate.NumOfTasksToIdentifyImpostorsOptions[impostors.Count].Value)
+            {
+                var pool = NebulaGameManager.Instance!.AllPlayerInfo().Where(p => p.Role.Role.Category == RoleCategory.ImpostorRole && !impostors.Contains(p.PlayerId)).ToArray();
+                //候補が残っていなければ何もしない
+                if (pool.Length == 0) return;
+                //生存しているインポスターだけに絞っても候補がいるなら、そちらを優先する。
+                if (pool.Any(p => !p.IsDead)) pool = pool.Where(p => !p.IsDead).ToArray();
+
+                impostors.Add(pool[System.Random.Shared.Next(pool.Length)].PlayerId);
+
+                if (MyPlayer.Tasks.CurrentCompleted > 0) new StaticAchievementToken("madmate.common2");
+            }
+        }
+
+        [OnlyMyPlayer]
+        public void OnTaskCompleteLocal(PlayerTaskCompleteLocalEvent ev) => IdentifyImpostors();
+
+
+        [Local]
+        void DecorateOtherPlayerName(PlayerDecorateNameEvent ev)
+        {
+            if (impostors.Contains(ev.Player.PlayerId) && ev.Player.IsImpostor) ev.Color = new(Palette.ImpostorRed);
+        }
+
+        [Local, OnlyMyPlayer]
+        void OnExiled(PlayerExiledEvent ev)
+        {
+            if (NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && p.Role.Role.Category == RoleCategory.ImpostorRole))
+                new StaticAchievementToken("madmate.common1");
+
+            if (!Madmate.EmbroilVotersOnExileOption) return;
+
+            if (Madmate.LimitEmbroiledPlayersToVotersOption)
+                ExtraExileRoleSystem.MarkExtraVictim(MyPlayer.Unbox(), false, true);
+            else
+            {
+                var voters = NebulaGameManager.Instance!.AllPlayerInfo().Where(p => !p.IsDead && !p.AmOwner && p.Role.Role.Category != RoleCategory.ImpostorRole).ToArray();
+                if (voters.Length > 0) voters.Random().VanillaPlayer.ModMarkAsExtraVictim(MyPlayer.VanillaPlayer, PlayerState.Embroiled, EventDetail.Embroil);
+            }
+        }
+
+        [Local, OnlyMyPlayer]
+        void OnMurdered(PlayerMurderedEvent ev)
+        {
+            if (ev.Murderer?.Role.Role.Category == RoleCategory.ImpostorRole)
+            {
+                new StaticAchievementToken("madmate.another1");
+                if (ev.Murderer != null && impostors.Contains(ev.Murderer.PlayerId)) new StaticAchievementToken("madmate.another2");
+                if (ev.Murderer != null && !impostors.Contains(ev.Murderer.PlayerId) && impostors.Count > 0) new StaticAchievementToken("madmate.another3");
+            }
+        }
+
+        [Local]
+        void OnGameEnd(GameEndEvent ev)
+        {
+            if (ev.EndState.EndCondition == NebulaGameEnd.ImpostorWin && NebulaGameManager.Instance!.AllPlayerInfo().All(p => p.Role.Role.Category != RoleCategory.ImpostorRole || !p.IsDead))
+                new StaticAchievementToken("madmate.challenge");
+        }
+
+        bool RuntimeModifier.MyCrewmateTaskIsIgnored => true;
+
+        string editRoleName(string name, bool isShort)
+        {
+            if (isShort) return "<color=#FF351FFF>" + Language.Translate("role.madmate.prefix.short") + "</color>" + name;
+            else return "<color=#FF351FFF>" + Language.Translate("role.madmate.prefix") + "</color>" + name;
+        }
+
+        string RuntimeAssignable.OverrideRoleName(string lastRoleName, bool isShort) => editRoleName(lastRoleName, isShort);
+    }
+}

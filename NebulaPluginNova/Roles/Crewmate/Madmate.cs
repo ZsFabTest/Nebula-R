@@ -205,7 +205,7 @@ public class MadmateModifier : DefinedModifierTemplate, DefinedAllocatableModifi
     static private IntegerConfiguration RoleChanceOption = NebulaAPI.Configurations.Configuration("options.role.madmate.roleChance", (10, 100, 10), 100, decorator: num => num + "%", title: new TranslateTextComponent("options.role.chance"));
 
     string ICodeName.CodeName => "MDAM";
-    Citation? HasCitation.Citaion => Citations.TheOtherRoles;
+    Citation? HasCitation.Citaion => Citations.TheOtherRolesGM;
     bool AssignableFilter<DefinedRole>.Test(DefinedRole role) => role.ModifierFilter?.Test(this) ?? false;
     void AssignableFilter<DefinedRole>.ToggleAndShare(DefinedRole role) => role.ModifierFilter?.ToggleAndShare(this);
     void AssignableFilter<DefinedRole>.SetAndShare(Virial.Assignable.DefinedRole role, bool val) => role.ModifierFilter?.SetAndShare(this, val);

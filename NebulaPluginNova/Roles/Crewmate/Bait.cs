@@ -80,7 +80,7 @@ public class Bait : DefinedRoleTemplate, HasCitation, DefinedRole
     }
 }
 
-public class BaitModifier : DefinedModifierTemplate, DefinedAllocatableModifier, RoleFilter
+public class BaitModifier : DefinedModifierTemplate,HasCitation , DefinedAllocatableModifier, RoleFilter
 {
     private BaitModifier() : base("bait", new(0, 247, 255), [NumOfRolesOption, RoleChanceOption, Bait.ShowKillFlashOption, Bait.ReportDelayOption, Bait.ReportDelayDispersionOption, Bait.CanSeeVentFlashOption])
     {
@@ -89,7 +89,8 @@ public class BaitModifier : DefinedModifierTemplate, DefinedAllocatableModifier,
 
     private static IntegerConfiguration NumOfRolesOption = NebulaAPI.Configurations.Configuration("options.role.madmate.numToSpawn", (0, 15), 1);
     private static IntegerConfiguration RoleChanceOption = NebulaAPI.Configurations.Configuration("options.role.madmate.roleChance", (10, 100, 10), 100, decorator: num => num + "%", title: new TranslateTextComponent("options.role.chance"));
-
+    
+    Citation? HasCitation.Citaion => Citations.TheOtherRoles;
     string ICodeName.CodeName => "BAT";
     bool AssignableFilter<DefinedRole>.Test(DefinedRole role) => role.ModifierFilter?.Test(this) ?? false;
     void AssignableFilter<DefinedRole>.ToggleAndShare(DefinedRole role) => role.ModifierFilter?.ToggleAndShare(this);

@@ -3,6 +3,7 @@ using Nebula.Behaviour;
 using static MeetingHud;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Virial.Events.Game.Meeting;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Nebula.Patches;
 
@@ -562,6 +563,7 @@ static class CheckForEndVotingPatch
 
         NebulaPlugin.Log.Print("Voting Result\n" + log.Join(null,"\n"));
 
+        GameOperatorManager.Instance?.Run(new ModCalcuateVotesEvent(dictionary));
         return dictionary;
     }
 

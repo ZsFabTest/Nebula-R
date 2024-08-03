@@ -67,7 +67,8 @@ public class NebulaGameEnd
     static public CustomEndCondition PaparazzoWin = new(29, "paparazzo", Roles.Neutral.Paparazzo.MyRole.UnityColor, 32);
     static public CustomEndCondition AvengerWin = new(30, "avenger", Roles.Neutral.Avenger.MyRole.UnityColor, 64);
     static public CustomEndCondition DancerWin = new(31, "dancer", Roles.Neutral.Dancer.MyRole.UnityColor, 32);
-    static public CustomEndCondition NoGame = new(128, "nogame", InvalidColor, 128);
+    static public CustomEndCondition CollectorWin = new(32, "collector", Roles.Neutral.Collector.MyRole.UnityColor, 128);
+    static public CustomEndCondition NoGame = new(128, "nogame", InvalidColor, 256);
 
     static public CustomExtraWin ExtraLoversWin = new(0, "lover", Roles.Modifier.Lover.MyRole.UnityColor);
     static public CustomExtraWin ExtraObsessionalWin = new(1, "obsessional", Roles.Modifier.Obsessional.MyRole.UnityColor);
@@ -82,6 +83,7 @@ public class NebulaGameEnd
         Virial.Game.NebulaGameEnds.JackalGameEnd = JackalWin;
         Virial.Game.NebulaGameEnds.ArsonistGameEnd = ArsonistWin;
         Virial.Game.NebulaGameEnds.PaparazzoGameEnd = PaparazzoWin;
+        Virial.Game.NebulaGameEnds.CollectorGameEnd = CollectorWin;
     }
 
     private readonly static RemoteProcess<(byte conditionId, int winnersMask,ulong extraWinMask, GameEndReason endReason)> RpcEndGame = new(

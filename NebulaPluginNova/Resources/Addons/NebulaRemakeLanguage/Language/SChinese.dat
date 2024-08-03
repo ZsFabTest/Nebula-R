@@ -1,5 +1,12 @@
 # Roles
 
+"role.collector.name" : "集票者"
+"role.collector.short" : "集"
+"role.collector.blurb" : "诡异的收藏家"
+"options.role.collector.detail" : "集票者可以收集他所投给的玩家收到的投票。<br>集齐一定票数后集票者获胜。"
+"options.role.collector.collectedVotesToWin" : "胜利所需集票票数"
+"role.collector.taskText" : "集票数：%DETAIL%"
+
 "role.judge.name" : "法官"
 "role.judge.short" : "法"
 "role.judge.blurb" : "无情地执行正义"
@@ -14,7 +21,27 @@
 "role.madmate.prefix" : "叛变的"
 "role.madmate.prefix.short" : "叛"
 
+# Teams
+
+"teams.collector" : "集票者"
+
+# Endings
+
+"end.collector" : "集票者获胜"
+
 # Achievements
+
+"achievement.collector.common1.title" : "收藏癖"
+"achievement.collector.common1.goal" : "一次性收集5张票。"
+"achievement.collector.common1.cond" : ""
+
+"achievement.collector.another1.title" : "失败的煽动者"
+"achievement.collector.another1.goal" : "一次性只收集到了1张投票（即自己的投票）。"
+"achievement.collector.another1.cond" : ""
+
+"achievement.collector.challenge.title" : "收藏狂人"
+"achievement.collector.challenge.goal" : "一次性收集10张票。"
+"achievement.collector.challenge.cond" : ""
 
 "achievement.judge.common1.title" : "庭审入门"
 "achievement.judge.common1.goal" : "成功审判一人。"

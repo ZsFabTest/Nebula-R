@@ -174,7 +174,7 @@ class ExileControllerBeginPatch
                 {
                     foreach(var modifier in NebulaGameManager.Instance.GetPlayer(exiled.PlayerId)!.Modifiers)
                     {
-                        roleName += "<space=0.5em>" + modifier.DisplayName;
+                        roleName += " " + modifier.DisplayName;
                     }
                 }
                 __instance.completeString = Language.Translate("game.meeting.roleText").Replace("%PLAYER%", exiled.PlayerName).Replace("%ROLE%", roleName);

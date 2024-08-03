@@ -357,12 +357,13 @@ public class MadmateModifier : DefinedModifierTemplate, DefinedAllocatableModifi
                 new StaticAchievementToken("madmate.challenge");
         }
 
+        bool RuntimeModifier.InvalidateCrewmateTask => true;
         bool RuntimeModifier.MyCrewmateTaskIsIgnored => true;
 
         string editRoleName(string name, bool isShort)
         {
-            if (isShort) return "<color=#FF351FFF>" + Language.Translate("role.madmate.prefix.short") + "</color>" + name;
-            else return "<color=#FF351FFF>" + Language.Translate("role.madmate.prefix") + "</color>" + name;
+            if (isShort) return Language.Translate("role.madmate.prefix.short").Color(MyRole.UnityColor) + name;
+            else return Language.Translate("role.madmate.prefix").Color(MyRole.UnityColor) + name;
         }
 
         string RuntimeAssignable.OverrideRoleName(string lastRoleName, bool isShort) => editRoleName(lastRoleName, isShort);

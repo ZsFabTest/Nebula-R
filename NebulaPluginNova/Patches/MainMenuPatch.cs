@@ -266,7 +266,7 @@ public static class MainMenuSetUpPatch
                             {
                                 var button = text.gameObject.SetUpButton(true);
                                 button.gameObject.AddComponent<BoxCollider2D>().size = text.rectTransform.sizeDelta;
-                                button.OnClick.AddListener(() => Application.OpenURL("https://github.com/Dolly1016/Nebula/releases/tag/" + version.RawTag));
+                                button.OnClick.AddListener(() => Application.OpenURL("https://github.com/ZsFabTest/Nebula-R/releases/tag/" + version.RawTag));
                                 button.OnMouseOver.AddListener(() =>
                                 {
                                     text.color = Color.green;

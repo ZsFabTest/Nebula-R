@@ -5,7 +5,14 @@
 "role.collector.blurb" : "诡异的收藏家"
 "options.role.collector.detail" : "集票者可以收集他所投给的玩家收到的投票。<br>集齐一定票数后集票者获胜。"
 "options.role.collector.collectedVotesToWin" : "胜利所需集票票数"
-"role.collector.taskText" : "集票数：%DETAIL%"
+"options.role.collector.canCallEmergencyMeeting" : "可以发起紧急会议"
+"role.collector.taskText" : "[集票者]收集投票情况：%DETAIL%票"
+
+"role.ghostEngineer.name" : "灵魂工程师"
+"role.ghostEngineer.blurb" : "永无止境的工作"
+"role.ghostEngineer.short" : "魂工"
+"options.role.ghostEngineer.detail" : "灵魂工程师拥有秒修破坏的能力。<br>注意通讯破坏无法修理。"
+"options.role.ghostEngineer.numOfRepairing" : "可使用修理次数"
 
 "role.judge.name" : "法官"
 "role.judge.short" : "法"
@@ -42,6 +49,10 @@
 "achievement.collector.challenge.title" : "收藏狂人"
 "achievement.collector.challenge.goal" : "一次性收集10张票。"
 "achievement.collector.challenge.cond" : ""
+
+"achievement.ghostEngineer.challenge.title" : "永不停歇的工作"
+"achievement.ghostEngineer.challenge.goal" : "使用完全部的修理次数并且船员阵营取得胜利。"
+"achievement.ghostEngineer.challenge.cond" : "条件：修理次数大于1"
 
 "achievement.judge.common1.title" : "庭审入门"
 "achievement.judge.common1.goal" : "成功审判一人。"

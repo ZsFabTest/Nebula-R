@@ -65,7 +65,7 @@ public class Judge : DefinedRoleTemplate, HasCitation, DefinedRole
     static private BoolConfiguration CanJudgeNeutralRolesOption = NebulaAPI.Configurations.Configuration("options.role.judge.canJudgeNeutralRoles", true);
     static private BoolConfiguration CanJudgeMadmateOption = NebulaAPI.Configurations.Configuration("options.role.judge.canJudgeMadmate", true);
     static private BoolConfiguration CanJudgeLoversOption = NebulaAPI.Configurations.Configuration("options.role.judge.canJudgeLovers", false);
-    static internal BoolConfiguration CanCallEmergencyMeetingOption = NebulaAPI.Configurations.Configuration("options.role.judge.canCallEmergencyMeeting", true);
+    static private BoolConfiguration CanCallEmergencyMeetingOption = NebulaAPI.Configurations.Configuration("options.role.judge.canCallEmergencyMeeting", true);
 
     static public Judge MyRole = new Judge();
 

@@ -11,12 +11,13 @@ namespace Nebula.Roles.Neutral;
 public class Collector : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     public static RoleTeam MyTeam = new Team("teams.collector", new(163, 73, 164), TeamRevealType.OnlyMe);
-    private Collector() : base("collector",new(163, 73, 164), RoleCategory.NeutralRole, MyTeam, [CollectedVotesToWinOption]) { }
-    Citation? HasCitation.Citaion => Citations.TownOfHostEdited;
+    private Collector() : base("collector",new(163, 73, 164), RoleCategory.NeutralRole, MyTeam, [CollectedVotesToWinOption, CanCallEmergencyMeetingOption]) { }
+    Citation? HasCitation.Citaion => Citations.TownOfHostY;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 
     private static IntegerConfiguration CollectedVotesToWinOption = NebulaAPI.Configurations.Configuration("options.role.collector.collectedVotesToWin", (1,30), 15);
+    static private BoolConfiguration CanCallEmergencyMeetingOption = NebulaAPI.Configurations.Configuration("options.role.collector.canCallEmergencyMeeting", true);
 
     public static Collector MyRole = new Collector();
     public class Instance : RuntimeAssignableTemplate, RuntimeRole
@@ -69,5 +70,7 @@ public class Collector : DefinedRoleTemplate, HasCitation, DefinedRole
 
             ev.AppendText(text.Replace("%DETAIL%", detail).Color(MyRole.UnityColor));
         }
+
+        bool RuntimeAssignable.CanCallEmergencyMeeting => CanCallEmergencyMeetingOption;
     }
 }

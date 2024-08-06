@@ -24,7 +24,7 @@ static file class JudgeSystem
                     NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
                 else if(canJudgeNeutralRoles && p?.Role.Role.Category == RoleCategory.NeutralRole)
                     NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
-                else if (canJudgeMadmate && p?.Role.Role == Madmate.MyRole)
+                else if (canJudgeMadmate && p!.IsMadmate())
                     NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
                 else if (canJudgeLovers && (bool)p?.TryGetModifier<Lover.Instance>(out _)!)
                     NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);

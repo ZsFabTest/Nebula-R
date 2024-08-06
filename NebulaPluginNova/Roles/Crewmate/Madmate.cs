@@ -1,4 +1,5 @@
 ﻿using Epic.OnlineServices;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Nebula.Game.Statistics;
 using Nebula.Modules.GUIWidget;
 using Nebula.Roles.Impostor;
@@ -367,5 +368,13 @@ public class MadmateModifier : DefinedModifierTemplate, DefinedAllocatableModifi
         }
 
         string RuntimeAssignable.OverrideRoleName(string lastRoleName, bool isShort) => editRoleName(lastRoleName, isShort);
+    }
+}
+
+public static class MadmateExtensions
+{
+    public static bool IsMadmate(this Virial.Game.Player player)
+    {
+        return player.Role.Role == Madmate.MyRole || player.TryGetModifier<MadmateModifier.Instance>(out _);
     }
 }

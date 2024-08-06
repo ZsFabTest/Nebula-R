@@ -172,6 +172,6 @@ public class Obsessional : DefinedAllocatableModifierTemplate, DefinedAllocatabl
             }
         }
 
-        bool RuntimeModifier.MyCrewmateTaskIsIgnored => obsession?.Role.Role.Category != Virial.Assignable.RoleCategory.CrewmateRole || obsession?.Role.Role == Madmate.MyRole;
+        bool RuntimeModifier.MyCrewmateTaskIsIgnored => obsession?.Role.Role.Category != Virial.Assignable.RoleCategory.CrewmateRole || obsession!.IsMadmate();
     }
 }

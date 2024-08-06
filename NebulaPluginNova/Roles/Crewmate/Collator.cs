@@ -146,7 +146,7 @@ public class Collator : DefinedRoleTemplate, HasCitation, DefinedRole
             switch (p.Role.Role.Category)
             {
                 case RoleCategory.CrewmateRole:
-                    if (p.Role.Role == Madmate.MyRole)
+                    if (p.IsMadmate())
                         return MadmateIsClassifiedAsOption.GetValue() switch { 0 => NebulaTeams.ImpostorTeam, 1 => NebulaTeams.CrewmateTeam, _ => NebulaTeams.CrewmateTeam };
                     else
                         return NebulaTeams.CrewmateTeam;

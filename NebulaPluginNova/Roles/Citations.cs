@@ -12,5 +12,5 @@ public static class Citations
     static public Citation SuperNewRoles { get; private set; } = new("superNewRoles", SpriteLoader.FromResource("Nebula.Resources.Citations.SuperNewRoles.png", 100f), new RawTextComponent(""), "https://github.com/SuperNewRoles/SuperNewRoles");
     static public Citation NebulaOnTheShip { get; private set; } = new("nebulaOnTheShip", SpriteLoader.FromResource("Nebula.Resources.Citations.NebulaOnTheShip.png", 100f), new RawTextComponent(""), "https://github.com/Dolly1016/Nebula");
     static public Citation NebulaOnTheShip_Remake { get; private set; } = new("nebulaOnTheShipRemake", null, new ColorTextComponent(new(1f, 1f, 1f), new RawTextComponent("Nebula-R")), "https://github.com/ZsFabTest/Nebula-R-LTS");
-    static public Citation TownOfHostY { get; private set; } = new("townOfHostY", null, new ColorTextComponent(new(35f / 255f, 134f / 255f, 54f / 255f), new RawTextComponent("TownOfHost_Y")), "https://github.com/Yumenopai/TownOfHost_Y");
+    static public Citation TownOfHostY { get; private set; } = new("townOfHostY", null, new ColorTextComponent(new(1f, 1f, 13f / 255f), new RawTextComponent("TownOfHost_Y")), "https://github.com/Yumenopai/TownOfHost_Y");
 }

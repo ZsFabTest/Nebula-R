@@ -119,7 +119,7 @@ public class NebulaEndCriteria
                 //Loversではないインポスターのみカウントに入れる
                 if (p.Role.Role.Team == Impostor.MyTeam && !p.Unbox().TryGetModifier<Lover.Instance>(out _)) impostors++;
 
-                if (p.TryGetModifier<MadmateModifier.Instance>(out _) || p.Role.Role == Madmate.MyRole)
+                if (p.IsMadmate())
                 {
                     madmates++;
                     continue;

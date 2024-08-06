@@ -58,7 +58,7 @@ public class Sheriff : DefinedRoleTemplate, HasCitation, DefinedRole
 
         private bool CanKill(GamePlayer target)
         {
-            if (target.Role.Role == Madmate.MyRole) return CanKillMadmateOption;
+            if (target.IsMadmate()) return CanKillMadmateOption;
             if (target.TryGetModifier<Lover.Instance>(out _) && CanKillLoversOption) return true;
             if (target.Role.Role.Category == RoleCategory.CrewmateRole) return false;
             return true;

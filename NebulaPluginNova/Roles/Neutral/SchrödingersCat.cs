@@ -237,6 +237,9 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         public InstanceJackal(GamePlayer player) : base(player) { }
         DefinedRole RuntimeRole.Role => MyRoleJackal;
 
+        bool RuntimeRole.CanUseVent => true;
+        bool RuntimeRole.CanMoveInVent => true;
+
         void RuntimeAssignable.OnActivated()
         {
             if (AmOwner)

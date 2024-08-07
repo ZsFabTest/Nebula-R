@@ -242,7 +242,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
 
         void RuntimeAssignable.OnActivated()
         {
-            if (AmOwner)
+            if (AmOwner && JackalHasKillOption)
             {
                 var killTracker = Bind(ObjectTrackers.ForPlayer(null, MyPlayer, (p) => ObjectTrackers.StandardPredicate(p) && !IsJackal(p)));
 

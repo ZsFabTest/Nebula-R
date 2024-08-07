@@ -557,7 +557,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
         //自身が勝利している場合
         if (EndState!.Winners.Test(PlayerControl.LocalPlayer.GetModInfo())) {
             //生存しているマッドメイト除くクルー陣営
-            var aliveCrewmate = allModPlayers.Values.Where(p => !p.IsDead && p.Role.Role.Category == RoleCategory.CrewmateRole && p.IsMadmate());
+            var aliveCrewmate = allModPlayers.Values.Where(p => !p.IsDead && p.Role.Role.Category == RoleCategory.CrewmateRole && !p.IsMadmate());
             int aliveCrewmateCount = aliveCrewmate?.Count() ?? 0;
             if (EndState!.EndReason == GameEndReason.Task)
             {

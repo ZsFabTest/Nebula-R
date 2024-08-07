@@ -5,6 +5,7 @@ using Virial.Assignable;
 using Virial.Configuration;
 using Virial.Events.Game.Meeting;
 using Virial.Events.Player;
+using static MeetingHud;
 
 namespace Nebula.Roles.Neutral;
 
@@ -24,39 +25,38 @@ public class Collector : DefinedRoleTemplate, HasCitation, DefinedRole
     {
         DefinedRole RuntimeRole.Role => MyRole;
         private int collection = 0;
-        private Dictionary<byte, int> dictionary = new();
+        private byte voteFor = byte.MaxValue;
 
         int[]? RuntimeAssignable.RoleArguments => new int[] { collection };
 
         public Instance(GamePlayer player, int[] arguments) : base(player)
         {
-            collection = arguments[0];
+            collection = arguments.Get(0,0);
         }
 
         void RuntimeAssignable.OnActivated()
         {
-            dictionary = new();
+            voteFor = byte.MaxValue;
         }
 
         [Local]
         void OnModCalcuateVotes(ModCalcuateVotesEvent ev)
         {
-            dictionary = ev.CalVoteResult();
-        }
-
-        [Local]
-        void OnPlayerVoteDisclosed(PlayerVoteDisclosedLocalEvent ev)
-        {
-            var VoteFor = ev.VoteFor;
-            if (VoteFor == null) return;
-            collection += dictionary[VoteFor.PlayerId];
-            if (dictionary[VoteFor.PlayerId] == 1)
+            var dictionary = ev.CalVoteResult();
+            collection += dictionary[voteFor];
+            if (dictionary[voteFor] == 1)
             {
                 new StaticAchievementToken("collector.another1");
                 return;
             }
-            if (dictionary[VoteFor.PlayerId] >= 5) new StaticAchievementToken("collector.common1");
-            if (dictionary[VoteFor.PlayerId] >= 10) new StaticAchievementToken("collector.challenge");
+            if (dictionary[voteFor] >= 5) new StaticAchievementToken("collector.common1");
+            if (dictionary[voteFor] >= 10) new StaticAchievementToken("collector.challenge");
+        }
+
+        [Local]
+        void OnCastVoteLocal(PlayerVoteCastLocalEvent ev)
+        {
+            voteFor = ev.VoteFor?.PlayerId ?? byte.MaxValue;
         }
 
         [Local]

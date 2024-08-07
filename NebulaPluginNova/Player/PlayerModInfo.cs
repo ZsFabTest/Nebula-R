@@ -696,7 +696,7 @@ internal class PlayerModInfo : AbstractModuleContainer, IRuntimePropertyHolder, 
         foreach (var a in PlayerAttributeImpl.AllAttributes)
         {
             //自認できない属性
-            if (!a.CanCognize(this)) continue;
+            if (!a?.CanCognize(this) ?? true) continue;
 
             float max = 0f, current = 0f;
             bool isPermanent = false;

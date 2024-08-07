@@ -161,7 +161,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         [Local]
         void OnGameEnd(GameEndEvent ev)
         {
-            if(!MyPlayer.IsDead && ev.EndState == NebulaGameEnds.CrewmateGameEnd)
+            if(!MyPlayer.IsDead && ev.EndState.EndCondition == NebulaGameEnds.CrewmateGameEnd)
             {
                 new StaticAchievementToken("schrödingersCat.challenge");
             }
@@ -226,7 +226,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         [Local]
         void OnGameEnd(GameEndEvent ev)
         {
-            if (!MyPlayer.IsDead && ev.EndState == NebulaGameEnds.ImpostorGameEnd)
+            if (!MyPlayer.IsDead && ev.EndState.EndCondition == NebulaGameEnds.ImpostorGameEnd)
             {
                 new StaticAchievementToken("schrödingersCat.challenge");
             }
@@ -272,7 +272,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         [Local]
         void OnGameEnd(GameEndEvent ev)
         {
-            if (!MyPlayer.IsDead && ev.EndState == NebulaGameEnds.JackalGameEnd)
+            if (!MyPlayer.IsDead && ev.EndState.EndCondition == NebulaGameEnds.JackalGameEnd)
             {
                 new StaticAchievementToken("schrödingersCat.challenge");
             }

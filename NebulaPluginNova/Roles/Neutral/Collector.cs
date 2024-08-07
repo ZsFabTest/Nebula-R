@@ -14,7 +14,7 @@ public class Collector : DefinedRoleTemplate, HasCitation, DefinedRole
     private Collector() : base("collector",new(163, 73, 164), RoleCategory.NeutralRole, MyTeam, [CollectedVotesToWinOption, CanCallEmergencyMeetingOption]) { }
     Citation? HasCitation.Citaion => Citations.TownOfHostY;
 
-    RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
+    RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player, arguments);
 
     private static IntegerConfiguration CollectedVotesToWinOption = NebulaAPI.Configurations.Configuration("options.role.collector.collectedVotesToWin", (1,30), 15);
     static private BoolConfiguration CanCallEmergencyMeetingOption = NebulaAPI.Configurations.Configuration("options.role.collector.canCallEmergencyMeeting", true);
@@ -26,12 +26,16 @@ public class Collector : DefinedRoleTemplate, HasCitation, DefinedRole
         private int collection = 0;
         private Dictionary<byte, int> dictionary = new();
 
-        public Instance(GamePlayer player) : base(player) { }
+        int[]? RuntimeAssignable.RoleArguments => new int[] { collection };
+
+        public Instance(GamePlayer player, int[] arguments) : base(player)
+        {
+            collection = arguments[0];
+        }
 
         void RuntimeAssignable.OnActivated()
         {
             dictionary = new();
-            if (AmOwner) collection = 0;
         }
 
         [Local]

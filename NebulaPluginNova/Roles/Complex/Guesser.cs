@@ -64,6 +64,8 @@ static file class GuesserSystem
 
                     if (p?.Role.Role == r)
                         NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
+                    else if (Neutral.SchrödingersCat.MyRoles.Any((sr) => p?.Role == sr) && r == Neutral.SchrödingersCat.MyRole)
+                        NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
                     else
                         NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(NebulaAPI.CurrentGame.LocalPlayer, PlayerState.Misguessed, EventDetail.Missed, KillParameter.MeetingKill);
 

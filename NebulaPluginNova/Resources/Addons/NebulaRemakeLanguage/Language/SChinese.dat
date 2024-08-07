@@ -28,6 +28,30 @@
 "role.madmate.prefix" : "叛变的"
 "role.madmate.prefix.short" : "叛"
 
+"role.schrödingersCat.name" : "薛定谔的猫"
+"role.schrödingersCat.short" : "猫"
+"role.schrödingersCat.blurb" : "墙头草，两边倒"
+"options.role.schrödingersCat.detail" : "薛定谔的猫可以通过击杀更换阵营。<br>更换一次阵营以后不可再次更换。"
+"options.role.schrödingersCat.numOfLeftImpostorToBeAllowedToKill" : "红猫在剩余多少伪装者时获得击杀能力"
+"options.role.schrödingersCat.impostorKillCoolDown" : "红猫击杀冷却时间"
+"options.role.schrödingersCat.jackalHasKill" : "蓝猫拥有击杀能力"
+"options.role.schrödingersCat.jackalKillCoolDown" : "蓝猫击杀冷却时间"
+
+"role.schrödingersCatCrewmate.name" : "薛定谔的猫"
+"role.schrödingersCatCrewmate.short" : "猫"
+"role.schrödingersCatCrewmate.blurb" : "墙头草，两边倒"
+"options.role.schrödingersCatCrewmate.detail" : "你现在加入了船员阵营。<br>找出伪装者并与船员共同胜利。"
+
+"role.schrödingersCatImpostor.name" : "薛定谔的猫"
+"role.schrödingersCatImpostor.short" : "猫"
+"role.schrödingersCatImpostor.blurb" : "墙头草，两边倒"
+"options.role.schrödingersCatImpostor.detail" : "你现在加入了伪装者阵营。<br>击杀船员并与伪装者共同胜利。"
+
+"role.schrödingersCatJackal.name" : "薛定谔的猫"
+"role.schrödingersCatJackal.short" : "猫"
+"role.schrödingersCatJackal.blurb" : "墙头草，两边倒"
+"options.role.schrödingersCatJackal.detail" : "你现在加入了豺狼阵营。<br>击杀所有人并与豺狼共同胜利。"
+
 # Teams
 
 "teams.collector" : "集票者"
@@ -65,3 +89,19 @@
 "achievement.judge.challenge.title" : "审判长"
 "achievement.judge.challenge.goal" : "成功审判三人并存活到最后取得胜利。"
 "achievement.judge.challenge.cond" : "条件：游戏结束时存活且成功审判三人"
+
+"achievement.schrödingersCat.common1.title" : "墙头草"
+"achievement.schrödingersCat.common1.goal" : "更换阵营。"
+"achievement.schrödingersCat.common1.cond" : ""
+
+"achievement.schrödingersCat.another1.title" : "太糟糕了"
+"achievement.schrödingersCat.another1.goal" : "没有更换阵营直接死亡。"
+"achievement.schrödingersCat.another1.cond" : ""
+
+"achievement.schrödingersCat.common2.title" : "无人问津"
+"achievement.schrödingersCat.common2.goal" : "没有更换阵营并活到最后。"
+"achievement.schrödingersCat.common2.cond" : ""
+
+"achievement.schrödingersCat.challenge.title" : "有一份热 发一分光"
+"achievement.schrödingersCat.challenge.goal" : "更换阵营后跟随该阵营胜利。"
+"achievement.schrödingersCat.challenge.cond" : ""

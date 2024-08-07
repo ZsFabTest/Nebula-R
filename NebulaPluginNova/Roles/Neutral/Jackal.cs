@@ -33,7 +33,8 @@ public class Jackal : DefinedRoleTemplate, HasCitation, DefinedRole
     public static bool IsJackal(GamePlayer player, int teamId)
     {
         if (player.Role is Instance j) return j.JackalTeamId == teamId;
-        if(player.Role is Sidekick.Instance s) return s.JackalTeamId == teamId;
+        if (player.Role is Sidekick.Instance s) return s.JackalTeamId == teamId;
+        if (player.Role is SchrödingersCat.InstanceJackal) return true;
         return player.Unbox().GetModifiers<SidekickModifier.Instance>().Any(m => m.JackalTeamId == teamId);
     }
 
@@ -66,12 +67,14 @@ public class Jackal : DefinedRoleTemplate, HasCitation, DefinedRole
             if (player == null) return false;
             if (player.Role is Sidekick.Instance sidekick && sidekick.JackalTeamId == JackalTeamId) return true;
             if (player.Unbox().AllModifiers.Any(m => m is SidekickModifier.Instance sidekick && sidekick.JackalTeamId == JackalTeamId)) return true;
+            if (player.Role is SchrödingersCat.InstanceJackal) return true;
             return false;
         }
 
         public bool IsSameTeam(GamePlayer? player)
         {
             if (IsMySidekick(player)) return true;
+            if (player?.Role is SchrödingersCat.InstanceJackal) return true;
             if (player?.Role is Instance jackal && jackal.JackalTeamId == JackalTeamId) return true;
             return false;
         }

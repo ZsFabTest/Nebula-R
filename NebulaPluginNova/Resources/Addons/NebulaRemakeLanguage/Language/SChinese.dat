@@ -1,5 +1,7 @@
 # Roles
 
+"role.avenger.becomeAvengerTitle" : "是时候复仇了..."
+
 "role.collector.name" : "集票者"
 "role.collector.short" : "集"
 "role.collector.blurb" : "诡异的收藏家"
@@ -28,6 +30,14 @@
 "role.madmate.prefix" : "叛变的"
 "role.madmate.prefix.short" : "叛"
 
+"role.oracle.name" : "占卜师"
+"role.oracle.short" : "占"
+"role.oracle.blurb" : "感受你的过往"
+"options.role.oracle.detail" : "你可以获取他人的职业。<br>你获取的信息会混杂着多个错误的干扰信息。"
+"options.role.oracle.oracleCoolDown" : "占卜冷却时间"
+"options.role.oracle.numOfInfo" : "占卜获得的职业数量"
+"role.oracle.message" : "%PLAYER%的职业是%DETAIL%其中之一"
+
 "role.schrödingersCat.name" : "薛定谔的猫"
 "role.schrödingersCat.short" : "猫"
 "role.schrödingersCat.blurb" : "墙头草，两边倒"
@@ -51,6 +61,11 @@
 "role.schrödingersCatJackal.short" : "猫"
 "role.schrödingersCatJackal.blurb" : "墙头草，两边倒"
 "options.role.schrödingersCatJackal.detail" : "你现在加入了豺狼阵营。<br>击杀所有人并与豺狼共同胜利。"
+
+# Buttons
+
+"button.label.repair" : "修理"
+"button.label.oracle" : "占卜"
 
 # Teams
 

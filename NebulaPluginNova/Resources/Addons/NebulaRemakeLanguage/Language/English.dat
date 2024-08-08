@@ -1,0 +1,65 @@
+# Roles
+
+"role.avenger.becomeAvengerTitle" : "You become Avanger..."
+
+"role.collector.name" : "Collector"
+"role.collector.short" : "Co"
+"role.collector.blurb" : "Terrifying Collector"
+"options.role.collector.detail" : "Collector could collect the votes which players voted for your voting target.<br>You could win if the num of the collected votes satisfy the requirement."
+"options.role.collector.collectedVotesToWin" : "Number of Collected Votes to Win"
+"options.role.collector.canCallEmergencyMeeting" : "Can Call Emergency Meeting"
+"role.collector.taskText" : "[Collector]Collected Votes：%DETAIL%"
+
+"role.ghostEngineer.name" : "Ghost Engineer"
+"role.ghostEngineer.blurb" : "Engineering Forever"
+"role.ghostEngineer.short" : "GE"
+"options.role.ghostEngineer.detail" : "Ghost Engineer could repair the sabotages in a second.<br>However, you can't repair the Comms."
+"options.role.ghostEngineer.numOfRepairing" : "Number of Repairing"
+
+"role.judge.name" : "Judge"
+"role.judge.short" : "Ju"
+"role.judge.blurb" : "For Fairness"
+"options.role.judge.detail" : "Judge has simliar abilities to guesser.<br>You can guess the players without knowing their roles."
+"options.role.judge.numOfGuess" : "Number of Guessing"
+"options.role.judge.canJudgeNeutralRoles" : "Can Guess Neutral Roles"
+"options.role.judge.canJudgeMadmate" : "Can Guess Madmate"
+"options.role.judge.canJudgeLovers" : "Can Guess Lovers"
+"options.role.judge.canCallEmergencyMeeting" : "Can Call Emergency Meeting"
+
+"options.role.madmate.numToSpawn" : "Number of Roles"
+"role.madmate.prefix" : "Mad "
+"role.madmate.prefix.short" : "M"
+
+"role.schrödingersCat.name" : "Schrödinger's Cat"
+"role.schrödingersCat.short" : "SC"
+"role.schrödingersCat.blurb" : "Either Alive or Die"
+"options.role.schrödingersCat.detail" : "You could change your team by being murdered.<br>However, you have only one chance to change your team."
+"options.role.schrödingersCat.numOfLeftImpostorToBeAllowedToKill" : "(When become Impostor)Can Be Allowed to Kill When Left What Number of Impostor"
+"options.role.schrödingersCat.impostorKillCoolDown" : "(When become Impostor)Kill Cool Down"
+"options.role.schrödingersCat.jackalHasKill" : "(When become Jackal)Has Kill Button"
+"options.role.schrödingersCat.jackalKillCoolDown" : "(When become Jackal)Kill Cool Down"
+
+"role.schrödingersCatCrewmate.name" : "Schrödinger's Cat"
+"role.schrödingersCatCrewmate.short" : "SC"
+"role.schrödingersCatCrewmate.blurb" : "Either Alive or Die"
+"options.role.schrödingersCatCrewmate.detail" : "Now you have become a Crewmate."
+
+"role.schrödingersCatImpostor.name" : "Schrödinger's Cat"
+"role.schrödingersCatImpostor.short" : "SC"
+"role.schrödingersCatImpostor.blurb" : "Either Alive or Die"
+"options.role.schrödingersCatImpostor.detail" : "Now you have become an Impostor."
+
+"role.schrödingersCatJackal.name" : "Schrödinger's Cat"
+"role.schrödingersCatJackal.short" : "SC"
+"role.schrödingersCatJackal.blurb" : "Either Alive or Die"
+"options.role.schrödingersCatJackal.detail" : "Now you have become a Jackal."
+
+# Teams
+
+"teams.collector" : "Collector"
+"teams.schrödingersCat" : "Schrödinger's Cat"
+
+# Endings
+
+"end.collector" : "Collector Win"
+

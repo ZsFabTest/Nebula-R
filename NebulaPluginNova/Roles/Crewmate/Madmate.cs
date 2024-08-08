@@ -375,6 +375,6 @@ public static class MadmateExtensions
 {
     public static bool IsMadmate(this Virial.Game.Player player)
     {
-        return player.Role.Role == Madmate.MyRole || player.TryGetModifier<MadmateModifier.Instance>(out _);
+        return player != null && player.Role.Role == Madmate.MyRole || (player?.TryGetModifier<MadmateModifier.Instance>(out _) ?? false);
     }
 }

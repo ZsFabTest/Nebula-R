@@ -232,12 +232,12 @@ public static class Helpers
         return array;
     }
 
-    static public T Random<T>(this T[] array)
+    static public T? Random<T>(this T[] array)
     {
         return array[System.Random.Shared.Next(array.Length)];
     }
 
-    static public T Random<T>(this List<T> list)
+    static public T? Random<T>(this List<T> list)
     {
         return list[System.Random.Shared.Next(list.Count)];
     }

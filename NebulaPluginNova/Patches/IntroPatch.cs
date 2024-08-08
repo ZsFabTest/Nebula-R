@@ -1,4 +1,5 @@
-﻿using Nebula.Compat;
+﻿using NAudio.CoreAudioApi;
+using Nebula.Compat;
 using Virial;
 
 namespace Nebula.Patches;
@@ -127,10 +128,23 @@ public static class ShowIntroPatch
         yield break;
     }
 
+    static void GetCurrectRoleName(ref string result, GamePlayer playerInfo)
+    {
+        if (playerInfo?.Modifiers.Count() > 0)
+        {
+            foreach (var modifier in playerInfo?.Modifiers!)
+            {
+                result = (modifier.OverrideRoleName(result, false) ?? "");
+            }
+        }
+    }
+    
     static IEnumerator CoShowRole(IntroCutscene __instance, GamePlayer myInfo)
     {
         var role = myInfo.Role.Role;
-        __instance.RoleText.text = role.DisplayName;
+        var roleName = role.DisplayName;
+        GetCurrectRoleName(ref roleName, myInfo);
+        __instance.RoleText.text = roleName;
         __instance.RoleBlurbText.text = role.DisplayIntroBlurb;
         __instance.RoleBlurbText.transform.localPosition = new(0.0965f, -2.12f, -36f);
         __instance.RoleBlurbText.rectTransform.sizeDelta = new(12.8673f, 0.7f);

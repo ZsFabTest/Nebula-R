@@ -353,6 +353,7 @@ internal class PlayerModInfo : AbstractModuleContainer, IRuntimePropertyHolder, 
         AssignableAction(r => r.DecorateNameConstantly(ref text, NebulaGameManager.Instance?.CanSeeAllInfo ?? false));
         var ev = GameOperatorManager.Instance?.Run(new PlayerDecorateNameEvent(this, text));
         var color = (ev?.Color.HasValue ?? false) ? ev.Color.Value.ToUnityColor() : Color.white;
+        text = ev?.Name ?? text;
 
         if (showDefaultName && !CurrentOutfit.PlayerName.Equals(DefaultName))
             text += (" (" + DefaultName + ")").Color(Color.gray);
@@ -363,7 +364,7 @@ internal class PlayerModInfo : AbstractModuleContainer, IRuntimePropertyHolder, 
 
     static public readonly Color FakeTaskColor = new Color(0x86 / 255f, 0x86 / 255f, 0x86 / 255f);
     static public readonly Color CrewTaskColor = new Color(0xFA / 255f, 0xD9 / 255f, 0x34 / 255f);
-    public void UpdateRoleText(TMPro.TextMeshPro roleText) {
+    public void UpdateRoleText(TMPro.TextMeshPro roleText, string OracleInfo = "<Nothing>") {
 
         string text = "";
 

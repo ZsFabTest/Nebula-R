@@ -506,7 +506,10 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
 
             //ローカルモジュール
             AttributeShower.Update(localModInfo);
+
+            Patches.AddChat.Update();
         }
+
     }
 
     public void OnFixedUpdate() {
@@ -547,6 +550,8 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
         HudManager.Instance.UpdateHudContent();
 
         ConsoleRestriction?.OnGameStart();
+
+        Patches.AddChat.Initialize();
     }
 
     public void OnGameEnd()
@@ -574,6 +579,8 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
                 /*最後の死亡者をキルしている*/ (allModPlayers.Values.MaxBy(p => p.Unbox().DeathTimeStamp ?? 0f)?.MyKiller?.AmOwner ?? false))
                 new StaticAchievementToken("challenge.impostor");
         }
+
+        Patches.AddChat.CleanUp();
     }
 
     public GamePlayer? GetPlayer(byte playerId)

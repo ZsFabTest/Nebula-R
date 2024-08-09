@@ -134,7 +134,7 @@ public static class ShowIntroPatch
         {
             foreach (var modifier in playerInfo?.Modifiers!)
             {
-                result = (modifier.OverrideRoleName(result, false) ?? "");
+                result = modifier.OverrideRoleName(result, false) ?? result;
             }
         }
     }

@@ -64,9 +64,25 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
                 return 0;
         }
     }
+    private static RoleTeam GetCorrectTeam(int categoryId)
+    {
+        switch (categoryId)
+        {
+            case 0:
+                return MyTeam;
+            case 1:
+                return Crewmate.Crewmate.MyTeam;
+            case 2:
+                return Impostor.Impostor.MyTeam;
+            case 3:
+                return Jackal.MyTeam;
+            default:
+                return MyTeam;
+        }
+    }
     private int categoryId;
     private SchrödingersCat(int categoryId) : base("schrödingersCat" + adds.Get(categoryId, ""), 
-        GetColor(categoryId), GetCategory(categoryId), MyTeam, [NumOfLeftImpostorToBeAllowedToKillOption, ImpostorKillCoolDownOption, JackalHasKillOption, JackalKillCoolDownOption],
+        GetColor(categoryId), GetCategory(categoryId), GetCorrectTeam(categoryId), [NumOfLeftImpostorToBeAllowedToKillOption, ImpostorKillCoolDownOption, JackalHasKillOption, JackalKillCoolDownOption],
         categoryId == 0,categoryId == 0)
     {
         this.categoryId = categoryId;

@@ -81,6 +81,24 @@
 
 "end.collector" : "集票者获胜"
 
+# Chat
+
+"chat.default" : "空频道"
+"chat.impostor" : "伪装者频道"
+"chat.jackal" : "豺狼频道"
+"chat.lover" : "恋人频道"
+
+# Input
+"input.changeCannel" : "聊天框更换频道"
+
+# Options
+"options.bubbleChat" : "聊天框频道"
+"options.bubbleChat.detail" : "允许玩家在游戏内随时使用聊天框与队友交流。"
+"options.bubbleChat.useBubbleChat" : "队伍游戏中聊天框"
+"options.bubbleChat.enableImpostorCannel" : "启用伪装者频道"
+"options.bubbleChat.enableJackalCannel" : "启用豺狼频道"
+"options.bubbleChat.enableLoverCannel" : "启用恋人频道"
+
 # Achievements
 
 "achievement.collector.common1.title" : "收藏癖"

@@ -1,13 +1,9 @@
-﻿using Epic.OnlineServices.Presence;
-using Nebula.Roles.Neutral;
-using UnityEngine.Serialization;
-using Virial;
+﻿using Virial;
 using Virial.Assignable;
 using Virial.Configuration;
 using Virial.Events.Game;
 using Virial.Events.Game.Meeting;
 using Virial.Events.Player;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Nebula.Roles.Crewmate;
 
@@ -60,6 +56,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                     {
                         info = GetInfomation(myTracker.CurrentTarget!, NumOfInfoOption).TrimEnd(' ').TrimEnd(',');
                         oracleResults.Add(myTracker.CurrentTarget!.PlayerId, info);
+                        new StaticAchievementToken("oracle.common2");
                     }else info = oracleResults[myTracker.CurrentTarget!.PlayerId];
 
                     string message = Language.Translate("role.oracle.message").Replace("%PLAYER%",myTracker.CurrentTarget.Name).Replace("%DETAIL%",info);
@@ -68,6 +65,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                     Debug.LogWarning($"Message: {message}\nMessage.IsActive: {this.message.gameObject.active}");
                     duration = 5f;
 
+                    new StaticAchievementToken("oracle.common1");
                     button.StartCoolDown();
                 };
                 oracleButton.CoolDownTimer = Bind(new Timer(OracleCoolDownOption).Start());
@@ -185,7 +183,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
         {
             string info = "";
             if (oracleResults.TryGetValue(ev.Player.PlayerId, out info!))
-                ev.Name += $"({info})".Color(Color.gray);
+                ev.Name += $"<size=0.9>({info})</size>".Color(Color.gray);
         }
 
         [Local]
@@ -193,6 +191,15 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
         {
             if (oracleResults.TryGetValue(ev.Player.PlayerId, out _))
                 oracleResults.Remove(ev.Player.PlayerId);
+        }
+
+        [Local]
+        void OnPlayerGuessed(PlayerMurderedEvent ev)
+        {
+            if(ev.Murderer.PlayerId == MyPlayer.PlayerId && ev.Dead.PlayerState == PlayerState.Guessed && oracleResults.TryGetValue(ev.Player.PlayerId, out _))
+                new StaticAchievementToken("oracle.challenge");
+            if (oracleResults.TryGetValue(ev.Dead.PlayerId, out _))
+                oracleResults.Remove(ev.Dead.PlayerId);
         }
     }
 }

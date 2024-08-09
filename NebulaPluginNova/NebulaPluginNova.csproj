@@ -90,6 +90,7 @@
 	  <PackageReference Include="NAudio.WinMM" Version="2.2.1" />
 	  <PackageReference Include="OpusDotNet" Version="1.0.3" />
 	  <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+	  <PackageReference Include="System.IO.Compression" Version="4.3.0" />
 	  <PackageReference Include="System.Reflection.Metadata" Version="8.0.0" />
 	  <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
 	</ItemGroup>

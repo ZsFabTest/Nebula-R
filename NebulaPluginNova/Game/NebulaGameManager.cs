@@ -305,7 +305,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
 
     //天界視点フラグ
     public bool CanBeSpectator { get; private set; }
-    public bool CanSeeAllInfo => CanBeSpectator && (ClientOption.AllOptions[ClientOption.ClientOptionType.SpoilerAfterDeath].Value == 1 || !HudManager.InstanceExists);
+    public bool CanSeeAllInfo => CanBeSpectator && (ClientOption.AllOptions[ClientOption.ClientOptionType.SpoilerAfterDeath].Value == 1 || !HudManager.InstanceExists) && (PlayerControl.LocalPlayer.GetModInfo()?.Unbox().GhostRole is not Roles.Ghost.Complex.Unyielding.Instance);
     //public bool CanSeeAllInfo => false; // Test
     public void ChangeToSpectator(bool tryGhostAssignment = true)
     {

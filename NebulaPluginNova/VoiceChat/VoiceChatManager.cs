@@ -4,6 +4,7 @@ using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using Nebula.Behaviour;
 using Nebula.Modules.GUIWidget;
+using Nebula.Roles.Neutral;
 using OpusDotNet;
 using System.Runtime.CompilerServices;
 using TMPro;
@@ -12,6 +13,7 @@ using Virial.Assignable;
 using Virial.Game;
 using Virial.Media;
 using static Nebula.Modules.MetaWidgetOld;
+using System.IO.Compression;
 
 namespace Nebula.VoiceChat;
 
@@ -492,10 +494,14 @@ public class VoiceChatManager : IDisposable
 
                         if (!(IsMuting || (ListenerIsDead && !ListenerIsPerfectlyDead)))
                         {
+                            /*
                             foreach (var d in data)
                             {
                                 RpcSendAudio.Invoke((PlayerControl.LocalPlayer.PlayerId, sId++, currentRadio != null, currentRadio?.RadioMask ?? 0, d.Length, d));
                             }
+                            */
+                            RpcMultSendAudio.Invoke((PlayerControl.LocalPlayer.PlayerId, sId++, currentRadio != null, currentRadio?.RadioMask ?? 0, data));
+                            sId += (uint)(data.Count - 1);
                         }
                         data.Clear();
                     }
@@ -544,6 +550,95 @@ public class VoiceChatManager : IDisposable
         (message,calledByMe) => {
             if (NebulaGameManager.Instance?.VoiceChatManager?.allClients.TryGetValue(message.clientId, out var client) ?? false)
                 client?.OnReceivedData(message.sId, message.isRadio, message.radioMask, message.dataAry);
+        }
+        );
+
+    static private RemoteProcess<(byte clientId, uint sId, bool isRadio, int radioMask, List<byte[]> data)> RpcMultSendAudio = new(
+        "SendMultAudio",
+        (writer, message) => {
+            writer.Write(message.clientId);
+            writer.Write(message.sId);
+            writer.Write(message.isRadio);
+            writer.Write(message.radioMask);
+            writer.Write(message.data.Count);
+            foreach(var d in message.data)
+                writer.Write(d.Length);
+            byte[] allData = { };
+            foreach (var d in message.data)
+            {
+                var originLength = allData.Length;
+                Array.Resize<byte>(ref allData, originLength + d.Length);
+                Array.Copy(d, 0, allData, originLength, d.Length);
+            }
+
+            byte[] Compress(byte[] inputBytes)
+            {
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    using (GZipStream zipStream = new GZipStream(outStream, CompressionMode.Compress, true))
+                    {
+                        zipStream.Write(inputBytes, 0, inputBytes.Length);
+                        zipStream.Close();
+                        return outStream.ToArray();
+                    }
+                }
+            }
+
+            writer.Write(allData.Length);
+            writer.Write(Compress(allData));
+            // cliectId sId isRadio radioMask data.Length dataLengths allData.Length allData
+        },
+        (reader) => {
+            byte id = reader.ReadByte();
+            uint sId = reader.ReadUInt32();
+            bool isRadio = reader.ReadBoolean();
+            int radioMask = reader.ReadInt32();
+            int indexLength = reader.ReadInt32();
+            int[] dataLengths = { };
+            for (int i = 0; i < indexLength; i++)
+            {
+                dataLengths.AddItem(reader.ReadInt32());
+            }
+            List<byte[]> data = new();
+            int alllDataLength = reader.ReadInt32();
+
+            byte[] Decompress(byte[] inputBytes)
+            {
+
+                using (MemoryStream inputStream = new MemoryStream(inputBytes))
+                {
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (GZipStream zipStream = new GZipStream(inputStream, CompressionMode.Decompress))
+                        {
+                            zipStream.CopyTo(outStream);
+                            zipStream.Close();
+                            return outStream.ToArray();
+                        }
+                    }
+
+                }
+            }
+
+            byte[] allData = Decompress(reader.ReadBytes(alllDataLength));
+
+            int nLength = 0;
+            foreach (var l in dataLengths)
+            {
+                data.Add(allData.Skip(nLength).Take(l).ToArray());
+                nLength += l;
+            }
+            return (id, sId, isRadio, radioMask, data);
+        },
+        (message, calledByMe) => {
+            if (NebulaGameManager.Instance?.VoiceChatManager?.allClients.TryGetValue(message.clientId, out var client) ?? false)
+            {
+                foreach (var d in message.data)
+                {
+                    client?.OnReceivedData(message.sId, message.isRadio, message.radioMask, d);
+                    message.sId++;
+                }
+            }
         }
         );
 

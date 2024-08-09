@@ -62,6 +62,11 @@
 "role.schrödingersCatJackal.blurb" : "墙头草，两边倒"
 "options.role.schrödingersCatJackal.detail" : "你现在加入了豺狼阵营。<br>击杀所有人并与豺狼共同胜利。"
 
+"role.unyielding.name" : "不屈者"
+"role.unyielding.short" : "屈"
+"role.unyielding.blurb" : "我还不想死"
+"options.role.unyielding.detail" : "你在死后可以通过其他玩家的尸体复活。<br>复活后你将继承该玩家的职业。<br>不复活时你可以跟随原阵营胜利。<br>死亡后你看不到其他玩家的职业信息。"
+
 # Buttons
 
 "button.label.repair" : "修理"
@@ -106,6 +111,18 @@
 "achievement.judge.challenge.goal" : "成功审判三人并存活到最后取得胜利。"
 "achievement.judge.challenge.cond" : "条件：游戏结束时存活且成功审判三人"
 
+"achievement.oracle.common1.title" : "让我看看"
+"achievement.oracle.common1.goal" : "使用一次占卜。"
+"achievement.oracle.common1.cond" : ""
+
+"achievement.oracle.common2.title" : "无用功"
+"achievement.oracle.common2.goal" : "占卜同一人。"
+"achievement.oracle.common2.cond" : "条件：该玩家的占卜信息没有被刷新（死亡后复活）"
+
+"achievement.oracle.challenge.title" : "进击的赌徒"
+"achievement.oracle.challenge.goal" : "占卜后赌杀一人。"
+"achievement.oracle.challenge.cond" : "条件：被赌杀的玩家已经被占卜过且信息没有被刷新（死亡后复活）"
+
 "achievement.schrödingersCat.common1.title" : "墙头草"
 "achievement.schrödingersCat.common1.goal" : "更换阵营。"
 "achievement.schrödingersCat.common1.cond" : ""
@@ -121,3 +138,15 @@
 "achievement.schrödingersCat.challenge.title" : "有一份热 发一分光"
 "achievement.schrödingersCat.challenge.goal" : "更换阵营后跟随该阵营胜利。"
 "achievement.schrödingersCat.challenge.cond" : ""
+
+"achievement.unyielding.common1.title" : "我重生了"
+"achievement.unyielding.common1.goal" : "通过玩家的尸体复活一次。"
+"achievement.unyielding.common1.cond" : ""
+
+"achievement.unyielding.challenge1.title" : "我要夺回属于我的一切"
+"achievement.unyielding.challenge1.goal" : "重生后胜利。"
+"achievement.unyielding.challenge1.cond" : ""
+
+"achievement.unyielding.challenge2.title" : "重生(极速版)"
+"achievement.unyielding.challenge2.goal" : "目睹击杀现场。"
+"achievement.unyielding.challenge2.cond" : "条件：尚未复活过"

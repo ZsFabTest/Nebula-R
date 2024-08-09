@@ -8,7 +8,7 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 [The Other Roles](https://github.com/Eisbison/TheOtherRoles) 本家灵感来源 主要插件的的鼻祖之一。\
 [TheOtherRoles: GM Edition](https://github.com/yukinogatari/TheOtherRoles-GM) 提供了叛徒等优秀职业。\
 [Town Of Impostors](https://github.com/Town-of-Impostors/TownOfImpostors) 提供了狙击手、死灵法师、市长等优秀职业。\
-[Nebula-R-LTS](https://github.com/ZsFabTest/Nebula-R-LTS) 本项目的前身。\
+[Nebula-R-LTS](https://github.com/ZsFabTest/Nebula-R-LTS) 本项目的前身。 \
 
 **イラストのご提供**\
 かつどん\

@@ -507,7 +507,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
             //ローカルモジュール
             AttributeShower.Update(localModInfo);
 
-            Patches.AddChat.Update();
+            //Patches.AddChat.Update();
         }
 
     }
@@ -551,7 +551,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
 
         ConsoleRestriction?.OnGameStart();
 
-        Patches.AddChat.Initialize();
+        //Patches.AddChat.Initialize();
     }
 
     public void OnGameEnd()
@@ -580,7 +580,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
                 new StaticAchievementToken("challenge.impostor");
         }
 
-        Patches.AddChat.CleanUp();
+        //Patches.AddChat.CleanUp();
     }
 
     public GamePlayer? GetPlayer(byte playerId)

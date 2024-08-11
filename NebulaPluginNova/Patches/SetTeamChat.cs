@@ -4,15 +4,6 @@ using Virial.Assignable;
 
 namespace Nebula.Patches;
 
-enum ChatCannel
-{
-    Default = 0x1,
-    Impostor = 0x2,
-    Jackal = 0x4,
-    Lover = 0x8,
-    TurnBack = 0x10
-}
-
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
 public class MeetingStart
 {
@@ -24,46 +15,56 @@ public class MeetingStart
 }
 
 [HarmonyPatch(typeof(ChatController), nameof(ChatController.AddChat))]
-[NebulaRPCHolder]
 public static class AddChat
 {
-    internal static int Cannel = 0x1;
-    private static TMPro.TextMeshPro message = null!;
-    private static Dictionary<byte, int> cannels = null!;
-    public static void Initialize()
+    private static bool GetExtraMessageChecker(Virial.Game.Player sourcePlayer, ref string chatText)
     {
-        if (!GeneralConfigurations.UseBubbleChatOption) return;
-        CleanUp();
-        Cannel = 0x1;
-        message = GameObject.Instantiate(VanillaAsset.StandardTextPrefab, HudManager.Instance.transform);
-        new TextAttributeOld(TextAttributeOld.NormalAttr) { Size = new Vector2(4f, 0.72f) }.Reflect(message);
-        message.transform.localPosition = new Vector3(0.75f, 2.5f, -5f);
-        message.gameObject.SetActive(true);
-        message.text = GetCannelName();
-        cannels = new();
-        HudManager.Instance.Chat.SetVisible(false);
-    }
-
-    public static void CleanUp()
-    {
-        if (message != null) message.gameObject.SetActive(false);
-        message = null!;
-        if (cannels != null) cannels.Clear();
-        cannels = null!;
-        Cannel = 0x1;
-    }
-
-    private static bool GetExtraMessageChecker(Virial.Game.Player sourcePlayer)
-    {
+        if (MeetingHud.Instance != null) return false;
         if (sourcePlayer == null) return false;
-        int sourcePlayerCannel = int.MaxValue;
-        if (cannels.TryGetValue(sourcePlayer.PlayerId, out sourcePlayerCannel) && sourcePlayerCannel != Cannel) return false;
         var MyPlayer = PlayerControl.LocalPlayer.GetModInfo()!;
-        switch (Cannel)
+        var arguments = chatText.Split(' ');
+        if (arguments.Get(0, "[NAC]") == "/tell")
         {
-            case (int)ChatCannel.Impostor:
+            if (!PlayerControl.AllPlayerControls.GetFastEnumerator().Any((p) => p.GetModInfo()?.Name == arguments.Get(1, "[NAP]")))
+            {
+                chatText = Language.Translate("chat.unknowPlayer");
+                return false;
+            }
+            else if (arguments.Get(1, "[NAP]") == MyPlayer.Name || (NebulaGameManager.Instance?.CanSeeAllInfo ?? false))
+            {
+                chatText = $"{Language.Translate("chat.private")} to {arguments.Get(1,"[NAP]")}: {chatText.Split(' ',3).Get(2, "[NO MESSAGE]")}";
+                return true;
+            }
+            return false;
+        }
+
+        switch (arguments.Get(0, "NAC"))
+        {
+            case "/impostor":
+                if (!GeneralConfigurations.EnableImpostorCannelOption)
+                {
+                    chatText = Language.Translate("chat.impostorDisabled");
+                    return false;
+                }else if (sourcePlayer.Role.Role.Category != RoleCategory.ImpostorRole)
+                {
+                    chatText = Language.Translate("chat.notImpostor");
+                    return false;
+                }
+
+                chatText = $"{Language.Translate("chat.impostor")}: {chatText.Split(' ', 2).Get(1, "[NO MESSAGE]")}";
                 return MyPlayer.Role.Role.Category == RoleCategory.ImpostorRole && sourcePlayer.Role.Role.Category == RoleCategory.ImpostorRole;
-            case (int)ChatCannel.Jackal:
+            case "/jackal":
+                if (!GeneralConfigurations.EnableJackalCannelOption)
+                {
+                    chatText = Language.Translate("chat.jackalDisabled");
+                    return false;
+                }else if (sourcePlayer.Role.Role.Team != NebulaTeams.JackalTeam && !sourcePlayer.TryGetModifier<SidekickModifier.Instance>(out _))
+                {
+                    chatText = Language.Translate("chat.notJackal");
+                    return false;
+                }
+
+                chatText = $"{Language.Translate("chat.jackal")}: {chatText.Split(' ', 2).Get(1, "[NO MESSAGE]")}";
                 SidekickModifier.Instance sidekickModifier = null!;
                 Virial.Game.Player jackal = null!;
                 if (MyPlayer.TryGetModifier<SidekickModifier.Instance>(out sidekickModifier!))
@@ -74,96 +75,47 @@ public static class AddChat
                     jackal = PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) => p.GetModInfo()?.Role is Jackal.Instance && ((Jackal.Instance)p.GetModInfo()!.Role).IsSameTeam(MyPlayer)).GetModInfo() ?? null!;
                 else if (MyPlayer.Role is SchrödingersCat.InstanceJackal)
                     return true;
+                else if (NebulaGameManager.Instance?.CanSeeAllInfo ?? false)
+                    return true;
                 else return false;
+                    
                 return ((Jackal.Instance)(jackal?.Role ?? null!))?.IsSameTeam(sourcePlayer) ?? false;
-            case (int)ChatCannel.Lover:
+            case "/lover":
+                if (!GeneralConfigurations.EnableJackalCannelOption)
+                {
+                    chatText = Language.Translate("chat.loverDisabled");
+                    return false;
+                }else if(!sourcePlayer.TryGetModifier<Lover.Instance>(out _))
+                {
+                    chatText = Language.Translate("chat.notLover");
+                    return false;
+                }
+
+                chatText = $"{Language.Translate("chat.lover")}: {chatText.Split(' ', 2).Get(1, "[NO MESSAGE]")}";
                 Lover.Instance LoverModifier = null!;
                 return MyPlayer.TryGetModifier<Lover.Instance>(out LoverModifier!) && (sourcePlayer?.TryGetModifier<Lover.Instance>(out _) ?? false) && LoverModifier.MyLover?.PlayerId == sourcePlayer.PlayerId;
+            case "/help":
+                chatText = Language.Translate("chat.nac");
+                return false;
             default:
                 return false;
         }
     }
 
-    public static bool Prefix(ChatController __instance, [HarmonyArgument(0)] PlayerControl sourcePlayer)
+    public static bool Prefix(ChatController __instance, [HarmonyArgument(0)] PlayerControl sourcePlayer, [HarmonyArgument(1)] ref string chatText)
     {
         if (__instance != HudManager.Instance.Chat || !GeneralConfigurations.UseBubbleChatOption) return true;
         var MyPlayer = PlayerControl.LocalPlayer.GetModInfo();
         if (MyPlayer == null) return true;
-        bool shouldSeeMessage = MyPlayer.IsDead || sourcePlayer.PlayerId == MyPlayer.PlayerId;
+        bool shouldSeeMessage = (NebulaGameManager.Instance?.CanSeeAllInfo ?? false) || sourcePlayer.PlayerId == MyPlayer.PlayerId;
 
-        shouldSeeMessage = shouldSeeMessage || GetExtraMessageChecker(sourcePlayer.GetModInfo() ?? null!);
+        shouldSeeMessage = GetExtraMessageChecker(sourcePlayer.GetModInfo() ?? null!, ref chatText) || shouldSeeMessage;
         if (DateTime.UtcNow - MeetingStart.MeetingStartTime < TimeSpan.FromSeconds(1))
         {
             return shouldSeeMessage;
         }
         return MeetingHud.Instance != null || LobbyBehaviour.Instance != null || shouldSeeMessage;
     }
-
-    private static string GetCannelName()
-    {
-        switch (Cannel)
-        {
-            case (int)ChatCannel.Default:
-                return Language.Translate("chat.default");
-            case (int)ChatCannel.Impostor:
-                return Language.Translate("chat.impostor");
-            case (int)ChatCannel.Jackal:
-                return Language.Translate("chat.jackal");
-            case (int)ChatCannel.Lover:
-                return Language.Translate("chat.lover");
-            default:
-                return Language.Translate("chat.default");
-        }
-    }
-
-    public static void Update()
-    {
-        if (!CheckEnableChat())
-        {
-            Cannel = 0x1;
-            RpcSetCannel.Invoke((PlayerControl.LocalPlayer.PlayerId, Cannel));
-            HudManager.Instance.Chat.SetVisible(false);
-            if (message != null) message.text = GetCannelName();
-        }
-
-        if (NebulaInput.GetInput(Virial.Compat.VirtualKeyInput.ChangeChatCannel).KeyDownForAction)
-        {
-            do
-            {
-                Cannel <<= 1;
-                if (Cannel == (int)ChatCannel.TurnBack) Cannel = 0x1;
-            } while (!CheckEnableChat());
-            if (message != null) message.text = GetCannelName();
-            Debug.Log(Cannel);
-            HudManager.Instance.Chat.SetVisible(false);
-            RpcSetCannel.Invoke((PlayerControl.LocalPlayer.PlayerId, Cannel));
-        }
-    }
-
-    private static bool CheckEnableChat()
-    {
-        var MyPlayer = PlayerControl.LocalPlayer.GetModInfo();
-        if (MyPlayer == null) return false;
-
-        switch (Cannel)
-        {
-            case (int)ChatCannel.Default:
-                return true;
-            case (int)ChatCannel.Impostor:
-                return MyPlayer.Role.Role.Category == RoleCategory.ImpostorRole && GeneralConfigurations.EnableImpostorCannelOption;
-            case (int)ChatCannel.Jackal:
-                return (MyPlayer.Role.Role.Team == Jackal.MyTeam || MyPlayer.TryGetModifier<SidekickModifier.Instance>(out _)) && GeneralConfigurations.EnableJackalCannelOption;
-            case (int)ChatCannel.Lover:
-                return MyPlayer.TryGetModifier<Lover.Instance>(out _) && GeneralConfigurations.EnableLoverCannelOption;
-            default:
-                return true;
-        }
-    }
-
-    private readonly static RemoteProcess<(byte playerId, int cannel)> RpcSetCannel = new("SetCannel", (message, _) =>
-    {
-        if (cannels != null) cannels[message.playerId] = message.cannel;
-    });
 }
 
 [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
@@ -173,7 +125,7 @@ public static class EnableChat
     {
         if (!GeneralConfigurations.UseBubbleChatOption) return;
         
-        if (AddChat.Cannel != (int)ChatCannel.Default && !__instance.Chat.isActiveAndEnabled)
+        if (!__instance.Chat.isActiveAndEnabled)
             __instance.Chat.SetVisible(true);
     }
 }

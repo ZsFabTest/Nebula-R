@@ -84,9 +84,19 @@
 # Chat
 
 "chat.default" : "空频道"
-"chat.impostor" : "伪装者频道"
-"chat.jackal" : "豺狼频道"
-"chat.lover" : "恋人频道"
+"chat.impostor" : "[伪装者频道]"
+"chat.jackal" : "[豺狼频道]"
+"chat.lover" : "[恋人频道]"
+
+"chat.unknowPlayer" : "/tell: 未知目标玩家"
+"chat.private" : "[私聊]"
+"chat.impostorDisabled" : "/impostor: 伪装者频道已关闭"
+"chat.jackalDisabled" : "/jackal: 豺狼频道已关闭"
+"chat.loverDisabled" : "/lover: 伪装者频道已关闭"
+"chat.notImpostor" : "/impostor: 无法使用伪装者频道"
+"chat.notJackal" : "/jackal: 无法使用豺狼频道"
+"chat.notLover" : "/lover: 无法使用恋人频道"
+"chat.nac" : "/help: 查询命令<br> - /tell [玩家名] [消息内容] : 私聊<br> - /impostor [消息内容] : 伪装者频道<br> - /jackal [消息内容] : 豺狼频道<br> - /lover [消息内容] : 恋人频道"
 
 # Input
 "input.changeCannel" : "聊天框更换频道"

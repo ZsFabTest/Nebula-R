@@ -37,6 +37,8 @@ internal class NoSRoleSetUp
         Virial.Assignable.NebulaTeams.JesterTeam = Neutral.Jester.MyTeam;
         Virial.Assignable.NebulaTeams.PaparazzoTeam = Neutral.Paparazzo.MyTeam;
         Virial.Assignable.NebulaTeams.VultureTeam = Neutral.Vulture.MyTeam;
+        Virial.Assignable.NebulaTeams.CollectorTeam = Neutral.Collector.MyTeam;
+        Virial.Assignable.NebulaTeams.SchrödingersCatTeam = Neutral.SchrödingersCat.MyTeam;
     }
 
     static NoSRoleSetUp()

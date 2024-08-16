@@ -20,15 +20,15 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         switch (categoryId)
         {
             case 0:
-                return new(ChainShifter.MyRole.UnityColor);
+                return NebulaTeams.ChainShifterTeam.Color;
             case 1:
                 return new(Palette.CrewmateBlue);
             case 2:
                 return new(Palette.ImpostorRed);
             case 3:
-                return new(Jackal.MyRole.UnityColor);
+                return NebulaTeams.JackalTeam.Color;
             default:
-                return new(ChainShifter.MyRole.UnityColor);
+                return NebulaTeams.ChainShifterTeam.Color;
         }
     }
     private static RoleCategory GetCategory(int categoryId)

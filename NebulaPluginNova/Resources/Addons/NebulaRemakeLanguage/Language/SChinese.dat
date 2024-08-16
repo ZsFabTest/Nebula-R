@@ -17,6 +17,12 @@
 "options.role.collector.canCallEmergencyMeeting" : "可以发起紧急会议"
 "role.collector.taskText" : "[集票者]收集投票情况：%DETAIL%票"
 
+"role.evilAce.name" : "密命王牌"
+"role.evilAce.short" : "王"
+"role.evilAce.blurb" : "无法被看透的王牌"
+"options.role.evilAce.detail" : "密命王牌可以知晓伪装者们所击杀的玩家的职业。<br>密命王牌作为最后一人时其cd减少。"
+"options.role.evilAce.killCoolDown" : "作为最后一名伪装者时的击杀冷却倍率"
+
 "role.ghostEngineer.name" : "灵魂工程师"
 "role.ghostEngineer.blurb" : "永无止境的工作"
 "role.ghostEngineer.short" : "魂工"
@@ -134,6 +140,18 @@
 "achievement.collector.challenge.title" : "收藏狂人"
 "achievement.collector.challenge.goal" : "一次性收集10张票。"
 "achievement.collector.challenge.cond" : ""
+
+"achievement.evilAce.common1.title" : "先斩后奏"
+"achievement.evilAce.common1.goal" : "通过推理赌杀一人。"
+"achievement.evilAce.common1.cond" : ""
+
+"achievement.evilAce.another1.title" : "意料之外的背叛"
+"achievement.evilAce.another1.goal" : "赌杀一名伪装者。"
+"achievement.evilAce.another1.cond" : ""
+
+"achievement.evilAce.challenge.title" : "墓地管理员"
+"achievement.evilAce.challenge.goal" : "获取所有已死亡玩家的身份信息。"
+"achievement.evilAce.challenge.cond" : "条件：死亡玩家在五人及以上" 
 
 "achievement.ghostEngineer.challenge.title" : "永不停歇的工作"
 "achievement.ghostEngineer.challenge.goal" : "使用完全部的修理次数并且船员阵营取得胜利。"

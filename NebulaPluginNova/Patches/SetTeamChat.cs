@@ -121,11 +121,20 @@ public static class AddChat
 [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
 public static class EnableChat
 {
+    private static bool hasChat()
+    {
+        return (GeneralConfigurations.EnableImpostorCannelOption && PlayerControl.LocalPlayer.GetModInfo()?.Role.Role.Category == RoleCategory.ImpostorRole)
+            || (GeneralConfigurations.EnableJackalCannelOption && PlayerControl.LocalPlayer.GetModInfo()?.Role.Role.Team == NebulaTeams.JackalTeam)
+            || (GeneralConfigurations.EnableJackalCannelOption && (PlayerControl.LocalPlayer.GetModInfo()?.TryGetModifier<SidekickModifier.Instance>(out _) ?? false))
+            || (GeneralConfigurations.EnableLoverCannelOption && (PlayerControl.LocalPlayer.GetModInfo()?.TryGetModifier<Lover.Instance>(out _) ?? false));
+    }
+
     public static void Postfix(HudManager __instance)
     {
         if (!GeneralConfigurations.UseBubbleChatOption) return;
-        
-        if (!__instance.Chat.isActiveAndEnabled)
+
+        if (hasChat() && !__instance.Chat.isActiveAndEnabled)
             __instance.Chat.SetVisible(true);
+        else if (!hasChat() && MeetingHud.Instance == null && LobbyBehaviour.Instance == null) __instance.Chat.SetVisible(false);
     }
 }

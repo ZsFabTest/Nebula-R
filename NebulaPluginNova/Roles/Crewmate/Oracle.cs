@@ -179,7 +179,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
         }
 
         [Local]
-        void DecorateSidekickColor(PlayerDecorateNameEvent ev)
+        void DecoratePlayerName(PlayerDecorateNameEvent ev)
         {
             string info = "";
             if (oracleResults.TryGetValue(ev.Player.PlayerId, out info!))

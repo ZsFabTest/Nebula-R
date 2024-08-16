@@ -1,7 +1,9 @@
 ﻿using AmongUs.Data.Player;
+using AmongUs.GameOptions;
 using Nebula.Behaviour;
 using Nebula.Game.Statistics;
 using PowerTools;
+using TMPro;
 using Virial.Events.Player;
 
 namespace Nebula.Patches;
@@ -542,3 +544,26 @@ public static class UseZiplinePatch
     }
 }
 
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetKillTimer))]
+public static class KillTimerPatch
+{
+    public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] float time)
+    {
+        if (PlayerControl.LocalPlayer.GetModInfo() == null) return true;
+
+        if (AmongUsUtil.VanillaKillCoolDown <= 0f) return false;
+
+        float temp = AmongUsUtil.VanillaKillCoolDown;
+        //キルクールを設定する
+        if (__instance.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+        {
+            var ev = new PlayerSetKillTimerEvent(__instance.GetModInfo() ?? null!, time);
+            GameOperatorManager.Instance?.Run(ev);
+            temp = ev.Time;
+        }
+
+        __instance.killTimer = Mathf.Clamp(time, 0f, temp);
+        HudManager.Instance.KillButton.SetCoolDown(__instance.killTimer, AmongUsUtil.VanillaKillCoolDown);
+        return false;
+    }
+}

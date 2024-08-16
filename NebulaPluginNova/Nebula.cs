@@ -36,16 +36,16 @@ namespace Nebula;
 [BepInProcess("Among Us.exe")]
 public class NebulaPlugin : BasePlugin
 {
-    public const string AmongUsVersion = "2024.6.28s";
+    public const string AmongUsVersion = "2024.8.13s";
     public const string PluginGuid = "com.github.zsfabtest.nebular";
     public const string PluginName = "NebulaOnTheShip-Remake";
     public const string PluginVersion = "2.0.0";
 
     //public const string VisualVersion = "v2.0.0.2";
-    public const string VisualVersion = "Snapshot 24.08.11a";
+    public const string VisualVersion = "Snapshot 24.08.16a";
 
-    public const string PluginEpochStr = "100";
-    public const string PluginBuildNumStr = "1091";
+    public const string PluginEpochStr = "101";
+    public const string PluginBuildNumStr = "1093";
     public static readonly int PluginEpoch = int.Parse(PluginEpochStr);
     public static readonly int PluginBuildNum = int.Parse(PluginBuildNumStr);
     public const bool GuardVanillaLangData = false;

@@ -141,18 +141,24 @@ public static class AirshipExileWrapUpPatch
 [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
 class ExileControllerBeginPatch
 {
-    public static void Prefix(ExileController __instance, [HarmonyArgument(0)] ref NetworkedPlayerInfo exiled, [HarmonyArgument(1)] ref bool tie)
+    public static void Prefix(ExileController __instance, [HarmonyArgument(0)] ref ExileController.InitProperties init)
     {
-        exiled = MeetingHudExtension.ExiledAll?.FirstOrDefault()?.Data!;
-        tie = MeetingHudExtension.WasTie;
+        // exiled
+        init.networkedPlayer = MeetingHudExtension.ExiledAll?.FirstOrDefault()?.Data!;
+        //exiled = MeetingHudExtension.ExiledAll?.FirstOrDefault()?.Data!;
 
-        Debug.Log("Rewrite Exiled: " + (exiled?.PlayerName ?? "None"));
+        //tie
+        init.voteTie = MeetingHudExtension.WasTie;
+        //tie = MeetingHudExtension.WasTie;
+
+        Debug.Log("Rewrite Exiled: " + (init.networkedPlayer?.PlayerName ?? "None"));
     }
 
-    public static void Postfix(ExileController __instance, [HarmonyArgument(0)] ref NetworkedPlayerInfo exiled, [HarmonyArgument(1)] bool tie)
+    public static void Postfix(ExileController __instance, [HarmonyArgument(0)] ref ExileController.InitProperties init)
     {
         //MeetingHudがなぜか真になってしまうので、nullに書き換え
         MeetingHud.Instance = null;
+        var exiled = Helpers.GetPlayer(init.networkedPlayer.PlayerId);
 
         if (exiled == null) return;
 
@@ -166,18 +172,20 @@ class ExileControllerBeginPatch
         }
         else if (GeneralConfigurations.ShowRoleOfExiled)
         {
-            var role = NebulaGameManager.Instance.GetPlayer(exiled.PlayerId)?.Role;
+            //var role = NebulaGameManager.Instance?.GetPlayer(exiled.PlayerId)?.Role;
+            var role = exiled.GetModInfo()?.Role;
             if (role != null)
             {
                 var roleName = role.Role.DisplayName;
-                if(NebulaGameManager.Instance.GetPlayer(exiled.PlayerId)?.Modifiers.Count() > 0)
+                if(NebulaGameManager.Instance?.GetPlayer(exiled.PlayerId)?.Modifiers.Count() > 0)
                 {
-                    foreach(var modifier in NebulaGameManager.Instance.GetPlayer(exiled.PlayerId)!.Modifiers)
+                    //foreach(var modifier in NebulaGameManager.Instance.GetPlayer(exiled.PlayerId)!.Modifiers)
+                    foreach(var modifier in exiled.GetModInfo()!.Modifiers)
                     {
                         roleName += " " + modifier.DisplayName;
                     }
                 }
-                __instance.completeString = Language.Translate("game.meeting.roleText").Replace("%PLAYER%", exiled.PlayerName).Replace("%ROLE%", roleName);
+                __instance.completeString = Language.Translate("game.meeting.roleText").Replace("%PLAYER%", exiled.GetModInfo()?.Name).Replace("%ROLE%", roleName);
                 if (role.Role == Roles.Neutral.Jester.MyRole) __instance.ImpostorText.text = Language.Translate("game.meeting.roleJesterText");
             }
         }

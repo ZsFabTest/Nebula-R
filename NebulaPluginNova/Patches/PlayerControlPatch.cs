@@ -192,11 +192,13 @@ class CurrentOutfitPatch
 [HarmonyPatch(typeof(OverlayKillAnimation), nameof(OverlayKillAnimation.Initialize))]
 class OverlayKillAnimationPatch
 {
-    public static bool Prefix(OverlayKillAnimation __instance, [HarmonyArgument(0)] NetworkedPlayerInfo kInfo, [HarmonyArgument(1)] NetworkedPlayerInfo vInfo)
+    public static bool Prefix(OverlayKillAnimation __instance, [HarmonyArgument(0)] KillOverlayInitData initData)
     {
         if (__instance.killerParts)
         {
-            NetworkedPlayerInfo.PlayerOutfit? currentOutfit = NebulaGameManager.Instance?.GetPlayer(kInfo.PlayerId)?.Unbox().CurrentOutfit;
+
+            //NetworkedPlayerInfo.PlayerOutfit? currentOutfit = NebulaGameManager.Instance?.GetPlayer(kInfo.PlayerId)?.Unbox().CurrentOutfit;
+            NetworkedPlayerInfo.PlayerOutfit? currentOutfit = initData.killerOutfit;
             if (currentOutfit != null)
             {
                 __instance.killerParts.SetBodyType(PlayerBodyTypes.Normal);
@@ -206,9 +208,11 @@ class OverlayKillAnimationPatch
                 __instance.LoadKillerPet(currentOutfit);
             }
         }
-        if (vInfo != null && __instance.victimParts)
+        //if (vInfo != null && __instance.victimParts)
+        if(initData.victimOutfit != null && __instance.victimParts)
         {
-            NetworkedPlayerInfo.PlayerOutfit? defaultOutfit = NebulaGameManager.Instance?.GetPlayer(vInfo.PlayerId)?.Unbox().DefaultOutfit;
+            //NetworkedPlayerInfo.PlayerOutfit? defaultOutfit = NebulaGameManager.Instance?.GetPlayer(vInfo.PlayerId)?.Unbox().DefaultOutfit;
+            NetworkedPlayerInfo.PlayerOutfit? defaultOutfit = initData.victimOutfit;
             if (defaultOutfit != null)
             {
                 __instance.victimHat = defaultOutfit.HatId;
@@ -381,9 +385,10 @@ public static class KillOverlayPatch
 [HarmonyPatch(typeof(OverlayKillAnimation), nameof(OverlayKillAnimation.Initialize))]
 public static class OverlayKillAnimationInitializePatch
 {
-    public static void Postfix(OverlayKillAnimation __instance, NetworkedPlayerInfo kInfo, NetworkedPlayerInfo vInfo)
+    public static void Postfix(OverlayKillAnimation __instance, KillOverlayInitData initData)
     {
-        if (kInfo.PlayerId == vInfo.PlayerId)
+        //if (kInfo.PlayerId == vInfo.PlayerId)
+        if (initData.killerOutfit == initData.victimOutfit)
         {
             __instance.transform.GetChild(0).gameObject.SetActive(false);
             __instance.transform.GetChild(2).gameObject.SetActive(false);

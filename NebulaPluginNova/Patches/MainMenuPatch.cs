@@ -332,7 +332,8 @@ public class ServerVersionPatch
 {
     private static bool IsCustomServer()
     {
-        return ServerManager.Instance?.CurrentRegion.TranslateName is StringNames.NoTranslation or null;
+        return false;
+        //return ServerManager.Instance?.CurrentRegion.TranslateName is StringNames.NoTranslation or null;
     }
 
     static void Postfix(ref int __result)
@@ -346,8 +347,9 @@ class IsVersionModdedPatch
 {
     static bool Prefix(ref bool __result)
     {
-        int broadcastVersion = Constants.GetBroadcastVersion();
-        __result = Constants.GetVersionComponents(broadcastVersion).Item4 >= 25;
+        //int broadcastVersion = Constants.GetBroadcastVersion();
+        //__result = Constants.GetVersionComponents(broadcastVersion).Item4 >= 25;
+        __result = true;
         return false;
     }
 }

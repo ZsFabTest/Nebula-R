@@ -107,6 +107,7 @@ public static class PlayerUpdatePatch
             scale.z = 100f;
             __instance.cosmetics.transform.localScale = scale;
         }
+        //if (__instance.GetModInfo()!.DeathTime > 0f && !__instance.Data.IsDead) __instance.Data.IsDead = true;
     }
 }
 

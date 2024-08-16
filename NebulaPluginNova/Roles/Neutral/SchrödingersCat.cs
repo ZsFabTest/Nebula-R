@@ -256,6 +256,9 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         bool RuntimeRole.CanUseVent => true;
         bool RuntimeRole.CanMoveInVent => true;
 
+        [OnlyMyPlayer]
+        void CheckWins(PlayerCheckWinEvent ev) => ev.SetWinIf(ev.GameEnd == NebulaGameEnd.JackalWin && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead));
+
         void RuntimeAssignable.OnActivated()
         {
             if (AmOwner && JackalHasKillOption)

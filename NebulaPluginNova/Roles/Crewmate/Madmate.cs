@@ -197,13 +197,13 @@ public class Madmate : DefinedRoleTemplate, HasCitation, DefinedRole
 
 public class MadmateModifier : DefinedModifierTemplate, DefinedAllocatableModifier, HasCitation, RoleFilter
 {
-    private MadmateModifier() : base("madmate", Virial.Color.ImpostorColor, [NumToSpawnOption, RoleChanceOption, Madmate.EmbroilVotersOnExileOption, Madmate.LimitEmbroiledPlayersToVotersOption, Madmate.CanIdentifyImpostorsOptionEditor])
+    private MadmateModifier() : base("madmateModifier", Virial.Color.ImpostorColor, [NumToSpawnOption, RoleChanceOption, Madmate.EmbroilVotersOnExileOption, Madmate.LimitEmbroiledPlayersToVotersOption, Madmate.CanIdentifyImpostorsOptionEditor])
     {
         ConfigurationHolder?.SetDisplayState(() => NumToSpawnOption == 0 ? ConfigurationHolderState.Inactivated : RoleChanceOption == 100 ? ConfigurationHolderState.Emphasized : ConfigurationHolderState.Activated);
     }
 
-    private static IntegerConfiguration NumToSpawnOption = NebulaAPI.Configurations.Configuration("options.role.madmate.numToSpawn", (0, 15), 1);
-    static private IntegerConfiguration RoleChanceOption = NebulaAPI.Configurations.Configuration("options.role.madmate.roleChance", (10, 100, 10), 100, decorator: num => num + "%", title: new TranslateTextComponent("options.role.chance"));
+    private static IntegerConfiguration NumToSpawnOption = NebulaAPI.Configurations.Configuration("options.role.madmateModifier.numToSpawn", (0, 15), 1);
+    static private IntegerConfiguration RoleChanceOption = NebulaAPI.Configurations.Configuration("options.role.madmateModifier.roleChance", (10, 100, 10), 100, decorator: num => num + "%", title: new TranslateTextComponent("options.role.chance"));
 
     string ICodeName.CodeName => "MDAM";
     Citation? HasCitation.Citaion => Citations.TheOtherRolesGM;

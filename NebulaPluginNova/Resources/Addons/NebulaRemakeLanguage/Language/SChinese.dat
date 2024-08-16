@@ -2,6 +2,13 @@
 
 "role.avenger.becomeAvengerTitle" : "是时候复仇了..."
 
+"role.baitModifier.name" : "诱饵"
+"role.baitModifier.short" : "诱"
+"role.baitModifier.generalBlurb" : "诱骗敌人"
+"options.role.baitModifier.detail" : "诱饵被杀后，凶手会立刻报告诱饵的尸体"
+"options.role.baitModifier.numToSpawn" : "最大数量"
+"options.role.baitModifier.roleChance" : "生成概率"
+
 "role.collector.name" : "集票者"
 "role.collector.short" : "集"
 "role.collector.blurb" : "诡异的收藏家"
@@ -26,9 +33,14 @@
 "options.role.judge.canJudgeLovers" : "可以处决恋人"
 "options.role.judge.canCallEmergencyMeeting" : "可以发起紧急会议"
 
-"options.role.madmate.numToSpawn" : "生成个数"
-"role.madmate.prefix" : "叛变的"
-"role.madmate.prefix.short" : "叛"
+"role.madmateModifier.name" : "叛徒"
+"role.madmateModifier.short" : "叛"
+"role.madmateModifier.generalBlurb" : "帮助伪装者获得胜利"
+"options.role.madmateModifier.detail" : "叛徒属于伪装者阵营。<br>去背刺船员帮助伪装者！"
+"options.role.madmateModifier.numToSpawn" : "最大数量"
+"options.role.madmateModifier.roleChance" : "生成概率"
+"role.madmateModifier.prefix" : "叛变的"
+"role.madmateModifier.prefix.short" : "叛"
 
 "role.oracle.name" : "占卜师"
 "role.oracle.short" : "占"

@@ -43,7 +43,7 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
             {
                 hasRevived = false;
 
-                var myTracker = Bind(ObjectTrackers.ForDeadBody(null, MyPlayer, (p) => true));
+                var myTracker = Bind(ObjectTrackers.ForDeadBody(null, MyPlayer, (p) => p.PlayerId != MyPlayer.PlayerId));
                 var revievButton = Bind(new ModAbilityButton()).KeyBind(NebulaInput.GetInput(Virial.Compat.VirtualKeyInput.Ability));
                 revievButton.SetSprite(reviveButtonSprite.GetSprite());
                 revievButton.Availability = (button) => MyPlayer.CanMove && myTracker.CurrentTarget != null;

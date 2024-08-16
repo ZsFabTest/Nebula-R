@@ -327,7 +327,6 @@ public static class MainMenuClearScreenPatch
     }
 }
 
-/*
 [HarmonyPatch(typeof(Constants), nameof(Constants.GetBroadcastVersion))]
 public class ServerVersionPatch
 {
@@ -352,4 +351,3 @@ class IsVersionModdedPatch
         return false;
     }
 }
-*/

@@ -15,7 +15,7 @@ using static Nebula.Roles.Crewmate.Cannon;
 
 namespace Nebula.Roles.Impostor;
 
-public class Disturber : DefinedRoleTemplate, DefinedRole
+public class Disturber : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     [NebulaPreprocess(PreprocessPhase.PostRoles)]
     [NebulaRPCHolder]
@@ -68,6 +68,7 @@ public class Disturber : DefinedRoleTemplate, DefinedRole
     private Disturber() : base("disturber", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [PlaceCoolDownOption, DisturbCoolDownOption, DisturbDurationOption, MaxNumOfPolesOption, MaxDistanceBetweenPolesOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagDifficult, ConfigurationTags.TagFunny);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

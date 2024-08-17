@@ -11,12 +11,13 @@ using Virial.Text;
 namespace Nebula.Roles.Modifier;
 
 [NebulaRPCHolder]
-public class Damned : DefinedAllocatableModifierTemplate, DefinedAllocatableModifier
+public class Damned : DefinedAllocatableModifierTemplate, HasCitation, DefinedAllocatableModifier
 {
     private Damned() : base("damned", "DMD", new(Palette.ImpostorRed), [TakeOverRoleOfKillerOption, DamnedMurderMyKillerOption, KillDelayOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny);
     }
-    
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
+
     static private BoolConfiguration TakeOverRoleOfKillerOption = NebulaAPI.Configurations.Configuration("options.role.damned.takeOverRoleOfKiller", true);
     static private BoolConfiguration DamnedMurderMyKillerOption = NebulaAPI.Configurations.Configuration("options.role.damned.damnedMurderMyKiller", true);
     static private FloatConfiguration KillDelayOption = NebulaAPI.Configurations.Configuration("options.role.damned.killDelay", (0f, 20f, 2.5f), 0f, FloatConfigurationDecorator.Second);

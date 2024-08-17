@@ -11,7 +11,7 @@ public class EvilAce : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private EvilAce() : base("evilAce", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [killCoolDownOption]) { }
 
-    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

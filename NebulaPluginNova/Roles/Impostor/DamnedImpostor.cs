@@ -2,12 +2,12 @@
 
 namespace Nebula.Roles.Impostor;
 
-public class DamnedImpostor : DefinedRoleTemplate, DefinedRole
+public class DamnedImpostor : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     static public DamnedImpostor MyRole = new DamnedImpostor();
 
     private DamnedImpostor():base("damned", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, null, false, false) { }
-    
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

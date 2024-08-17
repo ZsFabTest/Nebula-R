@@ -10,9 +10,10 @@ using Virial.Game;
 
 namespace Nebula.Roles.Impostor;
 
-public class Hadar : DefinedRoleTemplate, DefinedRole
+public class Hadar : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Hadar() : base("hadar", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [DiveCoolDownOption, AccelRateUndergroundOption, GushFromVentsOption, VentDetectionRangeOption, LeftDivingEvidenceOption]) { }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

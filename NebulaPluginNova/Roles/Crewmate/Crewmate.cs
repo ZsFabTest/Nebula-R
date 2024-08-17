@@ -6,11 +6,12 @@ using Virial.Game;
 
 namespace Nebula.Roles.Crewmate;
 
-public class Crewmate : DefinedRoleTemplate, DefinedRole
+public class Crewmate : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     static public RoleTeam MyTeam = new Team("teams.crewmate", new(Palette.CrewmateBlue), TeamRevealType.Everyone);
 
     private Crewmate() : base("crewmate", new(Palette.CrewmateBlue), RoleCategory.CrewmateRole, MyTeam) { }
+    Citation? HasCitation.Citaion => Citations.AmongUs;
 
     static public Crewmate MyRole = new Crewmate();
 

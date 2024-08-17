@@ -126,7 +126,7 @@ public class DanceModule : AbstractModule<GamePlayer>, IGameOperator
 }
 
 [NebulaRPCHolder]
-public class Dancer : DefinedRoleTemplate, DefinedRole
+public class Dancer : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     static public RoleTeam MyTeam = new Team("teams.dancer", new(243, 152, 0), TeamRevealType.OnlyMe);
 
@@ -144,7 +144,8 @@ public class Dancer : DefinedRoleTemplate, DefinedRole
     private Dancer() : base("dancer", MyTeam.Color, RoleCategory.NeutralRole, MyTeam, [NumOfSuccessfulForecastToWinOption, DanceCoolDownOption, DanceDurationOption, DanceRangeOption, ForecastDurationOption, FinalDanceOption, ShowDeahNotificationOption, ForecastedFollowingSuicideOption, VentConfiguration]/*, optionHolderPredicate: () => false*/) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny);
     }
-    
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
+
     static public Dancer MyRole = new Dancer();
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);

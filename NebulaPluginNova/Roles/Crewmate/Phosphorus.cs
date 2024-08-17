@@ -9,12 +9,13 @@ using Virial.Helpers;
 namespace Nebula.Roles.Crewmate;
 
 [NebulaRPCHolder]
-public class Phosphorus : DefinedRoleTemplate, DefinedRole
+public class Phosphorus : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Phosphorus():base("phosphorus", new(249,188,81), RoleCategory.CrewmateRole, Crewmate.MyTeam, [NumOfLampsOption, PlaceCoolDownOption, LampCoolDownOption, LampDurationOption, LampStrengthOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny);
         ConfigurationHolder!.Illustration = new NebulaSpriteLoader("Assets/NebulaAssets/Sprites/Configurations/Phosphorus.png");
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player, arguments);
 

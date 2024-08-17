@@ -91,7 +91,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
             ConfigurationHolder?.ScheduleAddRelated(() => [MyRole.ConfigurationHolder!]);
         }
     }
-    Citation? HasCitation.Citaion => Citations.TownOfHost;
+    Citation? HasCitation.Citaion => Citations.TheOtherRolesGMH;
     bool AssignableFilterHolder.CanLoadDefault(DefinedAssignable assignable) => CanLoadDefaultTemplate(assignable) && categoryId == 0;
 
     bool IGuessed.CanBeGuessDefault => categoryId == 0;
@@ -151,7 +151,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         [OnlyMyPlayer]
         void OnGuard(PlayerGuardEvent ev)
         {
-            if (ev.Murderer.AmOwner) ev.Murderer.VanillaPlayer.transform.position = MyPlayer.VanillaPlayer.transform.position;
+            if (ev.Murderer.AmOwner && ev.Murderer.Role.Role is not Impostor.Sniper or Impostor.Raider) ev.Murderer.VanillaPlayer.transform.position = MyPlayer.VanillaPlayer.transform.position;
             if (AmOwner)
             {
                 int nextCategoryId = GetCategoryId(ev.Murderer.Role.Role);

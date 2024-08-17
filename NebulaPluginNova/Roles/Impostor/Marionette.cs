@@ -11,11 +11,12 @@ using Virial.Helpers;
 namespace Nebula.Roles.Impostor;
 
 [NebulaRPCHolder]
-public class Marionette : DefinedRoleTemplate, DefinedRole
+public class Marionette : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Marionette() : base("marionette", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [PlaceCoolDownOption, SwapCoolDownOption, DecoyDurationOption, CanSeeDecoyInShadowOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny, ConfigurationTags.TagDifficult);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

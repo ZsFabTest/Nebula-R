@@ -8,12 +8,13 @@ using Virial.Game;
 
 namespace Nebula.Roles.Modifier;
 
-public class Confused : DefinedAllocatableModifierTemplate, DefinedAllocatableModifier
+public class Confused : DefinedAllocatableModifierTemplate, HasCitation, DefinedAllocatableModifier
 {
     private Confused() : base("confused", "CFD", new(242,247,226), [ChanceOfShuffleOption, NumOfMaxShuffledPairsOption])
     {
 
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     static private IntegerConfiguration ChanceOfShuffleOption = NebulaAPI.Configurations.Configuration("options.role.confused.chanceOfShuffle", (10,100,10),60, decorator: val => val + "%");
     static private IntegerConfiguration NumOfMaxShuffledPairsOption = NebulaAPI.Configurations.Configuration("options.role.confused.numOfMaxShuffledPairs", (1, 7), 3);

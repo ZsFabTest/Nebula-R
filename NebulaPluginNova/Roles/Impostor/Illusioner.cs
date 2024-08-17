@@ -6,12 +6,13 @@ using Virial.Helpers;
 
 namespace Nebula.Roles.Impostor;
 
-public class Illusioner : DefinedRoleTemplate, DefinedRole
+public class Illusioner : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Illusioner() : base("illusioner", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [SampleCoolDownOption, MorphCoolDownOption,MorphDurationOption,PaintCoolDownOption, LoseSampleOnMeetingOption, TransformAfterMeetingOption,SampleOriginalLookOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagChaotic, ConfigurationTags.TagDifficult);
         //ConfigurationHolder!.Illustration = new NebulaSpriteLoader("Assets/NebulaAssets/Sprites/Configurations/Illusioner.png");
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[]? arguments) => new Instance(player);
 

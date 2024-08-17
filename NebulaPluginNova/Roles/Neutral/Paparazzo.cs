@@ -261,7 +261,7 @@ public class PaparazzoShot : MonoBehaviour
 
 
 [NebulaRPCHolder]
-public class Paparazzo : DefinedRoleTemplate, DefinedRole
+public class Paparazzo : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     static public RoleTeam MyTeam = new Team("teams.paparazzo", new(202,118,140), TeamRevealType.OnlyMe);
 
@@ -269,6 +269,7 @@ public class Paparazzo : DefinedRoleTemplate, DefinedRole
     {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny, ConfigurationTags.TagDifficult);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player, arguments);
 

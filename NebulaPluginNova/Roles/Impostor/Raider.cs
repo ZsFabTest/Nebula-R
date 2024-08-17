@@ -14,13 +14,14 @@ using static UnityEngine.GraphicsBuffer;
 namespace Nebula.Roles.Impostor;
 
 [NebulaRPCHolder]
-public class Raider : DefinedRoleTemplate, DefinedRole
+public class Raider : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Raider() : base("raider", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [ThrowCoolDownOption, AxeSizeOption, AxeSpeedOption,CanKillImpostorOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny, ConfigurationTags.TagDifficult);
 
         MetaAbility.RegisterCircle(new("role.raider.axeSize", () => AxeSizeOption * 0.4f, () => null, UnityColor));
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

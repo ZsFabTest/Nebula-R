@@ -8,11 +8,12 @@ using Virial.Helpers;
 
 namespace Nebula.Roles.Impostor;
 
-public class Stirrer : DefinedRoleTemplate, DefinedRole
+public class Stirrer : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Stirrer() : base("stirrer", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [StirCoolDownOption,SabotageChargeOption, SabotageMaxChargeOption,SabotageCoolDownOption,SabotageIntervalOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[]? arguments) => new Instance(player);
 

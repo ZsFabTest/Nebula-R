@@ -6,9 +6,10 @@ using Virial.Helpers;
 
 namespace Nebula.Roles.Impostor;
 
-public class Painter : DefinedRoleTemplate, DefinedRole
+public class Painter : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Painter() : base("painter", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [SampleCoolDownOption, PaintCoolDownOption, LoseSampleOnMeetingOption, TransformAfterMeetingOption]) { }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

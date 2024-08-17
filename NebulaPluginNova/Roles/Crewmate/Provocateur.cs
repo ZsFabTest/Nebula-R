@@ -27,9 +27,10 @@ public static class ExtraExileRoleSystem
     }
 }
 
-public class Provocateur : DefinedRoleTemplate, DefinedRole
+public class Provocateur : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Provocateur() : base("provocateur", new(112, 225, 89), RoleCategory.CrewmateRole, Crewmate.MyTeam, [EmbroilCoolDownOption, EmbroilAdditionalCoolDownOption, EmbroilDurationOption]) { }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

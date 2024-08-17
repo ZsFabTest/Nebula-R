@@ -12,7 +12,7 @@ using Virial.Game;
 
 namespace Nebula.Roles.Neutral;
 
-public class Avenger : DefinedRoleTemplate, DefinedRole
+public class Avenger : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     static public RoleTeam MyTeam = new Team("teams.avenger", new(141,111,131), TeamRevealType.OnlyMe);
     private Avenger() : base("avenger", MyTeam.Color, RoleCategory.NeutralRole, MyTeam,
@@ -21,6 +21,7 @@ public class Avenger : DefinedRoleTemplate, DefinedRole
     {
         ConfigurationHolder?.ScheduleAddRelated(() => [Modifier.Lover.MyRole.ConfigurationHolder!]);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     AllocationParameters? DefinedSingleAssignable.AllocationParameters => null;
 

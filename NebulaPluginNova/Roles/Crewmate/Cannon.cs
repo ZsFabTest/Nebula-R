@@ -18,12 +18,13 @@ using Nebula.Behaviour;
 namespace Nebula.Roles.Crewmate;
 
 [NebulaRPCHolder]
-public class Cannon : DefinedRoleTemplate, DefinedRole
+public class Cannon : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     public Cannon() : base("cannon", new(168, 178, 36), RoleCategory.CrewmateRole, Crewmate.MyTeam, [MarkCoolDownOption, NumOfMarksOption, CannonPowerOption, CannonPowerAttenuationOption])
     {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagBeginner);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

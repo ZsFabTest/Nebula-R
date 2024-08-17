@@ -9,13 +9,14 @@ using Virial.Helpers;
 
 namespace Nebula.Roles.Crewmate;
 
-public class Necromancer : DefinedRoleTemplate, DefinedRole
+public class Necromancer : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Necromancer() : base("necromancer", new(108,50,160), RoleCategory.CrewmateRole, Crewmate.MyTeam, [ReviveCoolDownOption, ReviveDurationOption, DetectedRangeOption, ReviveMinRangeOption, ReviveMaxRangeOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny, ConfigurationTags.TagDifficult);
 
         MetaAbility.RegisterCircle(new("role.necromancer.reviveRange", () => DetectedRangeOption, () => null, UnityColor));
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

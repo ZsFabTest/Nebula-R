@@ -8,11 +8,11 @@ using Virial.Helpers;
 
 namespace Nebula.Roles.Crewmate;
 
-public class Doctor : DefinedRoleTemplate, DefinedRole
+public class Doctor : DefinedRoleTemplate, HasCitation, DefinedRole
 {
 
     private Doctor() : base("doctor", new(128,255,221),RoleCategory.CrewmateRole, Crewmate.MyTeam, [PortableVitalsChargeOption, MaxPortableVitalsChargeOption, ChargesPerTasksOption]) { }
-    
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

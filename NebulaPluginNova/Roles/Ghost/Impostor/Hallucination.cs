@@ -19,7 +19,7 @@ using static Nebula.Roles.Ghost.Neutral.Grudge;
 
 namespace Nebula.Roles.Ghost.Impostor;
 
-public class Hallucination : DefinedGhostRoleTemplate, DefinedGhostRole
+public class Hallucination : DefinedGhostRoleTemplate, HasCitation, DefinedGhostRole
 {
     public class HallucinationPlayer : IGameOperator, ILifespan
     {
@@ -171,6 +171,7 @@ public class Hallucination : DefinedGhostRoleTemplate, DefinedGhostRole
     public Hallucination() : base("hallucination", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, [HallucinationCooldownOption, HallucinationDurationOption])
     {
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     string ICodeName.CodeName => "HLC";
 

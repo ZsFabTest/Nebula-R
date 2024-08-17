@@ -12,13 +12,14 @@ using Virial.Game;
 
 namespace Nebula.Roles.Impostor;
 
-public class Jailer : DefinedRoleTemplate, DefinedRole
+public class Jailer : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Jailer() : base("jailer", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [CanMoveWithMapWatchingOption, CanUseAdminOnMeetingOption, CanIdentifyDeadBodiesOption, CanIdentifyImpostorsOption, InheritAbilityOnDyingOption])
     {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagBeginner);
         ConfigurationHolder?.ScheduleAddRelated(() => [JailerModifier.MyRole.ConfigurationHolder!]);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

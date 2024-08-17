@@ -26,11 +26,12 @@ public class DestroyerAssets
     })).ToArray();
 
 }
-public class Destroyer : DefinedRoleTemplate, DefinedRole
+public class Destroyer : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Destroyer() : base("destroyer", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [KillCoolDownOption, PhasesOfDestroyingOption, KillSEStrengthOption,LeaveKillEvidenceOption, CanReportKillSceneOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny, ConfigurationTags.TagBeginner);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

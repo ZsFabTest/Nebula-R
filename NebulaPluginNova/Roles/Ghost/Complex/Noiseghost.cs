@@ -11,9 +11,10 @@ using Virial;
 namespace Nebula.Roles.Ghost.Complex;
 
 [NebulaRPCHolder]
-public class Noiseghost : DefinedGhostRoleTemplate, DefinedGhostRole
+public class Noiseghost : DefinedGhostRoleTemplate, HasCitation, DefinedGhostRole
 {
     public Noiseghost() : base("noiseghost", new(216, 199, 232), RoleCategory.CrewmateRole | RoleCategory.ImpostorRole | RoleCategory.NeutralRole, [Nebula.Roles.Crewmate.Noisemaker.NoiseDurationOption, NumOfNoiseOption, NoiseCooldownOption]) { }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     string ICodeName.CodeName => "NGH";
 

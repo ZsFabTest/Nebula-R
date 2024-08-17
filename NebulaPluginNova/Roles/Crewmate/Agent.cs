@@ -11,12 +11,13 @@ using Virial.Helpers;
 
 namespace Nebula.Roles.Crewmate;
 
-public class Agent : DefinedRoleTemplate, DefinedRole
+public class Agent : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Agent() : base("agent", new(166, 183, 144), RoleCategory.CrewmateRole, Crewmate.MyTeam, [VentConfiguration, NumOfExemptedTasksOption, NumOfExtraTasksOption, SuicideIfSomeoneElseCompletesTasksBeforeAgentOption])
     {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagBeginner);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player, arguments);

@@ -284,7 +284,7 @@ public class DelayPlayDropshipAmbiencePatch
         var logoHolder = UnityHelper.CreateObject("NebulaLogoHolder", HudManager.Instance.transform, new(-4.15f, 2.75f));
         logoHolder.AddComponent<SortingGroup>();
         var logo = UnityHelper.CreateObject<SpriteRenderer>("NebulaLogo", logoHolder.transform, Vector3.zero);
-        logo.sprite = Citations.NebulaOnTheShip.LogoImage!.GetSprite();
+        logo.sprite = Citations.NebulaOnTheShip_Remake.LogoImage!.GetSprite();
         logo.color = new(1f, 1f, 1f, 0.75f);
         logo.transform.localScale = new(0.45f, 0.45f, 1f);
 

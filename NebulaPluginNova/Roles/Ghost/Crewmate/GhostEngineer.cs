@@ -15,7 +15,7 @@ public class GhostEngineer : DefinedGhostRoleTemplate, HasCitation, DefinedGhost
 {
     public GhostEngineer() : base("ghostEngineer", new(63, 72, 204), RoleCategory.CrewmateRole, [NumOfRepairingOption]) { }
 
-    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Remake;
+    Citation? HasCitation.Citaion => Citations.Nebula_Remake_LongTimeSupport;
 
     string ICodeName.CodeName => "GEG";
 

@@ -8,13 +8,14 @@ using Virial.Helpers;
 namespace Nebula.Roles.Crewmate;
 
 
-public class Comet : DefinedRoleTemplate, DefinedRole
+public class Comet : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     public Comet() : base("comet", new(121,175,206), RoleCategory.CrewmateRole, Crewmate.MyTeam, [BlazeCoolDownOption, BlazeDurationOption, BlazeSpeedOption, BlazeVisionOption, BlazeScreenOption])
     {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagBeginner);
     }
-    
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
+
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 
     static private FloatConfiguration BlazeCoolDownOption = NebulaAPI.Configurations.Configuration("options.role.comet.blazeCoolDown", (5f,60f,2.5f),20f, FloatConfigurationDecorator.Second);

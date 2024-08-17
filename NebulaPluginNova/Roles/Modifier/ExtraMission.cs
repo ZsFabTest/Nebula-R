@@ -6,9 +6,10 @@ using Virial.Game;
 namespace Nebula.Roles.Modifier;
 
 [NebulaRPCHolder]
-public class ExtraMission : DefinedAllocatableModifierTemplate, DefinedAllocatableModifier
+public class ExtraMission : DefinedAllocatableModifierTemplate, HasCitation, DefinedAllocatableModifier
 {
     private ExtraMission() : base("extraMission", "EXM", new(222, 69, 102)) { }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
 
     static public ExtraMission MyRole = new ExtraMission();

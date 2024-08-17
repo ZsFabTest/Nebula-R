@@ -7,11 +7,12 @@ using Virial.Game;
 
 namespace Nebula.Roles.Modifier;
 
-public class Bloody : DefinedAllocatableModifierTemplate, DefinedAllocatableModifier
+public class Bloody : DefinedAllocatableModifierTemplate, HasCitation, DefinedAllocatableModifier
 {
     private Bloody(): base("bloody", "BLD", new(180, 0, 0), [CurseDurationOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagBeginner);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     static private FloatConfiguration CurseDurationOption = NebulaAPI.Configurations.Configuration("options.role.bloody.curseDuration", (2.5f,30f,2.5f),10f, FloatConfigurationDecorator.Second);
 

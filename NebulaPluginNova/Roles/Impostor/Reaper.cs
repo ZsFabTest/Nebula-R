@@ -10,11 +10,12 @@ using Virial.Helpers;
 
 namespace Nebula.Roles.Impostor;
 
-public class Reaper : DefinedRoleTemplate, DefinedRole
+public class Reaper : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Reaper() : base("reaper", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [VentConfiguration]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagBeginner);
     }
+    Citation? HasCitation.Citaion => Citations.TownOfImpostors;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

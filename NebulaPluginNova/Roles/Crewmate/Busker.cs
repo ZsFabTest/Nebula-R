@@ -11,12 +11,13 @@ using Virial.Helpers;
 namespace Nebula.Roles.Crewmate;
 
 
-public class Busker : DefinedRoleTemplate, DefinedRole
+public class Busker : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Busker() : base("busker", new(255, 172, 117), RoleCategory.CrewmateRole, Crewmate.MyTeam, [PseudocideCoolDownOption, PseudocideDurationOption, HidePseudocideFromVitalsOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny);
         ConfigurationHolder!.Illustration = new NebulaSpriteLoader("Assets/NebulaAssets/Sprites/Configurations/Busker.png");
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

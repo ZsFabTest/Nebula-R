@@ -6,9 +6,10 @@ using Virial.Helpers;
 namespace Nebula.Roles.Ghost.Crewmate;
 
 [NebulaRPCHolder]
-public class Poltergeist : DefinedGhostRoleTemplate, DefinedGhostRole
+public class Poltergeist : DefinedGhostRoleTemplate, HasCitation, DefinedGhostRole
 {
     public Poltergeist() : base("poltergeist", new(210, 220, 234), RoleCategory.CrewmateRole, [PoltergeistCoolDownOption]) { }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     string ICodeName.CodeName => "PLT";
 

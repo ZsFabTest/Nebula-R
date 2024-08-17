@@ -10,7 +10,7 @@ namespace Nebula.Roles.Crewmate;
 public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Oracle() : base("oracle", new(254, 156, 45), RoleCategory.CrewmateRole, Crewmate.MyTeam, [OracleCoolDownOption, NumOfInfoOption]) { }
-    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(Virial.Game.Player player, int[] arguments) => new Instance(player);
 

@@ -14,9 +14,10 @@ using Virial.Events.Player;
 
 namespace Nebula.Roles.Ghost.Neutral;
 
-public class Grudge : DefinedGhostRoleTemplate, DefinedGhostRole
+public class Grudge : DefinedGhostRoleTemplate, HasCitation, DefinedGhostRole
 {
     public Grudge() : base("grudge", new(154, 147, 80), RoleCategory.NeutralRole, [TotalStandingTimeToWin]) { }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     string ICodeName.CodeName => "GRD";
 

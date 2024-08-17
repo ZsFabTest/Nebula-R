@@ -7,9 +7,10 @@ using Virial.Helpers;
 namespace Nebula.Roles.Ghost.Crewmate;
 
 [NebulaRPCHolder]
-public class Lumine : DefinedGhostRoleTemplate, DefinedGhostRole
+public class Lumine : DefinedGhostRoleTemplate, HasCitation, DefinedGhostRole
 {
     public Lumine(): base("lumine", new(241, 237, 184),RoleCategory.CrewmateRole, [LightSizeOption, LightDurationOption]) {}
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     string ICodeName.CodeName => "LMN";
 

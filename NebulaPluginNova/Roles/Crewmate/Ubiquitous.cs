@@ -259,7 +259,7 @@ public class UbiquitousMapLayer : MonoBehaviour
 }
 
 [NebulaRPCHolder]
-public class Ubiquitous : DefinedRoleTemplate, DefinedRole
+public class Ubiquitous : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Ubiquitous(): base("ubiquitous", new(56,155,223), RoleCategory.CrewmateRole, Crewmate.MyTeam, [droneCoolDownOption, droneDurationOption, droneMicrophoneRadiousOption, droneDetectionRadiousOption, doorHackCoolDownOption, doorHackRadiousOption])
     {
@@ -268,6 +268,7 @@ public class Ubiquitous : DefinedRoleTemplate, DefinedRole
 
         MetaAbility.RegisterCircle(new("role.ubiquitous.droneRange", () => droneDetectionRadiousOption, () => null, UnityColor));
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

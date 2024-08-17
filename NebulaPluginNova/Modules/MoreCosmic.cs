@@ -1,4 +1,5 @@
 ﻿using AmongUs.Data;
+using Cpp2IL.Core.Extensions;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppSystem.Text.RegularExpressions;
 using Innersloth.Assets;
@@ -69,6 +70,7 @@ public abstract class CustomCosmicItem : CustomItemGrouped
                 existingHash = CosmicImage.ComputeImageHash(stream);
                 stream.Close();
             }
+
             if (MyBundle.RelatedRemoteAddress != null && (existingHash == null || !(hash?.Equals(existingHash) ?? true)))
             {
                 //更新を要する場合

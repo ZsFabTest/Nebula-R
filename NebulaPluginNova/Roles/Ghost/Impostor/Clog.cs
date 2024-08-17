@@ -14,11 +14,12 @@ using Virial.Events.Game;
 
 namespace Nebula.Roles.Ghost.Impostor;
 
-public class Clog : DefinedGhostRoleTemplate, DefinedGhostRole
+public class Clog : DefinedGhostRoleTemplate, HasCitation, DefinedGhostRole
 {
     public Clog() : base("clog", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, [GhostDurationOption, NumOfGhostsOption, GhostSizeOption]) {
         MetaAbility.RegisterCircle(new("role.clog.ghostSize", () => GhostSizeOption, () => null, UnityColor));
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip;
 
     string ICodeName.CodeName => "CLG";
 

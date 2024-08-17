@@ -98,7 +98,7 @@ file static class TrapperSystem
 }
 
 [NebulaRPCHolder]
-public class Trapper : DefinedRoleTemplate, DefinedRole
+public class Trapper : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Trapper(bool isEvil) : base(
         isEvil ? "evilTrapper" : "niceTrapper",
@@ -111,6 +111,7 @@ public class Trapper : DefinedRoleTemplate, DefinedRole
 
         ConfigurationHolder?.ScheduleAddRelated(() => [isEvil ? MyNiceRole.ConfigurationHolder! : MyEvilRole.ConfigurationHolder!]);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
 
     public bool IsEvil { get; private set; }

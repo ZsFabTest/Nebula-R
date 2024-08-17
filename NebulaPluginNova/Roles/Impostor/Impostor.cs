@@ -8,11 +8,12 @@ using Virial.Game;
 
 namespace Nebula.Roles.Impostor;
 
-public class Impostor : DefinedRoleTemplate, DefinedRole
+public class Impostor : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     static public RoleTeam MyTeam = new Team("teams.impostor", new(Palette.ImpostorRed), TeamRevealType.Teams);
     
     private Impostor():base("impostor", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, MyTeam, [CanKillHidingPlayerOption]) { }
+    Citation? HasCitation.Citaion => Citations.AmongUs;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

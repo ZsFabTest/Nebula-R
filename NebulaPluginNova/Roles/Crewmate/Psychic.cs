@@ -15,12 +15,13 @@ using Virial.Events.Player;
 
 namespace Nebula.Roles.Crewmate;
 
-public class Psychic : DefinedRoleTemplate, DefinedRole
+public class Psychic : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Psychic() : base("psychic", new(96, 206, 137), RoleCategory.CrewmateRole, Crewmate.MyTeam, [SearchCooldownOption, SearchDurationOption])
     {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagBeginner);
     }
+    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 

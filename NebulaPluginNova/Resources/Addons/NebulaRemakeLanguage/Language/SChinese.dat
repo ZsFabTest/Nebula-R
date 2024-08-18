@@ -39,6 +39,13 @@
 "options.role.judge.canJudgeLovers" : "可以处决恋人"
 "options.role.judge.canCallEmergencyMeeting" : "可以发起紧急会议"
 
+"role.knight.name" : "骑士"
+"role.knight.short" : "骑"
+"role.knight.blurb" : "捍卫骑士的荣耀"
+"options.role.knight.detail" : "骑士拥有格挡技能。<br>在格挡期间，骑士不会因直接击杀导致死亡。"
+"options.role.knight.blockCoolDown" : "格挡冷却时间"
+"options.role.knight.blockDuration" : "格挡持续时间"
+
 "role.madmateModifier.name" : "叛徒"
 "role.madmateModifier.short" : "叛"
 "role.madmateModifier.generalBlurb" : "帮助伪装者获得胜利"
@@ -53,6 +60,7 @@
 "role.oracle.blurb" : "感受你的过往"
 "options.role.oracle.detail" : "你可以获取他人的职业。<br>你获取的信息会混杂着多个错误的干扰信息。"
 "options.role.oracle.oracleCoolDown" : "占卜冷却时间"
+"options.role.oracle.oracleDuration" : "占卜所需时间"
 "options.role.oracle.numOfInfo" : "占卜获得的职业数量"
 "role.oracle.message" : "%PLAYER%的职业是%DETAIL%其中之一"
 
@@ -87,6 +95,7 @@
 
 # Buttons
 
+"button.label.block" : "格挡"
 "button.label.repair" : "修理"
 "button.label.oracle" : "占卜"
 
@@ -117,9 +126,11 @@
 "chat.nac" : "/help: 查询命令<br> - /tell [玩家名] [消息内容] : 私聊<br> - /impostor [消息内容] : 伪装者频道<br> - /jackal [消息内容] : 豺狼频道<br> - /lover [消息内容] : 恋人频道"
 
 # Input
+
 "input.changeCannel" : "聊天框更换频道"
 
 # Options
+
 "options.bubbleChat" : "聊天框频道"
 "options.bubbleChat.detail" : "允许玩家在游戏内随时使用聊天框与队友交流。"
 "options.bubbleChat.useBubbleChat" : "队伍游戏中聊天框"
@@ -168,6 +179,18 @@
 "achievement.judge.challenge.title" : "审判长"
 "achievement.judge.challenge.goal" : "成功审判三人并存活到最后取得胜利。"
 "achievement.judge.challenge.cond" : "条件：游戏结束时存活且成功审判三人"
+
+"achievement.knight.common1.title" : "来者何人"
+"achievement.knight.common1.goal" : "成功格挡一次击杀。"
+"achievement.knight.common1.cond" : ""
+
+"achievement.knight.common2.title" : "振刀"
+"achievement.knight.common2.goal" : "累计格挡十次击杀。"
+"achievement.knight.common2.cond" : ""
+
+"achievement.knight.challenge.title" : "四面楚歌"
+"achievement.knight.challenge.goal" : "一次性格挡三次击杀。"
+"achievement.knight.challenge.cond" : "条件：在一次技能期间避免三次击杀"
 
 "achievement.oracle.common1.title" : "让我看看"
 "achievement.oracle.common1.goal" : "使用一次占卜。"

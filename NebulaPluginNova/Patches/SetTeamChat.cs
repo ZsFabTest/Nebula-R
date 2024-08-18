@@ -131,10 +131,10 @@ public static class EnableChat
 
     public static void Postfix(HudManager __instance)
     {
-        if (!GeneralConfigurations.UseBubbleChatOption) return;
+        if (!GeneralConfigurations.UseBubbleChatOption || !hasChat()) return;
 
-        if (hasChat() && !__instance.Chat.isActiveAndEnabled)
+        if (!__instance.Chat.isActiveAndEnabled)
             __instance.Chat.SetVisible(true);
-        else if (!hasChat() && MeetingHud.Instance == null && LobbyBehaviour.Instance == null) __instance.Chat.SetVisible(false);
+        //else if (!hasChat() && MeetingHud.Instance == null && LobbyBehaviour.Instance == null) __instance.Chat.SetVisible(false);
     }
 }

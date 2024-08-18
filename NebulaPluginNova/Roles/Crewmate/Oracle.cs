@@ -9,12 +9,13 @@ namespace Nebula.Roles.Crewmate;
 
 public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
 {
-    private Oracle() : base("oracle", new(254, 156, 45), RoleCategory.CrewmateRole, Crewmate.MyTeam, [OracleCoolDownOption, NumOfInfoOption]) { }
+    private Oracle() : base("oracle", new(254, 156, 45), RoleCategory.CrewmateRole, Crewmate.MyTeam, [OracleCoolDownOption, OracleDurationOption, NumOfInfoOption]) { }
     Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(Virial.Game.Player player, int[] arguments) => new Instance(player);
 
     private static FloatConfiguration OracleCoolDownOption = NebulaAPI.Configurations.Configuration("options.role.oracle.oracleCoolDown", (5f, 60f, 2.5f), 20f, FloatConfigurationDecorator.Second);
+    private static FloatConfiguration OracleDurationOption = NebulaAPI.Configurations.Configuration("options.role.oracle.oracleDuration", (0f, 5f, 0.5f), 1.5f, FloatConfigurationDecorator.Second);
     private static IntegerConfiguration NumOfInfoOption = NebulaAPI.Configurations.Configuration("options.role.oracle.numOfInfo", (3, 10), 4);
 
     public static Oracle MyRole = new Oracle();
@@ -30,6 +31,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
         private Dictionary<byte, string> oracleResults = new();
         private TMPro.TextMeshPro message = null!;
         private float duration = 0f;
+        private byte targetId = byte.MaxValue;
 
         void RuntimeAssignable.OnActivated() 
         {
@@ -42,6 +44,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                 this.message.gameObject.SetActive(false);
                 duration = 0f;
                 Bind(new GameObjectBinding(message.gameObject));
+                targetId = byte.MaxValue;
 
                 var myTracker = Bind(ObjectTrackers.ForPlayer(null, MyPlayer, (p) => ObjectTrackers.StandardPredicate(p)));
                 var oracleButton = Bind(new ModAbilityButton()).KeyBind(Virial.Compat.VirtualKeyInput.Ability);
@@ -51,15 +54,29 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                 oracleButton.Visibility = (button) => !MyPlayer.IsDead;
                 oracleButton.OnClick = (button) =>
                 {
+                    button.ActivateEffect();
+                };
+                oracleButton.OnEffectStart = (button) =>
+                {
+                    targetId = myTracker.CurrentTarget!.PlayerId;
+                };
+                oracleButton.OnEffectEnd = (button) =>
+                {
+                    if ((myTracker.CurrentTarget?.PlayerId ?? byte.MaxValue) != targetId)
+                    {
+                        targetId = byte.MaxValue;
+                        return;
+                    }
                     string info;
-                    if(!oracleResults.TryGetValue(myTracker.CurrentTarget!.PlayerId, out info!))
+                    if (!oracleResults.TryGetValue(myTracker.CurrentTarget!.PlayerId, out info!))
                     {
                         info = GetInfomation(myTracker.CurrentTarget!, NumOfInfoOption).TrimEnd(' ').TrimEnd(',');
                         oracleResults.Add(myTracker.CurrentTarget!.PlayerId, info);
                         new StaticAchievementToken("oracle.common2");
-                    }else info = oracleResults[myTracker.CurrentTarget!.PlayerId];
+                    }
+                    else info = oracleResults[myTracker.CurrentTarget!.PlayerId];
 
-                    string message = Language.Translate("role.oracle.message").Replace("%PLAYER%",myTracker.CurrentTarget.Name).Replace("%DETAIL%",info);
+                    string message = Language.Translate("role.oracle.message").Replace("%PLAYER%", myTracker.CurrentTarget.Name).Replace("%DETAIL%", info);
                     this.message.text = message;
                     this.message.gameObject.SetActive(true);
                     Debug.LogWarning($"Message: {message}\nMessage.IsActive: {this.message.gameObject.active}");
@@ -68,7 +85,8 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                     new StaticAchievementToken("oracle.common1");
                     button.StartCoolDown();
                 };
-                oracleButton.CoolDownTimer = Bind(new Timer(OracleCoolDownOption).Start());
+                oracleButton.CoolDownTimer = Bind(new Timer(OracleCoolDownOption).SetAsAbilityCoolDown().Start());
+                oracleButton.EffectTimer = Bind(new Timer(OracleDurationOption));
                 oracleButton.SetLabelType(Virial.Components.ModAbilityButton.LabelType.Standard);
                 oracleButton.SetLabel("oracle");
             }

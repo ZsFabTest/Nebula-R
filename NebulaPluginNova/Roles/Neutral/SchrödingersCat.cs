@@ -95,6 +95,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
     bool AssignableFilterHolder.CanLoadDefault(DefinedAssignable assignable) => CanLoadDefaultTemplate(assignable) && categoryId == 0;
 
     bool IGuessed.CanBeGuessDefault => categoryId == 0;
+    bool DefinedAssignable.ShowOnHelpScreen => categoryId == 0;
 
     RuntimeRole CheckAndCreateInstance(Virial.Game.Player player)
     {

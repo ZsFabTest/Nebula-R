@@ -10,6 +10,12 @@
 "options.role.collector.canCallEmergencyMeeting" : "Can Call Emergency Meeting"
 "role.collector.taskText" : "[Collector]Collected Votes：%DETAIL%"
 
+"role.evilAce.name" : "Evil Ace"
+"role.evilAce.short" : "EA"
+"role.evilAce.blurb" : "The Ace of Impostors"
+"options.role.evilAce.detail" : "Evil Ace will know players' roles after they are killed by impostors.<br>Evil Ace's killing cool down will be cut down when become the last impostor."
+"options.role.evilAce.killCoolDown" : "Kill CoolDown Radio When Become the Last Impostor"
+
 "role.ghostEngineer.name" : "Ghost Engineer"
 "role.ghostEngineer.blurb" : "Engineering Forever"
 "role.ghostEngineer.short" : "GE"
@@ -26,18 +32,40 @@
 "options.role.judge.canJudgeLovers" : "Can Guess Lovers"
 "options.role.judge.canCallEmergencyMeeting" : "Can Call Emergency Meeting"
 
+"role.knight.name" : "Knight"
+"role.knight.short" : "Kn"
+"role.knight.blurb" : "For the Honour of Success"
+"options.role.knight.detail" : "Knight could block murdering.<br>During the ability is active, knight won't die except suicide and curse."
+"options.role.knight.blockCoolDown" : "Block Murdering CoolDown"
+"options.role.knight.blockDuration" : "Block Murdering Duration"
+
+"role.lastImpostor.name" : "Last Impostor"
+"role.lastimpostor.short" : "LI"
+"role.lastImpostor.generalBlurb" : "Bet on Your Life"
+"options.role.lastImpostor.detail" : "Last Impostor can guess others' roles.<br>Last Impostor can guess others' roles with no limit"
+"options.role.lastImpostor.canSpawn" : "Will Spawn When Become the Last Impostor"
+
 "options.role.madmate.numToSpawn" : "Number of Roles"
 "role.madmate.prefix" : "Mad "
 "role.madmate.prefix.short" : "M"
+
+"role.oracle.name" : "Oracle"
+"role.oracle.short" : "Or"
+"role.oracle.blurb" : "I know What You Think"
+"options.role.oracle.detail" : "Oracle could get others' role info.<br>However, the true role will be told with centain fake roles."
+"options.role.oracle.oracleCoolDown" : "Oracle CoolDown"
+"options.role.oracle.oracleDuration" : "Oracle Duration"
+"options.role.oracle.numOfInfo" : "The Num of Role Info Will Be Given"
+"role.oracle.message" : "%PLAYER%'s role is one of %DETAIL%."
 
 "role.schrödingersCat.name" : "Schrödinger's Cat"
 "role.schrödingersCat.short" : "SC"
 "role.schrödingersCat.blurb" : "Either Alive or Die"
 "options.role.schrödingersCat.detail" : "You could change your team by being murdered.<br>However, you have only one chance to change your team."
 "options.role.schrödingersCat.numOfLeftImpostorToBeAllowedToKill" : "(When become Impostor)Can Be Allowed to Kill When Left What Number of Impostor"
-"options.role.schrödingersCat.impostorKillCoolDown" : "(When become Impostor)Kill Cool Down"
+"options.role.schrödingersCat.impostorKillCoolDown" : "(When become Impostor)Kill CoolDown"
 "options.role.schrödingersCat.jackalHasKill" : "(When become Jackal)Has Kill Button"
-"options.role.schrödingersCat.jackalKillCoolDown" : "(When become Jackal)Kill Cool Down"
+"options.role.schrödingersCat.jackalKillCoolDown" : "(When become Jackal)Kill CoolDown"
 
 "role.schrödingersCatCrewmate.name" : "Schrödinger's Cat"
 "role.schrödingersCatCrewmate.short" : "SC"
@@ -54,6 +82,17 @@
 "role.schrödingersCatJackal.blurb" : "Either Alive or Die"
 "options.role.schrödingersCatJackal.detail" : "Now you have become a Jackal."
 
+"role.unyielding.name" : "Unyielding"
+"role.unyielding.short" : "Un"
+"role.unyielding.blurb" : "I Don't wanna Die"
+"options.role.unyielding.detail" : "You can revive after die.<br>You will get another player's role.<br>You won't follow your old team.<br>You won't know other players' roles after you die."
+
+# Buttons
+
+"button.label.block" : "Block"
+"button.label.repair" : "Repair"
+"button.label.oracle" : "Oracle"
+
 # Teams
 
 "teams.collector" : "Collector"
@@ -63,3 +102,32 @@
 
 "end.collector" : "Collector Win"
 
+# Chat
+
+"chat.default" : "空频道"
+"chat.impostor" : "[伪装者频道]"
+"chat.jackal" : "[豺狼频道]"
+"chat.lover" : "[恋人频道]"
+
+"chat.unknowPlayer" : "/tell: Unknown Player"
+"chat.private" : "[Whisper]"
+"chat.impostorDisabled" : "/impostor: Cannot Use /impostor ."
+"chat.jackalDisabled" : "/jackal: Cannot Use /jackal ."
+"chat.loverDisabled" : "/lover: Cannot Use /lover ."
+"chat.notImpostor" : "/impostor: You're not an Impostor."
+"chat.notJackal" : "/jackal: You're not a Jackal."
+"chat.notLover" : "/lover: You're not a Lover."
+"chat.nac" : "/help: Get Commands<br> - /tell [Player Name] [Message] : Whisper<br> - /impostor [Message] : Impostor<br> - /jackal [Message] : Jackal<br> - /lover [Message] : Lovers"
+
+# Input
+
+"input.changeCannel" : "Change Canel"
+
+# Options
+
+"options.bubbleChat" : "Bubble Chat"
+"options.bubbleChat.detail" : "Allow players use chat in Game."
+"options.bubbleChat.useBubbleChat" : "Enable Bubble Chat"
+"options.bubbleChat.enableImpostorCannel" : "Enable Impostor Canel"
+"options.bubbleChat.enableJackalCannel" : "Enable Jackal Canel"
+"options.bubbleChat.enableLoverCannel" : "Enable Lovers Canel"

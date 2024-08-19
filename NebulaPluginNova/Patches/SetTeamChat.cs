@@ -1,4 +1,5 @@
-﻿using Nebula.Roles.Modifier;
+﻿/*
+using Nebula.Roles.Modifier;
 using Nebula.Roles.Neutral;
 using Virial.Assignable;
 
@@ -132,6 +133,62 @@ public static class EnableChat
     public static void Postfix(HudManager __instance)
     {
         if (!GeneralConfigurations.UseBubbleChatOption || !hasChat()) return;
+
+        if (!__instance.Chat.isActiveAndEnabled)
+            __instance.Chat.SetVisible(true);
+        //else if (!hasChat() && MeetingHud.Instance == null && LobbyBehaviour.Instance == null) __instance.Chat.SetVisible(false);
+    }
+}
+
+*/
+
+using Nebula.Roles.Modifier;
+
+namespace Nebula.Patches;
+
+[HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
+public class MeetingStart
+{
+    public static DateTime MeetingStartTime = DateTime.MinValue;
+    public static void Prefix(MeetingHud __instance)
+    {
+        MeetingStartTime = DateTime.UtcNow;
+    }
+}
+
+[HarmonyPatch(typeof(ChatController), nameof(ChatController.AddChat))]
+public static class AddChat
+{
+    private static bool GetExtraMessageChecker(Virial.Game.Player sourcePlayer)
+    {
+        var MyPlayer = PlayerControl.LocalPlayer.GetModInfo();
+        if (MyPlayer == null) return false;
+        Lover.Instance LoverModifier = null!;
+        return MyPlayer.TryGetModifier<Lover.Instance>(out LoverModifier!) && (sourcePlayer?.TryGetModifier<Lover.Instance>(out _) ?? false) && LoverModifier.MyLover?.PlayerId == sourcePlayer.PlayerId;
+    }
+
+    public static bool Prefix(ChatController __instance, [HarmonyArgument(0)] PlayerControl sourcePlayer, [HarmonyArgument(1)] ref string chatText)
+    {
+        if (__instance != HudManager.Instance.Chat || !GeneralConfigurations.UseBubbleChatOption) return true;
+        var MyPlayer = PlayerControl.LocalPlayer.GetModInfo();
+        if (MyPlayer == null || sourcePlayer.GetModInfo() == null) return true;
+        bool shouldSeeMessage = (NebulaGameManager.Instance?.CanSeeAllInfo ?? false) || sourcePlayer.PlayerId == MyPlayer.PlayerId;
+
+        shouldSeeMessage = GetExtraMessageChecker(sourcePlayer.GetModInfo()!) || shouldSeeMessage;
+        if (DateTime.UtcNow - MeetingStart.MeetingStartTime < TimeSpan.FromSeconds(1))
+        {
+            return shouldSeeMessage;
+        }
+        return MeetingHud.Instance != null || LobbyBehaviour.Instance != null || shouldSeeMessage;
+    }
+}
+
+[HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+public static class EnableChat
+{
+    public static void Postfix(HudManager __instance)
+    {
+        if (!GeneralConfigurations.UseBubbleChatOption || !(PlayerControl.LocalPlayer.GetModInfo()?.TryGetModifier<Lover.Instance>(out _) ?? false)) return;
 
         if (!__instance.Chat.isActiveAndEnabled)
             __instance.Chat.SetVisible(true);

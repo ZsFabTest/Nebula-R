@@ -16,5 +16,5 @@ public enum VirtualKeyInput
     Spectator,
     SpectatorLeft,
     SpectatorRight,
-    ChangeChatCannel,
+    //ChangeChatCannel,
 }

@@ -461,9 +461,9 @@ public static class GeneralConfigurations
     }
 
     static public BoolConfiguration UseBubbleChatOption = NebulaAPI.Configurations.Configuration("options.bubbleChat.useBubbleChat", false);
-    static public BoolConfiguration EnableImpostorCannelOption = NebulaAPI.Configurations.Configuration("options.bubbleChat.enableImpostorCannel", true, () => UseBubbleChatOption);
-    static public BoolConfiguration EnableJackalCannelOption = NebulaAPI.Configurations.Configuration("options.bubbleChat.enableJackalCannel", true, () => UseBubbleChatOption);
-    static public BoolConfiguration EnableLoverCannelOption = NebulaAPI.Configurations.Configuration("options.bubbleChat.enableLoverCannel", true, () => UseBubbleChatOption);
+    //static public BoolConfiguration EnableImpostorCannelOption = NebulaAPI.Configurations.Configuration("options.bubbleChat.enableImpostorCannel", true, () => UseBubbleChatOption);
+    //static public BoolConfiguration EnableJackalCannelOption = NebulaAPI.Configurations.Configuration("options.bubbleChat.enableJackalCannel", true, () => UseBubbleChatOption);
+    //static public BoolConfiguration EnableLoverCannelOption = NebulaAPI.Configurations.Configuration("options.bubbleChat.enableLoverCannel", true, () => UseBubbleChatOption);
     static internal IConfigurationHolder BubbleChatOptions = NebulaAPI.Configurations.Holder("options.bubbleChat", [ConfigurationTab.Settings], [GameModes.FreePlay, GameModes.Standard]).AppendConfigurations([
-            UseBubbleChatOption, EnableImpostorCannelOption, EnableJackalCannelOption, EnableLoverCannelOption]);
+            UseBubbleChatOption]);//, EnableImpostorCannelOption, EnableJackalCannelOption, EnableLoverCannelOption]);
 }

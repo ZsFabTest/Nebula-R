@@ -249,9 +249,18 @@ public class MadmateModifier : DefinedModifierTemplate, DefinedAllocatableModifi
 
     void IAssignToCategorizedRole.GetAssignProperties(RoleCategory category, out int assign100, out int assignRandom, out int assignChance)
     {
-        assign100 = 0;
-        assignRandom = 0;
-        assignChance = 0;
+        if (category == RoleCategory.CrewmateRole)
+        {
+            assign100 = RoleChanceOption == 100 ? NumToSpawnOption : 0;
+            assignRandom = RoleChanceOption == 100 ? 0 : NumToSpawnOption;
+        }
+        else
+        {
+            assign100 = 0;
+            assignRandom = 0;
+        }
+
+        assignChance = RoleChanceOption;
     }
 
     public class Instance : RuntimeAssignableTemplate, RuntimeModifier

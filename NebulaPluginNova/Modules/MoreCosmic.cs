@@ -784,7 +784,7 @@ public static class MoreCosmic
     private static async Task LoadAll()
     {
         await LoadLocal();
-        await LoadOnline();
+        //await LoadOnline();
     }
 
     static void Preprocess(NebulaPreprocessor preprocessor)

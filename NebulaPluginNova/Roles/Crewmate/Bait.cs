@@ -80,7 +80,7 @@ public class Bait : DefinedRoleTemplate, HasCitation, DefinedRole
     }
 }
 
-public class BaitModifier : DefinedModifierTemplate,HasCitation , DefinedAllocatableModifier, RoleFilter
+public class BaitModifier : DefinedModifierTemplate, HasCitation, DefinedAllocatableModifier, RoleFilter
 {
     private BaitModifier() : base("baitModifier", new(0, 247, 255), [NumOfRolesOption, RoleChanceOption, Bait.ShowKillFlashOption, Bait.ReportDelayOption, Bait.ReportDelayDispersionOption, Bait.CanSeeVentFlashOption])
     {
@@ -134,9 +134,18 @@ public class BaitModifier : DefinedModifierTemplate,HasCitation , DefinedAllocat
 
     void IAssignToCategorizedRole.GetAssignProperties(RoleCategory category, out int assign100, out int assignRandom, out int assignChance)
     {
-        assign100 = 0;
-        assignRandom = 0;
-        assignChance = 0;
+        if (category == RoleCategory.CrewmateRole)
+        {
+            assign100 = RoleChanceOption == 100 ? NumOfRolesOption : 0;
+            assignRandom = RoleChanceOption == 100 ? 0 : NumOfRolesOption;
+        }
+        else
+        {
+            assign100 = 0;
+            assignRandom = 0;
+        }
+
+        assignChance = RoleChanceOption;
     }
 
     public class Instance : RuntimeAssignableTemplate, RuntimeModifier

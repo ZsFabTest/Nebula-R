@@ -46,6 +46,12 @@
 "options.role.knight.blockCoolDown" : "格挡冷却时间"
 "options.role.knight.blockDuration" : "格挡持续时间"
 
+"role.lastImpostor.name" : "绝境者"
+"role.lastimpostor.short" : "LI"
+"role.lastImpostor.generalBlurb" : "赌上所拥有的一切"
+"options.role.lastImpostor.detail" : "绝境者拥有赌怪能力。<br>绝境者的赌杀总次数不限，每次会议次数不限。"
+"options.role.lastImpostor.canSpawn" : "在剩余最后一名伪装者时分配"
+
 "role.madmateModifier.name" : "叛徒"
 "role.madmateModifier.short" : "叛"
 "role.madmateModifier.generalBlurb" : "帮助伪装者获得胜利"

@@ -110,6 +110,19 @@ public static class PlayerUpdatePatch
             __instance.cosmetics.transform.localScale = scale;
         }
         //if (__instance.GetModInfo()!.DeathTime > 0f && !__instance.Data.IsDead) __instance.Data.IsDead = true;
+
+        //Debug.Log(PlayerControl.AllPlayerControls.GetFastEnumerator().Count(
+        //         (p) => p.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole));
+        // 分配Last Impostor
+        if (!PlayerControl.LocalPlayer.Data.IsDead
+             && Roles.Modifier.LastImpostor.CanSpawnOption
+             && !(PlayerControl.LocalPlayer.GetModInfo()?.TryGetModifier<Roles.Modifier.LastImpostor.Instance>(out _) ?? true)
+             && PlayerControl.LocalPlayer.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole
+             && PlayerControl.AllPlayerControls.GetFastEnumerator().Count(
+                 (p) => p.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole) <= 1)
+        {
+            PlayerControl.LocalPlayer.GetModInfo()?.Unbox().RpcInvokerSetModifier(Roles.Modifier.LastImpostor.MyRole, null!).InvokeSingle();
+        }
     }
 }
 
@@ -551,7 +564,9 @@ public static class KillTimerPatch
     {
         if (PlayerControl.LocalPlayer.GetModInfo() == null) return true;
 
-        if (AmongUsUtil.VanillaKillCoolDown <= 0f) return false;
+        if (!(HudManager.Instance?.KillButton.isActiveAndEnabled ?? false)) return true;
+
+        if (AmongUsUtil.VanillaKillCoolDown <= 0f) return true;
 
         float temp = AmongUsUtil.VanillaKillCoolDown;
         //キルクールを設定する

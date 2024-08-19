@@ -41,7 +41,7 @@ public class GhostEngineer : DefinedGhostRoleTemplate, HasCitation, DefinedGhost
                 leftFix = NumOfRepairingOption;
                 var repairButton = Bind(new ModAbilityButton()).KeyBind(Virial.Compat.VirtualKeyInput.Ability);
                 repairButton.SetSprite(buttonSprite.GetSprite());
-                repairButton.Availability = (button) => MyPlayer.CanMove && leftFix > 0 && Utilities.AmongUsUtil.InAnySab && !Utilities.AmongUsUtil.InCommSab;
+                repairButton.Availability = (button) => MyPlayer.CanMove && leftFix > 0 && Utilities.AmongUsUtil.InAnySab;
                 repairButton.Visibility = (button) => MyPlayer.IsDead;
                 repairButton.OnClick = (button) =>
                 {
@@ -66,30 +66,24 @@ public class GhostEngineer : DefinedGhostRoleTemplate, HasCitation, DefinedGhost
 
     private static void RepairSabotage()
     {
-        // PlayerControl.LocalPlayer.myTasks.Find((Il2CppSystem.Predicate<PlayerTask>)(task=> task.GetIl2CppType().IsEquivalentTo(ShipStatus.Instance.GetSabotageTask(message.task).GetIl2CppType()))
-        foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
+        for (int i = 0; i < PlayerControl.LocalPlayer.myTasks.Count; i++)
         {
+            var task = PlayerControl.LocalPlayer.myTasks[i];
             if (task.TaskType is TaskTypes.FixLights or TaskTypes.RestoreOxy or TaskTypes.ResetReactor or TaskTypes.ResetSeismic or TaskTypes.FixComms or TaskTypes.StopCharles)
             {
-                Debug.Log(task.GetType().ToString());
                 var sabTask = task.TryCast<SabotageTask>();
-                // Debug.Log(ShipStatus.Instance.Systems[SystemTypes.Electrical].GetType().ToString());
                 if (sabTask != null)
                 {
-                    SwitchSystem switchSystem = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
+                    SwitchSystem switchSystem = ShipStatus.Instance?.Systems[SystemTypes.Electrical].Cast<SwitchSystem>() ?? null!;
                     switchSystem.ActualSwitches = switchSystem.ExpectedSwitches;
-
+                    ShipStatus.Instance?.RpcUpdateSystem(SystemTypes.Comms, 16);
                     var o2reactor = task.TryCast<NoOxyTask>()?.reactor;
                     if (o2reactor != null) o2reactor.Countdown = 10000f;
                     task.TryCast<ReactorTask>()?.reactor.ClearSabotage();
                     task.TryCast<HeliCharlesTask>()?.sabotage.ClearSabotage();
                     sabTask.GetIl2CppType().GetMethod("FixedUpdate", Il2CppSystem.Reflection.BindingFlags.InvokeMethod | Il2CppSystem.Reflection.BindingFlags.NonPublic | Il2CppSystem.Reflection.BindingFlags.Instance)?.Invoke(sabTask, null);
+                    break;
                 }
-            }
-            else
-            {
-                Debug.LogError("Unknow Task Type.");
-                Debug.LogWarning($"Task: { task.TaskType }");
             }
         }
     }

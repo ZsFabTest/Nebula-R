@@ -66,7 +66,7 @@ public class GameStartManagerUpdatePatch
         if (__instance.LastPlayerCount == __instance.MinPlayers) arg = "<color=#FFFF00FF>";
 
         int max = 15;
-        if (AmongUsClient.Instance.NetworkMode != NetworkModes.LocalGame) max = GameManager.Instance.LogicOptions.MaxPlayers;    
+        if (AmongUsClient.Instance.NetworkMode != NetworkModes.LocalGame) max = GameManager.Instance.LogicOptions.MaxPlayers;
         var text = string.Format("{0}{1}/{2}", arg, __instance.LastPlayerCount, max);
 
         if (__instance.LastPlayerCount < __instance.MinPlayers) text += $" ({__instance.MinPlayers}↑)";

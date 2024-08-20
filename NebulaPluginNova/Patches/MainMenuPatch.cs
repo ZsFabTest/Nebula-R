@@ -332,8 +332,8 @@ public class ServerVersionPatch
 {
     private static bool IsCustomServer()
     {
-        return false;
-        //return ServerManager.Instance?.CurrentRegion.TranslateName is StringNames.NoTranslation or null;
+        //return false;
+        return ClientOption.AllOptions[ClientOption.ClientOptionType.ForcefullyUsePlus25Protocol].Value == 1 ? false : ServerManager.Instance?.CurrentRegion.TranslateName is StringNames.NoTranslation or null;
     }
 
     static void Postfix(ref int __result)

@@ -324,6 +324,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
     public List<RoleHistory> RoleHistory = new();
 
     static private SpriteLoader vcConnectSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.VCReconnectButton.png", 100f);
+    static private SpriteLoader quickStartSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.QuickStartButton.png", 100f);
     public NebulaGameManager()
     {
         allModPlayers = new();
@@ -339,6 +340,18 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
         vcConnectButton.SetLabel("rejoin");
 
         VoiceChatManager = GeneralConfigurations.UseVoiceChatOption ? new() : null;
+
+        var quickStartButton = new Modules.ScriptComponents.ModAbilityButton(true);
+        quickStartButton.Visibility = (_) => Configuration.GeneralConfigurations.PutQuickStartButtonOnLeftOption && AmongUsClient.Instance && AmongUsClient.Instance.AmHost && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Joined && GameStartManager.Instance;
+        quickStartButton.Availability = (_) => GameState == NebulaGameStates.NotStarted;
+        quickStartButton.SetSprite(quickStartSprite.GetSprite());
+        quickStartButton.OnClick = (_) =>
+        {
+            GameStartManager.Instance.startState = GameStartManager.StartingStates.Countdown;
+            GameStartManager.Instance.FinallyBegin();
+        };
+        quickStartButton.SetLabel("quickStart");
+        //*/
     }
 
 

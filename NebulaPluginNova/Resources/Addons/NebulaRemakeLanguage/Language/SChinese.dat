@@ -104,6 +104,7 @@
 "button.label.block" : "格挡"
 "button.label.repair" : "修理"
 "button.label.oracle" : "占卜"
+"button.label.quickStart" : "快速开始"
 
 # Teams
 
@@ -143,6 +144,13 @@
 "options.bubbleChat.enableImpostorCannel" : "启用伪装者频道"
 "options.bubbleChat.enableJackalCannel" : "启用豺狼频道"
 "options.bubbleChat.enableLoverCannel" : "启用恋人频道"
+
+"options.host" : "房主设定"
+"options.host.detail" : "利好房主的一些小设置。"
+"options.host.kickIfDismatched" : "当玩家NoS-R(NOS)版本不匹配时直接踢出"
+"options.putQuickStartButtonOnLeft" : "显示快速开始按钮"
+
+"config.client.forcefullyUsePlus25Protocol" : "<i>（重进生效）</i>强制使用+25协议"
 
 # Achievements
 

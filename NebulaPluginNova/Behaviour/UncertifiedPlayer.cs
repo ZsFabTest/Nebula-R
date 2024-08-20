@@ -17,6 +17,7 @@ namespace Nebula.Behaviour
         private static RemoteProcess<(byte playerId, int epoch, int build, int addonHash)> RpcHandshake = new(
             "Handshake", (message, calledByMe) => {
                 var player = Helpers.GetPlayer(message.playerId);
+                //Debug.Log(1);
                 if (player?.gameObject.TryGetComponent<UncertifiedPlayer>(out var certification) ?? false)
                 {
                     if (message.epoch != NebulaPlugin.PluginEpoch)
@@ -120,7 +121,12 @@ namespace Nebula.Behaviour
                 widget.Append(new MetaWidgetOld.Button(() => AmongUsClient.Instance.ExitGame(DisconnectReasons.ExitGame), new(TextAttributeOld.BoldAttr) { Size = new(1f,0.26f)}) { TranslationKey = "ui.dialog.exit", Alignment = IMetaWidgetOld.AlignmentOption.Center });
                 screen.SetWidget(widget);
             }
-            
+
+            if (!(MyControl?.AmOwner ?? false) && GeneralConfigurations.KickIfDismatchedOption)
+            {
+                GameData.Instance.HandleDisconnect(MyControl, DisconnectReasons.IncorrectVersion);
+                if (AmongUsClient.Instance.AmHost) AmongUsClient.Instance.KickPlayer(MyControl!.NetTransform.OwnerId, false);
+            }
         }
 
         private void OnStateChanged()

@@ -466,4 +466,10 @@ public static class GeneralConfigurations
     //static public BoolConfiguration EnableLoverCannelOption = NebulaAPI.Configurations.Configuration("options.bubbleChat.enableLoverCannel", true, () => UseBubbleChatOption);
     static internal IConfigurationHolder BubbleChatOptions = NebulaAPI.Configurations.Holder("options.bubbleChat", [ConfigurationTab.Settings], [GameModes.FreePlay, GameModes.Standard]).AppendConfigurations([
             UseBubbleChatOption]);//, EnableImpostorCannelOption, EnableJackalCannelOption, EnableLoverCannelOption]);
+
+    static public BoolConfiguration KickIfDismatchedOption = NebulaAPI.Configurations.Configuration("options.host.kickIfDismatched", false);
+    //static public BoolConfiguration ForcefullyUsePlus25ProtocolOption = NebulaAPI.Configurations.Configuration("options.host.forcefullyUsePlus25Protocol", true);
+    static public BoolConfiguration PutQuickStartButtonOnLeftOption = NebulaAPI.Configurations.Configuration("options.putQuickStartButtonOnLeft", true);
+    static internal IConfigurationHolder HostOptions = NebulaAPI.Configurations.Holder("options.host", [ConfigurationTab.Settings], [GameModes.FreePlay, GameModes.Standard]).AppendConfigurations([
+            KickIfDismatchedOption, PutQuickStartButtonOnLeftOption]);
 }

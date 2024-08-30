@@ -176,11 +176,11 @@
 
 "achievement.evilAce.challenge.title" : "墓地管理员"
 "achievement.evilAce.challenge.goal" : "获取所有已死亡玩家的身份信息。"
-"achievement.evilAce.challenge.cond" : "条件：死亡玩家在五人及以上" 
+"achievement.evilAce.challenge.cond" : "死亡玩家在五人及以上" 
 
 "achievement.ghostEngineer.challenge.title" : "永不停歇的工作"
 "achievement.ghostEngineer.challenge.goal" : "使用完全部的修理次数并且船员阵营取得胜利。"
-"achievement.ghostEngineer.challenge.cond" : "条件：修理次数大于1"
+"achievement.ghostEngineer.challenge.cond" : "修理次数大于1"
 
 "achievement.judge.common1.title" : "庭审入门"
 "achievement.judge.common1.goal" : "成功审判一人。"
@@ -192,7 +192,7 @@
 
 "achievement.judge.challenge.title" : "审判长"
 "achievement.judge.challenge.goal" : "成功审判三人并存活到最后取得胜利。"
-"achievement.judge.challenge.cond" : "条件：游戏结束时存活且成功审判三人"
+"achievement.judge.challenge.cond" : "游戏结束时存活且成功审判三人"
 
 "achievement.knight.common1.title" : "来者何人"
 "achievement.knight.common1.goal" : "成功格挡一次击杀。"
@@ -204,7 +204,7 @@
 
 "achievement.knight.challenge.title" : "四面楚歌"
 "achievement.knight.challenge.goal" : "一次性格挡三次击杀。"
-"achievement.knight.challenge.cond" : "条件：在一次技能期间避免三次击杀"
+"achievement.knight.challenge.cond" : "在一次技能期间避免三次击杀"
 
 "achievement.oracle.common1.title" : "让我看看"
 "achievement.oracle.common1.goal" : "使用一次占卜。"
@@ -212,11 +212,11 @@
 
 "achievement.oracle.common2.title" : "无用功"
 "achievement.oracle.common2.goal" : "占卜同一人。"
-"achievement.oracle.common2.cond" : "条件：该玩家的占卜信息没有被刷新（死亡后复活）"
+"achievement.oracle.common2.cond" : "该玩家的占卜信息没有被刷新（死亡后复活）"
 
 "achievement.oracle.challenge.title" : "进击的赌徒"
 "achievement.oracle.challenge.goal" : "占卜后赌杀一人。"
-"achievement.oracle.challenge.cond" : "条件：被赌杀的玩家已经被占卜过且信息没有被刷新（死亡后复活）"
+"achievement.oracle.challenge.cond" : "被赌杀的玩家已经被占卜过且信息没有被刷新（死亡后复活）"
 
 "achievement.schrödingersCat.common1.title" : "墙头草"
 "achievement.schrödingersCat.common1.goal" : "更换阵营。"
@@ -244,4 +244,4 @@
 
 "achievement.unyielding.challenge2.title" : "重生(极速版)"
 "achievement.unyielding.challenge2.goal" : "目睹击杀现场。"
-"achievement.unyielding.challenge2.cond" : "条件：尚未复活过"
+"achievement.unyielding.challenge2.cond" : "尚未复活过"

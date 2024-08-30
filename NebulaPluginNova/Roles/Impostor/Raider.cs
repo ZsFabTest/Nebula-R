@@ -18,6 +18,7 @@ public class Raider : DefinedRoleTemplate, HasCitation, DefinedRole
 {
     private Raider() : base("raider", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [ThrowCoolDownOption, AxeSizeOption, AxeSpeedOption,CanKillImpostorOption]) {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagFunny, ConfigurationTags.TagDifficult);
+        ConfigurationHolder!.Illustration = new NebulaSpriteLoader("Assets/NebulaAssets/Sprites/Configurations/Raider.png");
 
         MetaAbility.RegisterCircle(new("role.raider.axeSize", () => AxeSizeOption * 0.4f, () => null, UnityColor));
     }

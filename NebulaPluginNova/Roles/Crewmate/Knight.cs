@@ -24,11 +24,11 @@ public class Knight : DefinedRoleTemplate, DefinedRole
         private static Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.BlockButton.png", 115f);
         private AchievementToken<(bool cleared, int count)>? acTokenChallenge;
         private ModAbilityButton blockButton = null!;
-        internal static Dictionary<byte, bool> BlockMurderingTab = new();
+        private RemoteIntData? isBlocking = null;
 
         void RuntimeAssignable.OnActivated()
         {
-            BlockMurderingTab = new();
+            isBlocking = new RemoteIntData((int)RemoteIntDataId.KnightDataBase + MyPlayer.PlayerId, 0);
             if (AmOwner)
             {
                 acTokenChallenge = new("knight.challenge", (false, 0), (val, _) => val.cleared);
@@ -45,11 +45,11 @@ public class Knight : DefinedRoleTemplate, DefinedRole
                 blockButton.OnEffectStart = (button) =>
                 {
                     acTokenChallenge!.Value.count = 0;
-                    RpcSetBlock.Invoke((MyPlayer.PlayerId, true));
+                    isBlocking.Update(1);
                 };
                 blockButton.OnEffectEnd = (button) =>
                 {
-                    RpcSetBlock.Invoke((MyPlayer.PlayerId, false));
+                    isBlocking.Update(0);
                     button.StartCoolDown();
                 };
                 blockButton.CoolDownTimer = Bind(new Timer(BlockCoolDownOption).SetAsAbilityCoolDown().Start());
@@ -61,7 +61,8 @@ public class Knight : DefinedRoleTemplate, DefinedRole
 
         void RuntimeAssignable.OnInactivated()
         {
-            RpcSetBlock.Invoke((MyPlayer.PlayerId, false));
+            isBlocking?.Update(0);
+            isBlocking = null;
         }
 
         [OnlyMyPlayer]
@@ -72,9 +73,10 @@ public class Knight : DefinedRoleTemplate, DefinedRole
             //Debug.Log($"{ev.Killer.PlayerId} {MyPlayer.PlayerId}");
             if (ev.IsMeetingKill || ev.EventDetail == EventDetail.Curse) return;
             if (ev.Killer.PlayerId == MyPlayer.PlayerId) return;
-            bool temp;
             //Debug.Log(result.ToString());
-            ev.Result = (BlockMurderingTab.TryGetValue(ev.Player.PlayerId, out temp) && temp) ? KillResult.Guard : KillResult.Kill;
+
+            //Debug.LogWarning(RemoteIntData.Get((int)RemoteIntDataId.KnightDataBase + ev.Player.PlayerId));
+            ev.Result = RemoteIntData.Get((int)RemoteIntDataId.KnightDataBase + ev.Player.PlayerId) == 1 ? KillResult.Guard : KillResult.Kill;
         }
 
         [OnlyMyPlayer]
@@ -93,9 +95,4 @@ public class Knight : DefinedRoleTemplate, DefinedRole
             }
         }
     }
-    private static readonly RemoteProcess<(byte playerId, bool status)> RpcSetBlock = new(
-        "SetBlock", (message, _) =>
-        {
-            Instance.BlockMurderingTab[message.playerId] = message.status;
-        });
 }

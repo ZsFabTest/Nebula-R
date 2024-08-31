@@ -301,7 +301,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         [Local]
         void DecorateSidekickColor(PlayerDecorateNameEvent ev)
         {
-            if (IsJackal(ev.Player)) ev.Color = MyRoleJackal.RoleColor;
+            if (IsJackal(ev.Player) && ev.Player.PlayerId != MyPlayer.PlayerId) ev.Color = MyRoleJackal.RoleColor;
         }
 
         //サイドキックはジャッカルを識別できる
@@ -311,7 +311,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
             var myInfo = PlayerControl.LocalPlayer.GetModInfo();
             if (myInfo == null) return;
 
-            if (IsJackal(myInfo)) ev.Color = MyRoleJackal.RoleColor;
+            if (IsJackal(myInfo) && ev.Player.PlayerId != MyPlayer.PlayerId) ev.Color = MyRoleJackal.RoleColor;
         }
     }
 }

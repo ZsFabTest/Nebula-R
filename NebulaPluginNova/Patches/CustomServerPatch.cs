@@ -1,4 +1,5 @@
-﻿using Il2CppInterop.Runtime.InteropTypes.Arrays;
+﻿using BepInEx;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Nebula.Behaviour;
 using UnityEngine.Events;
 
@@ -66,7 +67,7 @@ public static class RegionMenuOpenPatch
                 Hint = "Server IP".Color(Color.gray),
                 DefaultText = SaveIp.Value
             };
-            widget.Generate(__instance.gameObject, new Vector3(0f, -1.2f, -100f), out _);
+            widget.Generate(__instance.gameObject, new Vector3(-2.5f, -1.2f, -100f), out _);
 
             ipField = ipRef.Value!;
             ipField.LostFocusAction = (text) =>
@@ -89,7 +90,7 @@ public static class RegionMenuOpenPatch
                 Hint = "Server Port".Color(Color.gray),
                 DefaultText = SavePort.Value.ToString()
             };
-            widget.Generate(__instance.gameObject, new Vector3(0f, -1.8f, -100f), out _);
+            widget.Generate(__instance.gameObject, new Vector3(-2.5f, -1.8f, -100f), out _);
 
             portField = portRef.Value!;
             portField.LostFocusAction = (text) =>
@@ -107,6 +108,7 @@ public static class RegionMenuOnEnablePatch
 {
     public static void Postfix(RegionMenu __instance)
     {
+        DestroyableSingleton<ServerManager>.Instance.LoadServers();
         foreach (var button in __instance.ButtonPool.activeChildren)
         {
             var serverButton = button.CastFast<ServerListButton>();
@@ -121,5 +123,28 @@ public static class RegionMenuOnEnablePatch
             }));
 
         }
+
+        Transform back = __instance.ButtonPool.transform.FindChild("Backdrop");
+        back.transform.localScale *= 10f;
+        var oldScroller = __instance.ButtonPool.transform.parent.gameObject.GetComponent<Scroller>;
+        if (oldScroller != null) oldScroller = null;
+        Scroller RegionMenuScroller = __instance.ButtonPool.transform.parent.gameObject.AddComponent<Scroller>();
+        RegionMenuScroller.Inner = __instance.ButtonPool.transform;
+        RegionMenuScroller.MouseMustBeOverToScroll = true;
+        RegionMenuScroller.ClickMask = back.GetComponent<BoxCollider2D>();
+        RegionMenuScroller.ScrollWheelSpeed = 0.5f;
+        RegionMenuScroller.SetYBoundsMin(0f);
+        RegionMenuScroller.SetYBoundsMax(__instance.ButtonPool.poolSize * 0.222f);
+        RegionMenuScroller.allowY = true;
+        RegionMenuScroller.allowX = false;
+    }
+}
+
+[HarmonyPatch(typeof(ServerManager), nameof(ServerManager.LoadServers))]
+public static class LoadServersPatch
+{
+    public static void Prefix(ServerManager __instance)
+    {
+        __instance.serverInfoFileJson = Path.Combine(Paths.GameRootPath,"RegionInfo", "regionInfo.json");
     }
 }

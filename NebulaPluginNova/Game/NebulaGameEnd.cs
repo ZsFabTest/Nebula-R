@@ -5,6 +5,8 @@ using Virial;
 using Virial.Events.Game;
 using Virial.Runtime;
 using Nebula.Game.Statistics;
+using System.Runtime.CompilerServices;
+using BepInEx;
 
 namespace Nebula.Game;
 
@@ -268,7 +270,7 @@ public class EndGameManagerSetUpPatch
         //勝利メンバーを載せる
         List<byte> winners = new List<byte>();
         bool amWin = false;
-        foreach(var p in NebulaGameManager.Instance.AllPlayerInfo())
+        foreach (var p in NebulaGameManager.Instance.AllPlayerInfo())
         {
             if (endState.Winners.Test(p))
             {
@@ -373,7 +375,7 @@ public class EndGameManagerSetUpPatch
         else
         {
             SendDiscordWebhook(LastGameHistory.GenerateTexture().EncodeToPNG());
-        }    
+        }
 
         //Achievements
         //標準ゲームモードで廃村でない、かつOP権限が誰にも付与されていないゲームの場合
@@ -381,6 +383,8 @@ public class EndGameManagerSetUpPatch
         {
             NebulaManager.Instance.StartCoroutine(NebulaAchievementManager.CoShowAchievements(NebulaManager.Instance, NebulaAchievementManager.UniteAll()).WrapToIl2Cpp());
         }
+
+        LastGameHistory.SaveResult(NebulaManager.GetPicturePath(out _));
     }
 }
 

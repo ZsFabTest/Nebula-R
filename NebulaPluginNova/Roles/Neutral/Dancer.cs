@@ -467,10 +467,12 @@ public class Dancer : DefinedRoleTemplate, HasCitation, DefinedRole
             }
         }
 
+        /*
         void BlockWinning(PlayerBlockWinEvent ev)
         {
             ev.SetBlockedIf(!MyPlayer.IsDead && activeDanceLooked.Contains(ev.Player));
         }
+        */ 
 
         void ExtraWinning(PlayerCheckExtraWinEvent ev)
         {

@@ -100,6 +100,17 @@ public static class PlayerUpdatePatch
                 HudManager.Instance.ReportButton.SetDisabled();
                 HudManager.Instance.PetButton.SetDisabled();
             }
+
+            // 分配Last Impostor
+            if (!__instance.Data.IsDead
+                 && Roles.Modifier.LastImpostor.CanSpawnOption
+                 && !(__instance.GetModInfo()?.TryGetModifier<Roles.Modifier.LastImpostor.Instance>(out _) ?? true)
+                 && __instance.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole
+                 && PlayerControl.AllPlayerControls.GetFastEnumerator().Count(
+                     (p) => !p.Data.IsDead && p.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole) <= 1)
+            {
+                __instance.GetModInfo()?.Unbox().RpcInvokerSetModifier(Roles.Modifier.LastImpostor.MyRole, null!).InvokeSingle();
+            }
         }
         
 
@@ -113,16 +124,6 @@ public static class PlayerUpdatePatch
 
         //Debug.Log(PlayerControl.AllPlayerControls.GetFastEnumerator().Count(
         //         (p) => p.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole));
-        // 分配Last Impostor
-        if (!PlayerControl.LocalPlayer.Data.IsDead
-             && Roles.Modifier.LastImpostor.CanSpawnOption
-             && !(PlayerControl.LocalPlayer.GetModInfo()?.TryGetModifier<Roles.Modifier.LastImpostor.Instance>(out _) ?? true)
-             && PlayerControl.LocalPlayer.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole
-             && PlayerControl.AllPlayerControls.GetFastEnumerator().Count(
-                 (p) => p.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole) <= 1)
-        {
-            PlayerControl.LocalPlayer.GetModInfo()?.Unbox().RpcInvokerSetModifier(Roles.Modifier.LastImpostor.MyRole, null!).InvokeSingle();
-        }
     }
 }
 

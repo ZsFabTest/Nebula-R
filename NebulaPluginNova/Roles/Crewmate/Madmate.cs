@@ -372,8 +372,8 @@ public class MadmateModifier : DefinedModifierTemplate, DefinedAllocatableModifi
 
         string editRoleName(string name, bool isShort)
         {
-            if (isShort) return Language.Translate("role.madmate.prefix.short").Color(MyRole.UnityColor) + name;
-            else return Language.Translate("role.madmate.prefix").Color(MyRole.UnityColor) + name;
+            if (isShort) return Language.Translate("role.madmateModifier.prefix.short").Color(MyRole.UnityColor) + name;
+            else return Language.Translate("role.madmateModifier.prefix").Color(MyRole.UnityColor) + name;
         }
 
         string RuntimeAssignable.OverrideRoleName(string lastRoleName, bool isShort) => editRoleName(lastRoleName, isShort);

@@ -1,40 +1,63 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using UnityEngine;
-using static Il2CppSystem.Xml.Schema.XsdDuration;
+﻿namespace Nebula.Modules;
 
-namespace Nebula.Modules;
-
+/// <summary>
+/// 保存对应的RemoteIntDataId或RemoteIntDataBase
+/// </summary>
 internal enum RemoteIntDataId
 {
     DefaultIntData,
     KnightDataBase = 100,
 }
 
+/// <summary>
+/// 自动进行远程同步的int数据
+/// </summary>
 [NebulaRPCHolder]
 internal class RemoteIntData
 {
+    /// <summary>
+    /// RemoteIntData池 用于保存所有同步的RemoteIntData 不可从外部修改
+    /// </summary>
     private static List<RemoteIntData?> RemoteIntDatas = new();
 
+    /// <summary>
+    /// RemoteIntData值 默认不可直接访问 有Get()方法和隐式转换
+    /// </summary>
     private int value;
-    private int id;
-    Action<int> update { get; init; }
-    public RemoteIntData(int id, int data, bool skipInit = false) 
+    /// <summary>
+    /// RemoteIntData id 默认不可直接访问 初始化后不可修改
+    /// </summary>
+    private int Id { get; init; }
+    /// <summary>
+    /// 构建RemoteIntData并判断是否需要进行同步
+    /// </summary>
+    /// <param name="id">int值</param>
+    /// <param name="data">初始数据</param>
+    /// <param name="skipInit">是否跳过初始化同步</param>
+    private RemoteIntData(int id, int data, bool skipInit) 
     { 
         value = data;
-        this.id = id;
-        update = (data) => { value = data; };
+        this.Id = id;
         RemoteIntDatas.Add(this);
-        if (!skipInit) RpcInitRemoteData.Invoke((this.id, value));
+        if (!skipInit) InitRemoteData(id, data);
     }
-    // 防止编译器误报CS8618警告
-    #pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
-    public RemoteIntData(RemoteIntDataId id, int data) => new RemoteIntData((int)id, data);
-    #pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
+    /// <summary>
+    /// 构建RemoteIntData
+    /// </summary>
+    /// <param name="id">可以使用int或RemoteIntDataId</param>
+    /// <param name="data">初始数据</param>
+    public RemoteIntData(int id, int data) => new RemoteIntData(id, data, false);
+    /// <summary>
+    /// 构建RemoteIntData
+    /// </summary>
+    /// <param name="id">可以使用int或RemoteIntDataId</param>
+    /// <param name="data">初始数据</param>
+    public RemoteIntData(RemoteIntDataId id, int data) => new RemoteIntData((int)id, data, false);
 
     /// <summary>
     /// 若没有对应值返回 int.MinValue.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">可以使用int或RemoteIntDataId</param>
     public static int Get(int id)
     {
         foreach (var rid in RemoteIntDatas)
@@ -42,56 +65,78 @@ internal class RemoteIntData
             //Debug.LogWarning(rid?.id);
             //Debug.LogWarning(rid?.value);
             //Debug.LogWarning("");
-            if ((rid?.id ?? int.MinValue) == id)
+            if ((rid?.Id ?? int.MinValue) == id)
             {
                 return rid!.value;
             }
         }
         return int.MinValue;
     }
+    /// <summary>
+    /// 若没有对应值返回 int.MinValue.
+    /// </summary>
+    /// <param name="id">可以使用int或RemoteIntDataId</param>
     public static int Get(RemoteIntDataId id) => Get((int)id);
+    /// <summary>
+    /// 返回RemoteIntData值 建议使用隐式转换
+    /// </summary>
     public int Get() => value;
 
     /// <summary>
     /// 若成功更新则返回 ture 否则返回 false.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="data"></param>
+    /// <param name="id">可以使用int或RemoteIntDataId</param>
+    /// <param name="data">需要修改为的数据</param>
     public static bool Update(int id, int data)
     {
-        RpcUpdateRemoteIntData.Invoke((id, data));
+        UpdateRemoteIntData(id, data);
         foreach (var rid in RemoteIntDatas)
         {
-            if ((rid?.id ?? int.MinValue) == id)
+            if ((rid?.Id ?? int.MinValue) == id)
             {
-                rid!.update.Invoke(data);
+                rid!.value = data;
                 return true;
             }
         }
         return false;
     }
+    /// <summary>
+    /// 若成功更新则返回 ture 否则返回 false.
+    /// </summary>
+    /// <param name="id">可以使用int或RemoteIntDataId</param>
+    /// <param name="data">需要修改为的数据</param>
     public static bool Update(RemoteIntDataId id, int data) => Update((int)id, data);
-    public bool Update(int data) => Update(id, data);
+    /// <summary>
+    /// 若成功更新则返回 ture 否则返回 false.
+    /// </summary>
+    /// <param name="data">需要修改为的数据</param>
+    public bool Update(int data) => Update(Id, data);
 
+    /// <summary>
+    /// 获取对应id的RemoteIntData
+    /// </summary>
+    /// <param name="id">需要查寻的id 可以使用int或RemoteIntDataId</param>
+    /// <returns></returns>
     public static RemoteIntData? GetRemoteIntData(int id)
     {
-        for (int i = 0; i < RemoteIntDatas.Count; i++)
-        {
-            if ((RemoteIntDatas[i]?.id ?? int.MinValue) == id)
-            {
-                return RemoteIntDatas[i];
-            }
-        }
-        return null;
+        return RemoteIntDatas.FirstOrDefault((d) => (d?.Id ?? int.MinValue) == id);
     }
+    /// <summary>
+    /// 获取对应id的RemoteIntData
+    /// </summary>
+    /// <param name="id">需要查寻的id 可以使用int或RemoteIntDataId</param>
+    /// <returns></returns>
     public static RemoteIntData? GetRemoteIntData(RemoteIntDataId id) => GetRemoteIntData((int)id);
 
+    /// <summary>
+    /// 同步初始化RemoteIntData的Rpc
+    /// </summary>
     private static readonly RemoteProcess<(int id, int data)> RpcInitRemoteData = new RemoteProcess<(int id, int data)>(
         "InitRemoteData",
         (message, _) => {
             for (int i = 0; i < RemoteIntDatas.Count; i++)
             {
-                if ((RemoteIntDatas[i]?.id ?? int.MinValue) == message.id)
+                if ((RemoteIntDatas[i]?.Id ?? int.MinValue) == message.id)
                 {
                     RemoteIntDatas[i] = new RemoteIntData(message.id, message.data, true);
                     return;
@@ -99,11 +144,16 @@ internal class RemoteIntData
             }
             RemoteIntDatas.Add(new RemoteIntData(message.id, message.data, true));
         });
+    /// <summary>
+    /// 同步初始化RemoteIntData的Rpc
+    /// </summary>
+    /// <param name="id">int值</param>
+    /// <param name="data">初始值</param>
+    private static void InitRemoteData(int id, int data) => RpcInitRemoteData.Invoke((id, data));
 
-    public static implicit operator int(RemoteIntData RemoteData) => RemoteData.value;
-
-    public static implicit operator RemoteIntData(int data) => new(RemoteIntDataId.DefaultIntData, data);
-
+    /// <summary>
+    /// 同步更新RemoteIntData的Rpc
+    /// </summary>
     private static readonly RemoteProcess<(int id, int data)> RpcUpdateRemoteIntData = new RemoteProcess<(int id, int data)>(
         "UpdateRemoteIntData",
         (writer, message) => { 
@@ -115,11 +165,30 @@ internal class RemoteIntData
         {
             foreach (var rid in RemoteIntDatas)
             {
-                if ((rid?.id ?? int.MinValue) == message.id)
+                if ((rid?.Id ?? int.MinValue) == message.id)
                 {
-                    rid!.update.Invoke(message.data);
+                    rid!.value = message.data;
                     break;
                 }
             }
         });
+    /// <summary>
+    /// 同步初始化RemoteIntData的Rpc
+    /// </summary>
+    /// <param name="id">int值</param>
+    /// <param name="data">所需更新的值</param>
+    private static void UpdateRemoteIntData(int id, int data) => RpcUpdateRemoteIntData.Invoke((id, data));
+
+    // 隐式从RemoteIntData转为int
+    public static implicit operator int(RemoteIntData RemoteData) => RemoteData.value;
+    // 隐式从int转为RemoteIntData id为 RemoteIntDataId.DefaultIntData(0)
+    public static implicit operator RemoteIntData(int data) => new(RemoteIntDataId.DefaultIntData, data);
+}
+
+/// <summary>
+/// 提供提前准备好的已经被创建的RemoteIntData避免端与端之间不同步并简化名称
+/// </summary>
+public static class StaticRemoteIntData
+{
+
 }

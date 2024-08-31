@@ -1,4 +1,5 @@
-﻿using Virial;
+﻿using Cpp2IL.Core.Extensions;
+using Virial;
 using Virial.Assignable;
 using Virial.Configuration;
 using Virial.Events.Game;
@@ -104,12 +105,14 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                     allSpawnable.Add((DefinedRole)r);
                 }
             }
+
             var crewmateRoles = new List<DefinedRole>();
             var impostorRoles = new List<DefinedRole>();
             var neutralRoles = new List<DefinedRole>();
-            var allRoles = new List<DefinedRole>();
+            List<DefinedRole> allRoles = new List<DefinedRole>();
             foreach(var r in allSpawnable)
             {
+                if (MyPlayer.Role.Role.Equals(r)) continue;
                 allRoles.Add(r);
                 switch (r?.Category)
                 {
@@ -123,45 +126,53 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                         neutralRoles.Add(r);
                         break;
                     default:
-                        Debug.LogError("Oracle: Unknown Role");
+                        //Debug.LogError("Oracle: Unknown Role");
                         break;
                 }
             }
 
-            List<DefinedRole> results = new();
-            results.Add(player.Role.Role);
+            DefinedRole? GetRandomRole(List<DefinedRole> tab)
+            {
+                if (tab.Count > 0)
+                {
+                    DefinedRole target = tab.Random()!;
+                    tab.Remove(target);
+                    allRoles.Remove(target);
+                    return target;
+                }
+                return null;
+            }
+
+            List<DefinedRole?> results = new() { player.Role.Role };
             switch (player?.Role.Role.Category)
             {
                 case RoleCategory.CrewmateRole:
-                    results.Add(impostorRoles.Count > 0 ? impostorRoles.Random()! : Impostor.Impostor.MyRole);
-                    results.Add(neutralRoles.Count > 0 ? neutralRoles.Random()! : Neutral.ChainShifter.MyRole);
+                    results.Add(GetRandomRole(impostorRoles));
+                    results.Add(GetRandomRole(neutralRoles));
                     break;
                 case RoleCategory.ImpostorRole:
-                    results.Add(crewmateRoles.Count > 0 ? crewmateRoles.Random()! : Crewmate.MyRole);
-                    results.Add(neutralRoles.Count > 0 ? neutralRoles.Random()! : Neutral.ChainShifter.MyRole);
+                    results.Add(GetRandomRole(crewmateRoles));
+                    results.Add(GetRandomRole(neutralRoles));
                     break;
                 case RoleCategory.NeutralRole:
-                    results.Add(crewmateRoles.Count > 0 ? crewmateRoles.Random()! : Crewmate.MyRole);
-                    results.Add(impostorRoles.Count > 0 ? impostorRoles.Random()! : Impostor.Impostor.MyRole);
+                    results.Add(GetRandomRole(crewmateRoles));
+                    results.Add(GetRandomRole(impostorRoles));
                     break;
                 default:
                     Debug.LogError("Oracle: Unknown Player Role");
                     break;
             }
+
             for(int i = 0; i < infoNum - 3; i++)
             {
-                var role = allRoles.Count > infoNum ? allRoles.Random()! : Crewmate.MyRole;
-                if (results.Contains(role))
-                {
-                    i--;
-                    continue;
-                }
-                results.Add(role);
+                results.Add(GetRandomRole(allRoles));
             }
 
-            int cmp(DefinedRole a, DefinedRole b)
+            results.RemoveAll((r) => r is null);
+
+            int cmp(DefinedRole? a, DefinedRole? b)
             {
-                if (a.Id > b.Id) return 1;
+                if (a!.Id > b!.Id) return 1;
                 else if (a.Id < b.Id) return -1;
                 else return 0;
             }
@@ -171,7 +182,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
             string result = "";
             foreach(var r in results)
             {
-                result += r.DisplayName + ", ";
+                result += r!.DisplayName + ", ";
             }
             return result;
         }

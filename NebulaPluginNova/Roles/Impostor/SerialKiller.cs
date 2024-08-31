@@ -34,6 +34,7 @@ public class SerialKiller : DefinedRoleTemplate, HasCitation, DefinedRole
         public Instance(Virial.Game.Player player) : base(player) { }
         private Timer suicideTimer = null!;
         private bool hasKilled = false;
+        private int killCount = 0;
 
         static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.SerialKillerSuicideButton.png", 100f);
 
@@ -42,6 +43,7 @@ public class SerialKiller : DefinedRoleTemplate, HasCitation, DefinedRole
             if (AmOwner)
             {
                 hasKilled = false;
+                killCount = 0;
                 suicideTimer = Bind(new Timer(suicideTimeOption).Pause());
                 var suicideButton = Bind(new ModAbilityButton(true));
                 suicideButton.SetSprite(buttonSprite.GetSprite());
@@ -65,6 +67,7 @@ public class SerialKiller : DefinedRoleTemplate, HasCitation, DefinedRole
             if(hasKilled && !MyPlayer.IsDead && !suicideTimer.IsProgressing && !AmongUsUtil.InMeeting)
             {
                 MyPlayer.Suicide(PlayerState.Suicide, null, Virial.Game.KillParameter.NormalKill);
+                new StaticAchievementToken("serialKiller.common1");
                 suicideTimer.Pause().Reset();
             }
             else if(hasKilled && !MyPlayer.IsDead && suicideTimer.IsProgressing && !AmongUsUtil.InMeeting)
@@ -100,6 +103,8 @@ public class SerialKiller : DefinedRoleTemplate, HasCitation, DefinedRole
                     hasKilled = true;
                     suicideTimer.Start();
                 }
+                if (++killCount >= 3) new StaticAchievementToken("serialKiller.common2");
+                if (killCount >= 5) new StaticAchievementToken("serialKiller.challenge");
             }
         }
     }

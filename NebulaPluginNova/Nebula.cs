@@ -45,7 +45,7 @@ public class NebulaPlugin : BasePlugin
     public const string VisualVersion = "Snapshot 24w35a";
 
     public const string PluginEpochStr = "102";
-    public const string PluginBuildNumStr = "1113";
+    public const string PluginBuildNumStr = "1114";
     public static readonly int PluginEpoch = int.Parse(PluginEpochStr);
     public static readonly int PluginBuildNum = int.Parse(PluginBuildNumStr);
     public const bool GuardVanillaLangData = false;

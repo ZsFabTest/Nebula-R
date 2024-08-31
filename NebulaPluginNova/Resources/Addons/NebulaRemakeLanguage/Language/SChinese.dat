@@ -230,6 +230,18 @@
 "achievement.oracle.challenge.goal" : "占卜后赌杀一人。"
 "achievement.oracle.challenge.cond" : "被赌杀的玩家已经被占卜过且信息没有被刷新（死亡后复活）"
 
+"achievement.serialKiller.common1.title" : "awsl"
+"achievement.serialKiller.common1.goal" : "由于没有及时出刀导致嗜血杀手自杀。"
+"achievement.serialKiller.common1.cond" : ""
+
+"achievement.serialKiller.common2.title" : "连环杀手"
+"achievement.serialKiller.common2.goal" : "以嗜血杀手身份击杀3人。"
+"achievement.serialKiller.common2.cond" : ""
+
+"achievement.serialKiller.challenge.title" : "饥渴难耐"
+"achievement.serialKiller.challenge.goal" : "以嗜血杀手身份击杀5人。"
+"achievement.serialKiller.challenge.cond" : ""
+
 "achievement.schrödingersCat.common1.title" : "墙头草"
 "achievement.schrödingersCat.common1.goal" : "更换阵营。"
 "achievement.schrödingersCat.common1.cond" : ""

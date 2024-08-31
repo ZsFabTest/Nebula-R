@@ -73,9 +73,11 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                     {
                         info = GetInfomation(myTracker.CurrentTarget!, NumOfInfoOption).TrimEnd(' ').TrimEnd(',');
                         oracleResults.Add(myTracker.CurrentTarget!.PlayerId, info);
-                        new StaticAchievementToken("oracle.common2");
                     }
-                    else info = oracleResults[myTracker.CurrentTarget!.PlayerId];
+                    else {
+                        new StaticAchievementToken("oracle.common2");
+                        info = oracleResults[myTracker.CurrentTarget!.PlayerId];
+                    } 
 
                     string message = Language.Translate("role.oracle.message").Replace("%PLAYER%", myTracker.CurrentTarget.Name).Replace("%DETAIL%", info);
                     this.message.text = message;

@@ -85,7 +85,7 @@ public static class AmongUsUtil
     }
 
     public static UiElement CurrentUiElement => ControllerManager.Instance.CurrentUiState.CurrentSelection;
-    public static bool InMeeting => MeetingHud.Instance == null && ExileController.Instance == null;
+    public static bool InMeeting => MeetingHud.Instance != null || ExileController.Instance != null;
     public static byte CurrentMapId => GameOptionsManager.Instance.CurrentGameOptions.MapId;
     private static string[] mapName = new string[] { "skeld", "mira", "polus", "undefined", "airship", "fungle" };
     public static string ToMapName(byte mapId) => mapName[mapId];

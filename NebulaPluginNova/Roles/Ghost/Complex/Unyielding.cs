@@ -59,6 +59,7 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
                     myTracker.CurrentTarget!.Unbox().RpcInvokerSetRole(GetDefaultRole(targetRole.Category), null).InvokeSingle();
                     hasRevived = true;
                     new StaticAchievementToken("unyielding.common1");
+                    NebulaGameManager.Instance?.SetSpectator(false);
                 };
                 revievButton.SetLabel("revive");
             }

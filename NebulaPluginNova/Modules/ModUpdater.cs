@@ -85,7 +85,7 @@ public class ModUpdater
 
         private async Task UpdateAsync()
         {
-            string url = $"https://mirror.ghproxy.com/https://github.com/ZsFabTest/Nebula-R/releases/download/{rawTag}/Nebula.dll";
+            string url = $"https://gh.con.sh/https://github.com/ZsFabTest/Nebula-R/releases/download/{rawTag}/Nebula.dll";
             var response = await NebulaPlugin.HttpClient.GetAsync(url);
             if (response.StatusCode != HttpStatusCode.OK) return;
             var dllStream = await response.Content.ReadAsStreamAsync();

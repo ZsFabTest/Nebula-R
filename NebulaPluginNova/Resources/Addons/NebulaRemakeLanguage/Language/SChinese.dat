@@ -38,6 +38,7 @@
 "options.role.judge.canJudgeMadmate" : "可以处决叛徒"
 "options.role.judge.canJudgeLovers" : "可以处决恋人"
 "options.role.judge.canCallEmergencyMeeting" : "可以发起紧急会议"
+"options.role.judge.canJudgeAnyoneWhenBecomeMadmate" : "叛徒法官乱杀"
 
 "role.knight.name" : "骑士"
 "role.knight.short" : "骑"
@@ -51,6 +52,7 @@
 "role.lastImpostor.generalBlurb" : "赌上所拥有的一切"
 "options.role.lastImpostor.detail" : "绝境者拥有赌怪能力。<br>绝境者的赌杀总次数不限，每次会议次数不限。"
 "options.role.lastImpostor.canSpawn" : "在剩余最后一名伪装者时分配"
+"options.role.lastImpostor.canGuessAnyRole" : "绝境者无视赌怪可赌职业限制"
 
 "role.madmateModifier.name" : "叛徒"
 "role.madmateModifier.short" : "叛"
@@ -69,6 +71,15 @@
 "options.role.oracle.oracleDuration" : "占卜所需时间"
 "options.role.oracle.numOfInfo" : "占卜获得的职业数量"
 "role.oracle.message" : "%PLAYER%的职业是%DETAIL%其中之一"
+
+"role.serialKiller.name" : "嗜血杀手"
+"role.serialKiller.short" : "嗜"
+"role.serialKiller.blurb" : "你渴望鲜血"
+"options.role.serialKiller.detail" : "你的击杀快于一般伪装者，但在第一次击杀后一定时间内没有出刀则会自杀。"
+"options.role.serialKiller.killCoolDown" : "击杀冷却时间"
+"options.role.serialKiller.suicideTime" : "自杀倒计时最大时间"
+"options.role.serialKiller.timeToGet" : "每次击杀后自杀倒计时冷却恢复最大时间"
+"options.role.serialKiller.timeEachKillingGet" : "每次击杀获得的冷却时间"
 
 "role.schrödingersCat.name" : "薛定谔的猫"
 "role.schrödingersCat.short" : "猫"
@@ -105,6 +116,7 @@
 "button.label.repair" : "修理"
 "button.label.oracle" : "占卜"
 "button.label.quickStart" : "快速开始"
+"button.label.serialKillerSuicide" : "自杀倒计时"
 
 # Teams
 

@@ -319,6 +319,11 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
 
         new SpectatorsAbility().Register(this);
     }
+    /// <summary>
+    /// 用于本模组内的修改旁观
+    /// </summary>
+    /// <param name="value"></param>
+    internal void SetSpectator(bool value) => CanBeSpectator = value;
 
     //ゲーム内履歴
     public List<RoleHistory> RoleHistory = new();

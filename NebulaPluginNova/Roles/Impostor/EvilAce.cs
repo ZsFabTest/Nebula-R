@@ -15,7 +15,7 @@ public class EvilAce : DefinedRoleTemplate, HasCitation, DefinedRole
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 
-    private static FloatConfiguration killCoolDownOption = NebulaAPI.Configurations.Configuration("options.role.evilAce.killCoolDown", (0.125f, 1f, 0.125f), 0.75f, FloatConfigurationDecorator.Ratio);
+    private static FloatConfiguration killCoolDownOption = NebulaAPI.Configurations.Configuration("options.role.evilAce.killCoolDown", (0.125f, 1f, 0.125f), 0.75f, decorator: val => val + ("x" + $" ({string.Format("{0:#.#}", AmongUsUtil.VanillaKillCoolDown * val)}{Language.Translate("options.sec")})".Color(Color.gray)));
 
     public static EvilAce MyRole = new EvilAce();
 

@@ -12,13 +12,14 @@ namespace Nebula.Roles.Modifier;
 
 public class LastImpostor : DefinedModifierTemplate, DefinedAllocatableModifier, HasCitation, RoleFilter
 {
-    private LastImpostor() : base("lastImpostor", Virial.Color.ImpostorColor, [CanSpawnOption])
+    private LastImpostor() : base("lastImpostor", Virial.Color.ImpostorColor, [CanSpawnOption, CanGuessAnyRoleOption])
     {
         ConfigurationHolder?.SetDisplayState(() => CanSpawnOption ? ConfigurationHolderState.Emphasized : ConfigurationHolderState.Inactivated);
     }
     Citation? HasCitation.Citaion => Citations.TheOtherRolesGMH;
 
     internal static BoolConfiguration CanSpawnOption = NebulaAPI.Configurations.Configuration("options.role.lastImpostor.canSpawn", false);
+    internal static BoolConfiguration CanGuessAnyRoleOption = NebulaAPI.Configurations.Configuration("options.role.lastImpostor.canGuessAnyRole", false);
 
     RuntimeModifier RuntimeAssignableGenerator<RuntimeModifier>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 
@@ -82,7 +83,7 @@ static file class LIGuesserSystem
         MetaWidgetOld widget = new();
 
         MetaWidgetOld inner = new();
-        inner.Append(Roles.AllRoles.Where(r => r.CanBeGuess && r.IsSpawnable), r => new MetaWidgetOld.Button(() => onSelected.Invoke(r), ButtonAttribute) { RawText = r.DisplayColoredName, PostBuilder = (_, renderer, _) => renderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask }, 4, -1, 0, 0.59f);
+        inner.Append(Roles.AllRoles.Where(r => (r.CanBeGuess || LastImpostor.CanGuessAnyRoleOption) && r.IsSpawnable), r => new MetaWidgetOld.Button(() => onSelected.Invoke(r), ButtonAttribute) { RawText = r.DisplayColoredName, PostBuilder = (_, renderer, _) => renderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask }, 4, -1, 0, 0.59f);
         MetaWidgetOld.ScrollView scroller = new(new(6.6f, 3.8f), inner, true) { Alignment = IMetaWidgetOld.AlignmentOption.Center };
         widget.Append(scroller);
 

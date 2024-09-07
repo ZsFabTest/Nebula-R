@@ -28,4 +28,5 @@ public static class NebulaTeams
     public static RoleTeam ChainShifterTeam { get; internal set; } = null!;
     public static RoleTeam SchrödingersCatTeam { get; internal set; } = null!;
     public static RoleTeam CollectorTeam { get; internal set; } = null!;
+    public static RoleTeam PavlovTeam {  get; internal set; } = null!;
 }

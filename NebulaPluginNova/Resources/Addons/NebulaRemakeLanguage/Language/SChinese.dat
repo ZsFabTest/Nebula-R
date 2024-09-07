@@ -72,6 +72,23 @@
 "options.role.oracle.numOfInfo" : "占卜获得的职业数量"
 "role.oracle.message" : "%PLAYER%的职业是%DETAIL%其中之一"
 
+"role.pavlov.name" : "巴普洛夫"
+"role.pavlov.short" : "巴"
+"role.pavlov.blurb" : "当我的狗吧！"
+"options.role.pavlov.detail" : "巴普洛夫可以招募巴普洛夫的狗。<br>同一巴普洛夫职业只能同时存在一个巴普洛夫的狗。"
+"options.role.pavlov.maxFeedCount" : "最大招募人数"
+"options.role.pavlov.feedCoolingDown" : "招募冷却时间"
+
+"role.pavlovsDog.name" : "巴普洛夫的狗"
+"role.pavlovsDog.short" : "狗"
+"role.pavlovsDog.blurb" : "我是____的狗！"
+"options.role.pavlovsDog.detail" : "巴普洛夫的狗拥有击杀能力。<br>当狗主人死亡时，巴普洛夫的狗会进入疯狂状态。<br>疯狂状态下巴普洛夫的狗拥有类似于嗜血杀手开刀后的能力。"
+"options.role.pavlovsDog.canKillHidingPlayer" : "可以击杀隐藏的玩家"
+"options.role.pavlovsDog.killCoolDown" : "一般击杀冷却时间"
+"options.role.pavlovsDog.killCoolDownWhenOwnerDied" : "疯狂时击杀冷却时间"
+"options.role.pavlovsDog.suicideTime" : "自杀倒计时最大时间"
+"options.role.pavlovsDog.resetSuicideTimerAfterMeeting" : "会议后重置倒计时"
+
 "role.serialKiller.name" : "嗜血杀手"
 "role.serialKiller.short" : "嗜"
 "role.serialKiller.blurb" : "你渴望鲜血"
@@ -105,6 +122,11 @@
 "role.schrödingersCatJackal.blurb" : "墙头草，两边倒"
 "options.role.schrödingersCatJackal.detail" : "你现在加入了豺狼阵营。<br>击杀所有人并与豺狼共同胜利。"
 
+"role.tianMengLucky.name" : "天寸"
+"role.tianMengLucky.short" : "Yee"
+"role.tianMengLucky.generalBlurb" : "每 日 发 癫"
+"options.role.tianMengLucky.detail" : "如果你是第三方阵营，被票后直接胜利。<br>如果你是船员阵营，你只能跟伪装者胜利，且你存活期间内，船员不能胜利。<br>如果你是伪装者阵营，自己必须存活，且仅剩自己的情况下才能胜利。"
+
 "role.unyielding.name" : "不屈者"
 "role.unyielding.short" : "屈"
 "role.unyielding.blurb" : "我还不想死"
@@ -113,6 +135,7 @@
 # Buttons
 
 "button.label.block" : "格挡"
+"button.label.feed" : "喂养"
 "button.label.repair" : "修理"
 "button.label.oracle" : "占卜"
 "button.label.quickStart" : "快速开始"
@@ -122,10 +145,12 @@
 
 "teams.collector" : "集票者"
 "teams.schrödingersCat" : "薛定谔的猫"
+"teams.pavlov" : "巴普洛夫团队"
 
 # Endings
 
 "end.collector" : "集票者获胜"
+"end.pavlov" : "巴普洛夫团队胜利"
 
 # Chat
 
@@ -229,6 +254,26 @@
 "achievement.oracle.challenge.title" : "进击的赌徒"
 "achievement.oracle.challenge.goal" : "占卜后赌杀一人。"
 "achievement.oracle.challenge.cond" : "被赌杀的玩家已经被占卜过且信息没有被刷新（死亡后复活）"
+
+"achievement.pavlov.common1.title" : "狗主人"
+"achievement.pavlov.common1.goal" : "招募巴普洛夫的狗。"
+"achievement.pavlov.common1.cond" : ""
+
+"achievement.pavlov.common2.title" : "帮主"
+"achievement.pavlov.common2.goal" : "耗尽招募次数。"
+"achievement.pavlov.common2.cond" : ""
+
+"achievement.pavlov.challenge.title" : "汪汪队"
+"achievement.pavlov.challenge.goal" : "耗尽招募次数的情况下胜利。"
+"achievement.pavlov.challenge.cond" : ""
+
+"achievement.pavlovsDog.another1.title" : "老马啊"
+"achievement.pavlovsDog.another1.goal" : "由于疯狂状态下没有击杀而自杀。"
+"achievement.pavlovsDog.another1.cond" : ""
+
+"achievement.pavlovsDog.challenge.title" : "无法无天"
+"achievement.pavlovsDog.challenge.goal" : "在疯狂状态下击杀3人及以上。"
+"achievement.pavlovsDog.challenge.cond" : ""
 
 "achievement.serialKiller.common1.title" : "awsl"
 "achievement.serialKiller.common1.goal" : "由于没有及时出刀导致嗜血杀手自杀。"

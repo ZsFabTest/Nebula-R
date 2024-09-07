@@ -43,6 +43,7 @@ public static class NebulaGameEnds
     public static GameEnd PaparazzoGameEnd { get; internal set; } = null!;
     public static GameEnd VultureGameEnd { get; internal set; } = null!;
     public static GameEnd CollectorGameEnd {  get; internal set; } = null!;
+    public static GameEnd PavlovGameEnd { get; internal set; } = null!;
 }
 
 public class EndState

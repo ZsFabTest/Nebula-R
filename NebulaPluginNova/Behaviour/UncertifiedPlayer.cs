@@ -53,10 +53,11 @@ namespace Nebula.Behaviour
         {
             IEnumerator CoWaitAndRequireHandshake()
             {
-                yield return new WaitForSeconds((float)System.Random.Shared.NextDouble());
+                //yield return new WaitForSeconds((float)System.Random.Shared.NextDouble());
+                yield return new WaitForSeconds(1f);
                 RpcRequireHandshake.Invoke();
-                yield return new WaitForSeconds(1f + (float)System.Random.Shared.NextDouble());
-                RpcRequireHandshake.Invoke();
+                //yield return new WaitForSeconds(1f + (float)System.Random.Shared.NextDouble());
+                //RpcRequireHandshake.Invoke();
             }
 
             AmongUsClient.Instance.StartCoroutine(CoWaitAndRequireHandshake().WrapToIl2Cpp());
@@ -97,7 +98,7 @@ namespace Nebula.Behaviour
 
             IEnumerator CoWaitAndUpdate()
             {
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(1f);
                 if (State == UncertifiedReason.Waiting) Reject(UncertifiedReason.Uncertified);
             }
             StartCoroutine(CoWaitAndUpdate().WrapToIl2Cpp());
@@ -122,11 +123,17 @@ namespace Nebula.Behaviour
                 screen.SetWidget(widget);
             }
 
-            if (!(MyControl?.AmOwner ?? false) && GeneralConfigurations.KickIfDismatchedOption)
+            IEnumerator CoKickPlayer()
             {
-                GameData.Instance.HandleDisconnect(MyControl, DisconnectReasons.IncorrectVersion);
-                if (AmongUsClient.Instance.AmHost) AmongUsClient.Instance.KickPlayer(MyControl!.NetTransform.OwnerId, false);
+                yield return new WaitForSeconds(1f);
+                if (!(MyControl?.AmOwner ?? false) && GeneralConfigurations.KickIfDismatchedOption && State == UncertifiedReason.Uncertified)
+                {
+                    GameData.Instance.HandleDisconnect(MyControl, DisconnectReasons.IncorrectVersion);
+                    if (AmongUsClient.Instance.AmHost) AmongUsClient.Instance.KickPlayer(MyControl!.NetTransform.OwnerId, false);
+                }
             }
+
+            StartCoroutine(CoKickPlayer().WrapToIl2Cpp());
         }
 
         private void OnStateChanged()

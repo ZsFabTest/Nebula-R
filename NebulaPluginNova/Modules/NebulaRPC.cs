@@ -109,6 +109,7 @@ public static class RPCRouter
     }
 
     public static void SendRpc(string name, int hash, Action<MessageWriter> sender, Action localBodyProcess) {
+        //Debug.Log(name);
         if(currentSection == null)
         {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 128, Hazel.SendOption.Reliable, -1);

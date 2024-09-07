@@ -163,10 +163,11 @@ internal static class ConfigurationValues
             //(Item1)番目から(Item2)-1番目まで
             IEnumerator<Tuple<int, int>> GetDivider()
             {
+                //Debug.LogWarning(AllEntries.Count);
                 int done = 0;
                 while (done < AllEntries.Count)
                 {
-                    int max = Mathf.Min(AllEntries.Count, done + 100);
+                    int max = Mathf.Min(AllEntries.Count, done + 200);
                     yield return new Tuple<int, int>(done, max);
                     done = max;
                 }

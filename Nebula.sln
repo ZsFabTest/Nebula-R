@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NebulaAPI", "NebulaAPI\Nebu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NebulaAchievementUnlocker", "NebulaAchievementUnlocker\NebulaAchievementUnlocker.csproj", "{173CE3DF-EAE4-4BCE-A68F-BA447F0AC050}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AUServerTool", "AUServerTool\AUServerTool.csproj", "{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,18 @@ Global
 		{173CE3DF-EAE4-4BCE-A68F-BA447F0AC050}.Release|x64.Build.0 = Release|Any CPU
 		{173CE3DF-EAE4-4BCE-A68F-BA447F0AC050}.Release|x86.ActiveCfg = Release|Any CPU
 		{173CE3DF-EAE4-4BCE-A68F-BA447F0AC050}.Release|x86.Build.0 = Release|Any CPU
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Debug|Any CPU.Build.0 = Debug|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Debug|x64.ActiveCfg = Debug|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Debug|x64.Build.0 = Debug|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Debug|x86.ActiveCfg = Debug|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Debug|x86.Build.0 = Debug|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Release|Any CPU.ActiveCfg = Release|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Release|Any CPU.Build.0 = Release|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Release|x64.ActiveCfg = Release|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Release|x64.Build.0 = Release|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Release|x86.ActiveCfg = Release|x86
+		{1786AD6E-C700-4CE1-8843-FE5F8EFB2620}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

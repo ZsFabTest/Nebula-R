@@ -1,0 +1,6 @@
+# Roles
+
+"role.tianMengLucky.name" : "天寸"
+"role.tianMengLucky.short" : "Yee"
+"role.tianMengLucky.generalBlurb" : "每 日 发 癫"
+"options.role.tianMengLucky.detail" : "如果你是第三方阵营，被票后直接胜利。<br>如果你是船员阵营，你只能跟伪装者胜利，且你存活期间内，船员不能胜利。<br>如果你是伪装者阵营，自己必须存活，且仅剩自己的情况下才能胜利。"

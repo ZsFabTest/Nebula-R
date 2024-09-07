@@ -1,0 +1,292 @@
+{
+    "CurrentRegionIdx":5,"Regions":
+    [
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"North America",
+            "PingServer":"matchmaker.among.us",
+            "Servers":
+            [
+                {
+                    "Name":"Http-1",
+                    "Ip":"https://matchmaker.among.us",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":289
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Europe",
+            "PingServer":"matchmaker-eu.among.us",
+            "Servers":
+            [
+                {
+                    "Name":"Http-1",
+                    "Ip":"https://matchmaker-eu.among.us",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":290
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Asia",
+            "PingServer":"matchmaker-as.among.us",
+            "Servers":
+            [
+                {
+                    "Name":"Http-1",
+                    "Ip":"https://matchmaker-as.among.us",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":291
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"<color=#CC00CC>新猫服</color><color=#ffff00>[北京]</color>",
+            "PingServer":"https://au.v0.ink",
+            "Servers":
+            [
+                {
+                    "Name":"http-1",
+                    "Ip":"https://au.v0.ink",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"<color=#00CCFF>新猫服</color><color=#ffff00>[宿迁]</color>",
+            "PingServer":"http://www.45yun.cn",
+            "Servers":
+            [
+                {
+                    "Name":"http-1",
+                    "Ip":"http://www.45yun.cn",
+                    "Port":22020,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Niko233(AS_CN1)",
+            "PingServer":"https://au-as.niko233.me",
+            "Servers":
+            [
+                {
+                    "Name":"http-1",
+                    "Ip":"https://au-as.niko233.me",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Niko233(AS_CN2)",
+            "PingServer":"https://au-as2.niko233.me",
+            "Servers":
+            [
+                {
+                    "Name":"http-1",
+                    "Ip":"https://au-as2.niko233.me",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Niko233(NA_US)",
+            "PingServer":"https://au-us.niko233.me",
+            "Servers":
+            [
+                {
+                    "Name":"http-1",
+                    "Ip":"https://au-us.niko233.me",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Niko233(NA_US2)",
+            "PingServer":"https://au-us2.niko233.me",
+            "Servers":
+            [
+                {
+                    "Name":"http-1",
+                    "Ip":"https://au-us2.niko233.me",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"<color=#00ffff>方块</color>北京私服(<color=#FFC0CB>最新版</color>)",
+            "PingServer":"http://api.fangkuai.fun",
+            "Servers":
+            [
+                {
+                    "Name":"http-1",
+                    "Ip":"http://api.fangkuai.fun",
+                    "Port":22023,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"<color=#00ffff>方块</color>北京私服(<color=#FFC0CB>稍新版</color>)",
+            "PingServer":"https://player.fangkuai.fun",
+            "Servers":
+            [
+                {
+                    "Name":"http-1",
+                    "Ip":"https://player.fangkuai.fun",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type": "StaticHttpRegionInfo, Assembly-CSharp",
+            "Name": "<color=#00ffff>方块</color>北京(<color=#FFC0CB>新TOR专用服</color>)",
+            "PingServer": "tor.fangkuai.fun",
+            "Servers": [
+                {
+                    "Name": "http-1",
+                    "Ip": "https://tor.fangkuai.fun",
+                    "Port": 443,
+                    "UseDtls": false,
+                    "Players": 0,
+                    "ConnectionFailures": 0
+                }
+            ],
+            "TranslateName": 1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Modded EU (MEU)",
+            "PingServer":"https://au-eu.duikbo.at",
+            "Servers":
+            [
+                {
+                    "Name":"Http-1",
+                    "Ip":"https://au-eu.duikbo.at",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Modded NA (MNA)",
+            "PingServer":"https://www.aumods.us",
+            "Servers":
+            [
+                {
+                    "Name":"Http-1",
+                    "Ip":"https://www.aumods.us",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"Modded Asia (MAS)",
+            "PingServer":"https://au-as.duikbo.at",
+            "Servers":
+            [
+                {
+                    "Name":"Http-1",
+                    "Ip":"https://au-as.duikbo.at",
+                    "Port":443,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
+            "Name":"空白[香港]",
+            "PingServer":"http://154.21.201.194",
+            "Servers":
+            [
+                {
+                    "Name":"Http-1",
+                    "Ip":"http://154.21.201.194",
+                    "Port":22023,
+                    "UseDtls":false,
+                    "Players":0,
+                    "ConnectionFailures":0
+                }
+            ],
+            "TranslateName":1003
+        },
+        {
+            "$type": "StaticHttpRegionInfo, Assembly-CSharp",
+            "Name": "Custom",
+            "PingServer": "",
+            "Servers": [
+                {
+                    "Name": "",
+                    "Ip": "",
+                    "Port": 22023,
+                    "UseDtls": false,
+                    "Players": 0,
+                    "ConnectionFailures": 0
+                }
+            ],
+            "TranslateName": 1003
+        }
+    ]
+}

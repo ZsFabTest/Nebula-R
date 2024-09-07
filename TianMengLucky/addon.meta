@@ -1,0 +1,10 @@
+{
+	"Id" : "TML",
+	"Name" : "TianMengLucky Addon",
+	"Author" : "凛",
+	"Description" : "没活了 下次咬打火机去。",
+	"Version" : "1.0",
+	"Build" : 1,
+	"Dependency" : [
+	]
+}

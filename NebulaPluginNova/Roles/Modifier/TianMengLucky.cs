@@ -20,6 +20,13 @@ public class TianMengLucky : DefinedAllocatableModifierTemplate, DefinedAllocata
         void RuntimeAssignable.OnActivated() { }
 
         [Local]
+        void Update(GameUpdateEvent ev)
+        {
+            if (MyPlayer.Unbox().Role.Role == Neutral.Sidekick.MyRole || MyPlayer.TryGetModifier<Neutral.SidekickModifier.Instance>(out _))
+                MyPlayer.Unbox().RpcInvokerUnsetModifier(MyRole).InvokeSingle();
+        }
+
+        [Local]
         void OnCriteriaUpdate(CriteriaUpdateEvent ev)
         {
             if (!MyPlayer.IsDead && MyPlayer.Role.Role.Category is RoleCategory.CrewmateRole && ev.CriterialGameEnd == NebulaGameEnd.CrewmateWin)

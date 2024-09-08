@@ -21,18 +21,18 @@ static file class JudgeSystem
             state => {
                 var p = state.MyPlayer;
                 if (canJudgeAnyone)
-                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
+                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Judged, EventDetail.Guess, KillParameter.MeetingKill);
                 else if(p?.Role.Role.Category == RoleCategory.ImpostorRole)
-                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
+                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Judged, EventDetail.Guess, KillParameter.MeetingKill);
                 else if(canJudgeNeutralRoles && p?.Role.Role.Category == RoleCategory.NeutralRole)
-                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
+                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Judged, EventDetail.Guess, KillParameter.MeetingKill);
                 else if (canJudgeMadmate && p!.IsMadmate())
-                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
+                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Judged, EventDetail.Guess, KillParameter.MeetingKill);
                 else if (canJudgeLovers && (bool)p?.TryGetModifier<Lover.Instance>(out _)!)
-                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Guessed, EventDetail.Guess, KillParameter.MeetingKill);
+                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(p!, PlayerState.Judged, EventDetail.Guess, KillParameter.MeetingKill);
                 else
                 {
-                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(NebulaAPI.CurrentGame.LocalPlayer, PlayerState.Misguessed, EventDetail.Missed, KillParameter.MeetingKill);
+                    NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(NebulaAPI.CurrentGame.LocalPlayer, PlayerState.Misjudged, EventDetail.Missed, KillParameter.MeetingKill);
                     new StaticAchievementToken("judge.another1");
                 }
                     

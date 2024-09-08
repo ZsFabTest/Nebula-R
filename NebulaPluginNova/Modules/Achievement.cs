@@ -461,7 +461,9 @@ static public class NebulaAchievementManager
             PlayerState.Trapped,
             PlayerState.Cursed,
             PlayerState.Crushed,
-            PlayerState.Frenzied
+            PlayerState.Frenzied,
+            PlayerState.Exploded,
+            PlayerState.Judged
         }.Select(tag => new DisplayProgressRecord("kill." + tag.TranslateKey, 1, tag.TranslateKey)).ToArray();
         ProgressRecord[] deathRecord = new TranslatableTag[] { 
             PlayerState.Dead,
@@ -478,7 +480,10 @@ static public class NebulaAchievementManager
             PlayerState.Deranged,
             PlayerState.Cursed,
             PlayerState.Crushed,
-            PlayerState.Frenzied
+            PlayerState.Frenzied,
+            PlayerState.Exploded,
+            PlayerState.Judged,
+            PlayerState.Misjudged
         }.Select(tag => new DisplayProgressRecord("death." + tag.TranslateKey, 1, tag.TranslateKey)).ToArray();
 
         //読み込み

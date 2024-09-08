@@ -146,7 +146,13 @@ public class ChainShifter : DefinedRoleTemplate, HasCitation, DefinedRole
                     if (myGuess != -1) player.RpcInvokerSetModifier(GuesserModifier.MyRole, new int[] { myGuess }).InvokeSingle();
                     if (targetGuess != -1) MyPlayer.Unbox().RpcInvokerSetModifier(GuesserModifier.MyRole, new int[] { targetGuess }).InvokeSingle();
 
-
+                    // 矿工的隐藏附加的交换
+                    if (player.TryGetModifier<Crewmate.MinerModifier.Instance>(out var mm))
+                    {
+                        int[] arguments = ((RuntimeModifier)mm).RoleArguments??new int[0];
+                        player.RpcInvokerUnsetModifier(Crewmate.MinerModifier.MyRole).InvokeSingle();
+                        MyPlayer.Unbox().RpcInvokerSetModifier(Crewmate.MinerModifier.MyRole, arguments);
+                    }
                 }
 
                 //会議終了からすぐにゲームが終了すればよい

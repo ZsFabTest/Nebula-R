@@ -152,7 +152,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         [OnlyMyPlayer]
         void OnGuard(PlayerGuardEvent ev)
         {
-            if (ev.Murderer.AmOwner && ev.Murderer.Role.Role is not Impostor.Sniper or Impostor.Raider) ev.Murderer.VanillaPlayer.transform.position = MyPlayer.VanillaPlayer.transform.position;
+            //if (ev.Murderer.AmOwner) ev.Murderer.VanillaPlayer.transform.position = MyPlayer.VanillaPlayer.transform.position;
             if (AmOwner)
             {
                 int nextCategoryId = GetCategoryId(ev.Murderer.Role.Role);

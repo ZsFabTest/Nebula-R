@@ -63,6 +63,14 @@
 "role.madmateModifier.prefix" : "叛变的"
 "role.madmateModifier.prefix.short" : "叛"
 
+"role.miner.name" : "埋雷兵"
+"role.miner.short" : "埋"
+"role.miner.blurb" : "在管道口放置地雷"
+"options.role.miner.detail" : "埋雷兵可以对管道使用技能。<br>一个管道技能只能同时存在一个。<br>任意跳入或跳出该管道的玩家将会被击杀，并消耗该管道的技能使埋雷兵可以再次对该管道使用技能。<br>技能不随埋雷兵职业改变而失效。"
+"options.role.miner.layingMineCooldown" : "埋雷冷却时间"
+"options.role.miner.numOfMines" : "最大埋雷次数"
+"role.minerModifier.name" : "埋雷兵[判定]"
+
 "role.oracle.name" : "占卜师"
 "role.oracle.short" : "占"
 "role.oracle.blurb" : "感受你的过往"
@@ -132,10 +140,17 @@
 "role.unyielding.blurb" : "我还不想死"
 "options.role.unyielding.detail" : "你在死后可以通过其他玩家的尸体复活。<br>复活后你将继承该玩家的职业。<br>不复活时你可以跟随原阵营胜利。<br>死亡后你看不到其他玩家的职业信息。"
 
+# States
+
+"state.exploded" : "爆炸"
+"state.judged" : "审判"
+"state.misjudged" : "误判"
+
 # Buttons
 
 "button.label.block" : "格挡"
 "button.label.feed" : "喂养"
+"button.label.layMines" : "埋雷"
 "button.label.repair" : "修理"
 "button.label.oracle" : "占卜"
 "button.label.quickStart" : "快速开始"
@@ -242,6 +257,14 @@
 "achievement.knight.challenge.title" : "四面楚歌"
 "achievement.knight.challenge.goal" : "一次性格挡三次击杀。"
 "achievement.knight.challenge.cond" : "在一次技能期间避免三次击杀"
+
+"achievement.miner.common1.title" : "爆破狂"
+"achievement.miner.common1.goal" : "消耗所有的技能次数。"
+"achievement.miner.common1.cond" : "技能总数不少于3"
+
+"achievement.miner.challenge.title" : "恐怖分子"
+"achievement.miner.challenge.goal" : "在同一局游戏中炸死除自己外的3人。"
+"achievement.miner.challenge.cond" : ""
 
 "achievement.oracle.common1.title" : "让我看看"
 "achievement.oracle.common1.goal" : "使用一次占卜。"

@@ -57,6 +57,18 @@ public static class PlayerStates
     /// Buskerが偽装死した状態を表します。今後Buskerは復活する可能性があります。
     /// </summary>
     public static CommunicableTextTag Pseudocide { get; internal set; } = null!;
+    /// <summary>
+    /// 被埋雷兵炸死
+    /// </summary>
+    public static CommunicableTextTag Exploded {  get; internal set; } = null!;
+    /// <summary>
+    /// 被法官审判
+    /// </summary>
+    public static CommunicableTextTag Judged { get; internal set; } = null!;
+    /// <summary>
+    /// 法官误判
+    /// </summary>
+    public static CommunicableTextTag Misjudged { get; internal set; } = null!;
 }
 
 /// <summary>

@@ -44,6 +44,9 @@ public static class PlayerState
     public static TranslatableTag Cursed = new("state.cursed");
     public static TranslatableTag Crushed = new("state.crushed");
     public static TranslatableTag Frenzied = new("state.frenzied");
+    public static TranslatableTag Exploded = new("state.exploded");
+    public static TranslatableTag Judged = new("state.judged");
+    public static TranslatableTag Misjudged = new("state.misjudged");
 
     static PlayerState()
     {
@@ -59,6 +62,9 @@ public static class PlayerState
         Virial.Text.PlayerStates.Suicide = Suicide;
         Virial.Text.PlayerStates.Revived = Revived;
         Virial.Text.PlayerStates.Pseudocide = Pseudocide;
+        Virial.Text.PlayerStates.Exploded = Exploded;
+        Virial.Text.PlayerStates.Judged = Judged;
+        Virial.Text.PlayerStates.Misjudged = Misjudged;
     }
 }
 

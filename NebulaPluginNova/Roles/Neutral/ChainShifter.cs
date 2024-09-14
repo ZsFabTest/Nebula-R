@@ -147,11 +147,14 @@ public class ChainShifter : DefinedRoleTemplate, HasCitation, DefinedRole
                     if (targetGuess != -1) MyPlayer.Unbox().RpcInvokerSetModifier(GuesserModifier.MyRole, new int[] { targetGuess }).InvokeSingle();
 
                     // 矿工的隐藏附加的交换
-                    if (player.TryGetModifier<Crewmate.MinerModifier.Instance>(out var mm))
+                    if (player.TryGetModifier<Crewmate.MinerModifier.Instance>(out _))
                     {
-                        int[] arguments = ((RuntimeModifier)mm).RoleArguments??new int[0];
-                        player.RpcInvokerUnsetModifier(Crewmate.MinerModifier.MyRole).InvokeSingle();
-                        MyPlayer.Unbox().RpcInvokerSetModifier(Crewmate.MinerModifier.MyRole, arguments);
+                        MyPlayer.Unbox().RpcInvokerSetModifier(Crewmate.MinerModifier.MyRole, null!);
+                    }
+                    if (player.TryGetModifier<AmnesiacModifier.Instance>(out var am))
+                    {
+                        player.RpcInvokerUnsetModifier(AmnesiacModifier.MyRole).InvokeSingle();
+                        MyPlayer.Unbox().RpcInvokerSetModifier(AmnesiacModifier.MyRole, null!);
                     }
                 }
 

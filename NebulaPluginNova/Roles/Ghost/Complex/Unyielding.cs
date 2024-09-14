@@ -21,7 +21,7 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
 
         public Instance(Virial.Game.Player player) : base(player) { }
         private static Image reviveButtonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.BuskReviveButton.png", 115f);
-        private bool hasRevived = false;
+        internal bool hasRevived = false;
 
         void RuntimeAssignable.OnActivated() 
         {
@@ -59,7 +59,7 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
                     myTracker.CurrentTarget!.Unbox().RpcInvokerSetRole(GetDefaultRole(targetRole.Category), null).InvokeSingle();
                     hasRevived = true;
                     new StaticAchievementToken("unyielding.common1");
-                    NebulaGameManager.Instance?.SetSpectator(false);
+                    //NebulaGameManager.Instance?.SetSpectator(false);
                 };
                 revievButton.SetLabel("revive");
             }
@@ -77,6 +77,12 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
         {
             if (hasRevived && ev.EndState.Winners.Test(MyPlayer))
                 new StaticAchievementToken("unyielding.challenge1");
+        }
+
+        [Local]
+        void CheckCanSeeAllInfo(RequestEvent ev)
+        {
+            if (ev.requestInfo == "checkCanSeeAllInfo") ev.Report(!hasRevived);
         }
     }
 }

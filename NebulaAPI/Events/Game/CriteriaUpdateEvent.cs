@@ -15,12 +15,12 @@ public class CriteriaUpdateEvent : Event
     /// <summary>
     /// 当前更新的游戏结果
     /// </summary>
-    public GameEnd CriterialGameEnd { get; private set; }
+    public GameEnd CriterialGameEnd { get; private init; }
 
     /// <summary>
     /// 当前判断的游戏结束原因
     /// </summary>
-    public GameEndReason CriterialGameEndReason { get; private set; }
+    public GameEndReason CriterialGameEndReason { get; private init; }
 
     /// <summary>
     /// 若为是 则无论该次检查结果如何禁止游戏结束

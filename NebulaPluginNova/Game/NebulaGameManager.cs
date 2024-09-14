@@ -257,7 +257,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
 
     public List<AchievementTokenBase> AllAchievementTokens = new();
     public T? GetAchievementToken<T>(string achievement) where T : AchievementTokenBase {
-        return AllAchievementTokens.FirstOrDefault(a=>a.Achievement.Id == achievement) as T;
+        return AllAchievementTokens.FirstOrDefault(a => a.Achievement.Id == achievement) as T;
     }
 
 
@@ -290,7 +290,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
     public Dictionary<byte, AbstractAchievement?> TitleMap = new();
 
     private GamePlayer? localInfoCache = null;
-    
+
     public GamePlayer LocalPlayerInfo { get
         {
             if (localInfoCache == null) localInfoCache = GetPlayer(PlayerControl.LocalPlayer.PlayerId);
@@ -305,7 +305,14 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
 
     //天界視点フラグ
     public bool CanBeSpectator { get; private set; }
-    public bool CanSeeAllInfo => CanBeSpectator && (ClientOption.AllOptions[ClientOption.ClientOptionType.SpoilerAfterDeath].Value == 1 || !HudManager.InstanceExists) && (PlayerControl.LocalPlayer.GetModInfo()?.Unbox().GhostRole is not Roles.Ghost.Complex.Unyielding.Instance);
+    Func<bool> checkCanSeeAllInfo = () =>
+    {
+        var re = new RequestEvent("checkCanSeeAllInfo");
+        GameOperatorManager.Instance?.Run(re);
+        return (Instance?.CanBeSpectator ?? false) && (ClientOption.AllOptions[ClientOption.ClientOptionType.SpoilerAfterDeath].Value == 1 || !HudManager.InstanceExists) && !re.requestResult;
+    };
+    public bool CanSeeAllInfo => checkCanSeeAllInfo.Invoke();
+
     //public bool CanSeeAllInfo => false; // Test
     public void ChangeToSpectator(bool tryGhostAssignment = true)
     {

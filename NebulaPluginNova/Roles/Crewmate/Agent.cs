@@ -13,7 +13,7 @@ namespace Nebula.Roles.Crewmate;
 
 public class Agent : DefinedRoleTemplate, HasCitation, DefinedRole
 {
-    private Agent() : base("agent", new(166, 183, 144), RoleCategory.CrewmateRole, Crewmate.MyTeam, [VentConfiguration, NumOfExemptedTasksOption, NumOfExtraTasksOption, SuicideIfSomeoneElseCompletesTasksBeforeAgentOption])
+    private Agent() : base("agent", new(166, 183, 144), RoleCategory.CrewmateRole, Crewmate.MyTeam, [VentConfiguration, NumOfExemptedTasksOption, NumOfExtraTasksOption, SuicideIfSomeoneElseCompletesTasksBeforeAgentOption, CanGetExtraTasksAfterDiedOption])
     {
         ConfigurationHolder?.AddTags(ConfigurationTags.TagBeginner);
     }
@@ -26,6 +26,7 @@ public class Agent : DefinedRoleTemplate, HasCitation, DefinedRole
     static private IntegerConfiguration NumOfExtraTasksOption = NebulaAPI.Configurations.Configuration("options.role.agent.numOfExtraTasks", (0, 8), 3);
     static private BoolConfiguration SuicideIfSomeoneElseCompletesTasksBeforeAgentOption = NebulaAPI.Configurations.Configuration("options.role.agent.suicideIfSomeoneElseCompletesTasksBeforeAgent", false);
     static private IVentConfiguration VentConfiguration = NebulaAPI.Configurations.VentConfiguration("role.agent.vent", false, (0, 16), 3, null, -1f, (2.5f, 30f, 2.5f), 10f);
+    static private BoolConfiguration CanGetExtraTasksAfterDiedOption = NebulaAPI.Configurations.Configuration("options.role.agent.canGetExtraTasksAfterDied", true);
 
     static public Agent MyRole = new Agent();
 
@@ -110,10 +111,10 @@ public class Agent : DefinedRoleTemplate, HasCitation, DefinedRole
                     var taskButton = Bind(new Modules.ScriptComponents.ModAbilityButton()).KeyBind(NebulaInput.GetInput(Virial.Compat.VirtualKeyInput.Ability));
                     taskButton.SetSprite(buttonSprite.GetSprite());
                     taskButton.Availability = (button) => MyPlayer.CanMove && MyPlayer.Tasks.IsCompletedCurrentTasks;
-                    taskButton.Visibility = (button) => !MyPlayer.IsDead;
+                    taskButton.Visibility = (button) => !MyPlayer.IsDead || CanGetExtraTasksAfterDiedOption;
                     taskButton.OnClick = (button) =>
                     {
-                        MyPlayer.Tasks.Unbox().GainExtraTasksAndRecompute(NumOfExtraTasksOption, 0, 0, false);
+                        MyPlayer.Tasks.Unbox().GainExtraTasksAndRecompute(MyPlayer.IsDead ? 0 : NumOfExtraTasksOption, MyPlayer.IsDead ? NumOfExtraTasksOption : 0, 0, false);
                     };
                     taskButton.SetLabel("agent");
                 }

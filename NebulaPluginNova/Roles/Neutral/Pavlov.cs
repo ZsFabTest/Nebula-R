@@ -32,7 +32,7 @@ public class Pavlov : DefinedRoleTemplate, HasCitation, DefinedRole
     public class Instance : RuntimeAssignableTemplate, RuntimeRole
     {
         DefinedRole RuntimeRole.Role => MyRole;
-        public Instance(Virial.Game.Player player, int[] arguments) : base(player) 
+        public Instance(Virial.Game.Player player, int[] arguments) : base(player)
         {
             pavlovTeamId = (byte)arguments.Get(0, MyPlayer.PlayerId);
             leftFeedCount = arguments.Get(1, MaxFeedCountOption);
@@ -44,7 +44,7 @@ public class Pavlov : DefinedRoleTemplate, HasCitation, DefinedRole
         int[]? RuntimeAssignable.RoleArguments => [pavlovTeamId, leftFeedCount, hasDog];
         private static Image feedButtonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.AppointButton.png", 115f);
 
-        void RuntimeAssignable.OnActivated() 
+        void RuntimeAssignable.OnActivated()
         {
             if (AmOwner)
             {
@@ -72,9 +72,14 @@ public class Pavlov : DefinedRoleTemplate, HasCitation, DefinedRole
             }
         }
 
+        void RuntimeAssignable.OnInactivated()
+        {
+            PavlovsDog.Instance.RpcSetOwnerDied.Invoke(hasDog);
+        }
+
         public bool IsSameTeam(Virial.Game.Player player)
         {
-            return (player.Role is PavlovsDog.Instance dog && dog.pavlovTeamId == pavlovTeamId) || 
+            return (player.Role is PavlovsDog.Instance dog && dog.pavlovTeamId == pavlovTeamId) ||
                 (player.Role is Instance owner && owner.pavlovTeamId == pavlovTeamId);
         }
 
@@ -92,6 +97,13 @@ public class Pavlov : DefinedRoleTemplate, HasCitation, DefinedRole
         void OnGameEnd(PlayerCheckWinEvent ev)
         {
             if (ev.IsWin && leftFeedCount <= 0) new StaticAchievementToken("pavlov.challenge");
+        }
+
+        [Local]
+        void OnDied(PlayerDieEvent ev)
+        {
+            if (ev.Player.PlayerId == MyPlayer.PlayerId)
+                PavlovsDog.Instance.RpcSetOwnerDied.Invoke(hasDog);
         }
     }
 }
@@ -147,7 +159,7 @@ public class PavlovsDog : DefinedRoleTemplate, HasCitation, DefinedRole
                 button.OnClick = button =>
                 {
                     MyPlayer.MurderPlayer(myTracker.CurrentTarget!, PlayerState.Dead, EventDetail.Kill, KillParameter.NormalKill);
-                    
+
                     button.StartCoolDown();
                 };
                 killTimer = Bind(new Timer(KillCoolDownOption.CoolDown).SetAsKillCoolDown());
@@ -189,16 +201,8 @@ public class PavlovsDog : DefinedRoleTemplate, HasCitation, DefinedRole
             }
 
             if (hasMad > 0) return;
-            foreach(var p in NebulaGameManager.Instance!.AllPlayerInfo())
-            {
-                if (IsSameTeam(p) && p.Role.Role == Pavlov.MyRole && p.IsDead)
-                {
-                    killTimer!.SetRange(0f, KillCoolDownWhenOwnerDiedOption.CoolDown);
-                    suicideTimer!.Start();
-                    hasMad++;
-                    break;
-                }
-            }
+            if (!NebulaGameManager.Instance!.AllPlayerInfo().Any((p) => !p.IsDead && IsSameTeam(p) && p.Role.Role == Pavlov.MyRole))
+                RpcSetOwnerDied.Invoke(MyPlayer.PlayerId);
         }
 
 
@@ -229,5 +233,17 @@ public class PavlovsDog : DefinedRoleTemplate, HasCitation, DefinedRole
                 if (++killCount >= 3) new StaticAchievementToken("pavlovsDog.challenge");
             }
         }
+
+        private void SetMad() => hasMad = 1;
+
+        public static readonly RemoteProcess<byte> RpcSetOwnerDied = new(
+            "SetOwnerDied",
+            (message, _) => {
+                var MyPlayer = PlayerControl.LocalPlayer.GetModInfo();
+                if (MyPlayer == null) return;
+                if (MyPlayer.PlayerId == message)
+                    (MyPlayer.Role as Instance)?.SetMad();
+            }
+        );
     }
 }

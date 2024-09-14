@@ -1,5 +1,17 @@
 # Roles
 
+"options.role.agent.detail" : "代理人可以替磨磨唧唧的船员完成任务。\n根据设置，代理人死后可以继续接取任务，但死亡后接取的任务全部为长任务。"
+"options.role.agent.canGetExtraTasksAfterDied" : "代理人死后可继续接取任务"
+
+"role.amnesiac.name" : "失忆者"
+"role.amnesiac.short" : "忆"
+"role.amnesiac.blurb" : "我是谁 我在哪？"
+"options.role.amnesiac.detail" : "失忆者的回忆技能除被交换外将会永久保留。<br>失忆者通过对尸体使用技能可以获取尸体主人的职业并保留其职业数据。<br>失忆者可以反复通过回忆更换阵营。<br>当胜利条件达成且失忆者存活且只能单独胜利时，失忆者将抢夺胜利。"
+"options.role.amnesiac.recallCooldown" : "回忆冷却时间"
+"options.role.amnesiac.canOnlyWinAsNeutral" : "失忆者只能作为中立阵营胜利"
+"role.amnesiac.postfix" : " (失忆)"
+"role.amnesiacModifier.name" : "失忆者[判定]"
+
 "role.avenger.becomeAvengerTitle" : "是时候复仇了..."
 
 "role.baitModifier.name" : "诱饵"
@@ -151,6 +163,7 @@
 "button.label.block" : "格挡"
 "button.label.feed" : "喂养"
 "button.label.layMines" : "埋雷"
+"button.label.recall" : "回忆"
 "button.label.repair" : "修理"
 "button.label.oracle" : "占卜"
 "button.label.quickStart" : "快速开始"

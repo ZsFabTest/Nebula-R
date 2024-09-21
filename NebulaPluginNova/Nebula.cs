@@ -42,10 +42,10 @@ public class NebulaPlugin : BasePlugin
     public const string PluginVersion = "2.0.2";
 
     //public const string VisualVersion = "v2.0.2.2";
-    public const string VisualVersion = "Snapshot 24w37a";
+    public const string VisualVersion = "Snapshot 24w39a";
 
     public const string PluginEpochStr = "103";
-    public const string PluginBuildNumStr = "1120";
+    public const string PluginBuildNumStr = "1122";
     public static readonly int PluginEpoch = int.Parse(PluginEpochStr);
     public static readonly int PluginBuildNum = int.Parse(PluginBuildNumStr);
     public const bool GuardVanillaLangData = false;
@@ -110,15 +110,15 @@ public class NebulaPlugin : BasePlugin
 
     private static void CheckRegionInfo()
     {
-        if(!File.Exists(Path.Combine(Paths.GameRootPath, "RegionInfo") + "/regionInfo.json"))
-        {
+        // if(!File.Exists(Path.Combine(Paths.GameRootPath, "RegionInfo") + "/regionInfo.json"))
+        // {
             var bytes = StreamHelper.OpenFromResource("Nebula.Resources.RegionInfo.regionInfo.json")!.ReadBytes();
             if (!Directory.Exists(Path.Combine(Paths.GameRootPath, "RegionInfo")))
                 Directory.CreateDirectory(Path.Combine(Paths.GameRootPath, "RegionInfo"));
             var fileStream = File.Create(Path.Combine(Paths.GameRootPath, "RegionInfo") + "/regionInfo.json");
             fileStream.Write(bytes, 0, bytes.Length);
             fileStream.Close();
-        }
+        // }
     }
 }
 

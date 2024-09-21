@@ -134,7 +134,7 @@ public static class RegionMenuOnEnablePatch
         RegionMenuScroller.ClickMask = back.GetComponent<BoxCollider2D>();
         RegionMenuScroller.ScrollWheelSpeed = 0.5f;
         RegionMenuScroller.SetYBoundsMin(0f);
-        RegionMenuScroller.SetYBoundsMax(__instance.ButtonPool.poolSize * 0.222f);
+        RegionMenuScroller.SetYBoundsMax(__instance.ButtonPool.poolSize * 0.25f);
         RegionMenuScroller.allowY = true;
         RegionMenuScroller.allowX = false;
     }
@@ -145,6 +145,16 @@ public static class LoadServersPatch
 {
     public static void Prefix(ServerManager __instance)
     {
-        __instance.serverInfoFileJson = Path.Combine(Paths.GameRootPath,"RegionInfo", "regionInfo.json");
+        //Debug.LogError(__instance.serverInfoFileJson);
+        try
+        {
+            if (ClientOption.AllOptions[ClientOption.ClientOptionType.UseStandaloneServerList].Value == 1)
+                __instance.serverInfoFileJson = Path.Combine(Paths.GameRootPath, "RegionInfo", "regionInfo.json");
+            else
+                __instance.serverInfoFileJson = "%AppData%\\..\\LocalLow\\Innersloth\\Among Us\\regionInfo.json";
+        }
+        catch { }
+        // C:\Users\a1234\AppData\LocalLow\Innersloth\Among Us\regionInfo.json
+        // __instance.serverInfoFileJson = ClientOption.AllOptions[ClientOption.ClientOptionType.UseStandaloneServerList].Value == 1 ?
     }
 }

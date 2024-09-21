@@ -38,7 +38,7 @@
 "role.ghostEngineer.name" : "灵魂工程师"
 "role.ghostEngineer.blurb" : "永无止境的工作"
 "role.ghostEngineer.short" : "魂工"
-"options.role.ghostEngineer.detail" : "灵魂工程师拥有秒修破坏的能力。<br>注意通讯破坏无法修理。"
+"options.role.ghostEngineer.detail" : "灵魂工程师拥有秒修破坏的能力。"
 "options.role.ghostEngineer.numOfRepairing" : "可使用修理次数"
 
 "role.judge.name" : "法官"
@@ -216,6 +216,7 @@
 "options.putQuickStartButtonOnLeft" : "显示快速开始按钮"
 
 "config.client.forcefullyUsePlus25Protocol" : "<i>（重进生效）</i>强制使用+25协议"
+"config.client.useStandaloneServerList" : "使用独立服务器列表"
 
 # Achievements
 

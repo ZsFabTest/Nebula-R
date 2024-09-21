@@ -10,10 +10,12 @@ internal class RequestEvent : Event
 {
     public string requestInfo { get; private init; }
     public bool requestResult { get; private set; }
-    public RequestEvent(string info)
+    public int[] arguments { get; private init; }
+    public RequestEvent(string info, int[]? arguments = null)
     {
         requestInfo = info;
         requestResult = false;
+        this.arguments = arguments ?? new int[] { };
     }
     public void Report(bool flag) => requestResult |= flag;
 }

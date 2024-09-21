@@ -433,7 +433,7 @@ public class DynamicPalette
             //まだプレイヤーが追加されていない場合は即座に反映させなくても大丈夫
             try
             {
-                var player = PlayerControl.AllPlayerControls.Find((Il2CppSystem.Predicate<PlayerControl>)(p => p.PlayerId == message.playerId));
+                var player = Helpers.GetPlayer(message.playerId);
                 player?.SetColor(player!.PlayerId);
             }
             catch{ }

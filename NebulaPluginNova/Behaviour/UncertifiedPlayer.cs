@@ -54,7 +54,9 @@ namespace Nebula.Behaviour
             IEnumerator CoWaitAndRequireHandshake()
             {
                 //yield return new WaitForSeconds((float)System.Random.Shared.NextDouble());
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
+                RpcRequireHandshake.Invoke();
+                yield return new WaitForSeconds(0.5f);
                 RpcRequireHandshake.Invoke();
                 //yield return new WaitForSeconds(1f + (float)System.Random.Shared.NextDouble());
                 //RpcRequireHandshake.Invoke();

@@ -146,6 +146,7 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
                 return;
             }
 
+            if (GetCategoryId(ev.Killer.Role.Role) == 0) return;
             ev.Result = KillResult.Guard;
         }
 

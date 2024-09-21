@@ -82,9 +82,16 @@ public class Clog : DefinedGhostRoleTemplate, HasCitation, DefinedGhostRole
             var ghost = new Nebula.Roles.Crewmate.Ghost(pos, GhostDurationOption, null, Seer.CanSeeGhostsInShadowOption, GhostSizeOption);
             if (calledBeMe)
             {
+                float timeBeing = 0f;
                 bool achieved = false;
-                GameOperatorManager.Instance?.Register<GameUpdateEvent>(ev => { 
-                    if(!achieved && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && !p.AmOwner && p.IsImpostor && pos.Distance(p.Position) < 0.75f))
+                GameOperatorManager.Instance?.Register<GameUpdateEvent>(ev => {
+                    timeBeing += Time.deltaTime;
+                    if (timeBeing > GhostDurationOption)
+                    {
+                        ghost.ReleaseIt();
+                        ghost = null;
+                    }
+                    if (!achieved && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && !p.AmOwner && p.IsImpostor && pos.Distance(p.Position) < 0.75f))
                     {
                         new StaticAchievementToken("clog.another1");
                         achieved = true;

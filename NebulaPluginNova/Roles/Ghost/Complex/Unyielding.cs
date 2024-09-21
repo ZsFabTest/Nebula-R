@@ -21,7 +21,8 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
 
         public Instance(Virial.Game.Player player) : base(player) { }
         private static Image reviveButtonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.BuskReviveButton.png", 115f);
-        internal bool hasRevived = false;
+        private bool hasRevived = false;
+        private bool canbespector = false;
 
         void RuntimeAssignable.OnActivated() 
         {
@@ -42,6 +43,7 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
             if (AmOwner)
             {
                 hasRevived = false;
+                canbespector = false;
 
                 var myTracker = Bind(ObjectTrackers.ForDeadBody(null, MyPlayer, (p) => p.PlayerId != MyPlayer.PlayerId));
                 var revievButton = Bind(new ModAbilityButton()).KeyBind(NebulaInput.GetInput(Virial.Compat.VirtualKeyInput.Ability));
@@ -59,7 +61,6 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
                     myTracker.CurrentTarget!.Unbox().RpcInvokerSetRole(GetDefaultRole(targetRole.Category), null).InvokeSingle();
                     hasRevived = true;
                     new StaticAchievementToken("unyielding.common1");
-                    //NebulaGameManager.Instance?.SetSpectator(false);
                 };
                 revievButton.SetLabel("revive");
             }
@@ -83,6 +84,17 @@ public class Unyielding : DefinedGhostRoleTemplate, DefinedGhostRole
         void CheckCanSeeAllInfo(RequestEvent ev)
         {
             if (ev.requestInfo == "checkCanSeeAllInfo") ev.Report(!hasRevived);
+        }
+
+        [Local]
+        void Update(GameUpdateEvent ev)
+        {
+            if(NebulaGameManager.Instance!.CanBeSpectator && !hasRevived)
+            {
+                NebulaGameManager.Instance?.SetSpectator(false);
+                canbespector = true;
+            }else if(!NebulaGameManager.Instance!.CanBeSpectator && canbespector)
+                NebulaGameManager.Instance?.SetSpectator(true);
         }
     }
 }

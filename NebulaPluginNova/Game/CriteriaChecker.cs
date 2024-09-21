@@ -22,6 +22,7 @@ public class NebulaEndCriteria
         DIManager.Instance.RegisterGeneralModule<IGameModeStandard>(() => new JackalCriteria().Register(NebulaAPI.CurrentGame!));
         DIManager.Instance.RegisterGeneralModule<IGameModeStandard>(() => new LoversCriteria().Register(NebulaAPI.CurrentGame!));
         DIManager.Instance.RegisterGeneralModule<IGameModeStandard>(() => new JesterCriteria().Register(NebulaAPI.CurrentGame!));
+        DIManager.Instance.RegisterGeneralModule<IGameModeStandard>(() => new PavlovCriteria().Register(NebulaAPI.CurrentGame!));
     }
 
 

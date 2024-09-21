@@ -28,9 +28,10 @@ public class Knight : DefinedRoleTemplate, DefinedRole
 
         void RuntimeAssignable.OnActivated()
         {
-            isBlocking = new RemoteIntData((int)RemoteIntDataId.KnightDataBase + MyPlayer.PlayerId, 0);
             if (AmOwner)
             {
+                isBlocking = new RemoteIntData((int)RemoteIntDataId.KnightDataBase + MyPlayer.PlayerId, 0);
+                Debug.Log($"Knight RID ID: {isBlocking.rid_id}");
                 acTokenChallenge = new("knight.challenge", (false, 0), (val, _) => val.cleared);
 
                 blockButton = Bind(new ModAbilityButton()).KeyBind(Virial.Compat.VirtualKeyInput.Ability);
@@ -46,6 +47,8 @@ public class Knight : DefinedRoleTemplate, DefinedRole
                 {
                     acTokenChallenge!.Value.count = 0;
                     isBlocking.Update(1);
+                    //Debug.Log(isBlocking.Update(1));
+                    //Debug.Log(isBlocking.Get());
                 };
                 blockButton.OnEffectEnd = (button) =>
                 {

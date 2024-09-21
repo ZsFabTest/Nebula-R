@@ -54,40 +54,6 @@
         },
         {
             "$type":"StaticHttpRegionInfo, Assembly-CSharp",
-            "Name":"简幻欢",
-            "PingServer":"http://play.simpfun.cn",
-            "Servers":
-            [
-                {
-                    "Name":"Http-1",
-                    "Ip":"http://play.simpfun.cn",
-                    "Port":30170,
-                    "UseDtls":false,
-                    "Players":0,
-                    "ConnectionFailures":0
-                }
-            ],
-            "TranslateName":1003
-        },
-        {
-            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
-            "Name":"<color=#CC00CC>新猫服</color><color=#ffff00>[北京]</color>",
-            "PingServer":"https://au.v0.ink",
-            "Servers":
-            [
-                {
-                    "Name":"http-1",
-                    "Ip":"https://au.v0.ink",
-                    "Port":443,
-                    "UseDtls":false,
-                    "Players":0,
-                    "ConnectionFailures":0
-                }
-            ],
-            "TranslateName":1003
-        },
-        {
-            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
             "Name":"<color=#00CCFF>新猫服</color><color=#ffff00>[宿迁]</color>",
             "PingServer":"http://www.45yun.cn",
             "Servers":
@@ -102,23 +68,6 @@
                 }
             ],
             "TranslateName":1003
-        },
-        {
-            "$type": "StaticHttpRegionInfo, Assembly-CSharp",
-            "Name": "<color=#6C6C6C>胖猫服</color><color=#ffff00>[香港]</color>",
-            "PingServer": "http://cat.v0.ink",
-            "Servers": 
-            [
-                {
-                    "Name": "http-1",
-                    "Ip": "http://cat.v0.ink",
-                    "Port": 22000,
-                    "UseDtls": false,
-                    "Players": 0,
-                    "ConnectionFailures": 0
-                }
-            ],
-            "TranslateName": 1003
         },
         {
             "$type":"StaticHttpRegionInfo, Assembly-CSharp",
@@ -190,73 +139,6 @@
         },
         {
             "$type":"StaticHttpRegionInfo, Assembly-CSharp",
-            "Name":"<color=#00ffff>方块</color>北京私服(<color=#FFC0CB>最新版</color>)",
-            "PingServer":"http://api.fangkuai.fun",
-            "Servers":
-            [
-                {
-                    "Name":"http-1",
-                    "Ip":"http://api.fangkuai.fun",
-                    "Port":22023,
-                    "UseDtls":false,
-                    "Players":0,
-                    "ConnectionFailures":0
-                }
-            ],
-            "TranslateName":1003
-        },
-        {
-            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
-            "Name":"<color=#00ffff>方块</color>北京私服(<color=#FFC0CB>稍新版</color>)",
-            "PingServer":"https://player.fangkuai.fun",
-            "Servers":
-            [
-                {
-                    "Name":"http-1",
-                    "Ip":"https://player.fangkuai.fun",
-                    "Port":443,
-                    "UseDtls":false,
-                    "Players":0,
-                    "ConnectionFailures":0
-                }
-            ],
-            "TranslateName":1003
-        },
-        {
-            "$type": "StaticHttpRegionInfo, Assembly-CSharp",
-            "Name": "<color=#00ffff>方块</color>北京(<color=#FFC0CB>新TOR专用服</color>)",
-            "PingServer": "tor.fangkuai.fun",
-            "Servers": [
-                {
-                    "Name": "http-1",
-                    "Ip": "https://tor.fangkuai.fun",
-                    "Port": 443,
-                    "UseDtls": false,
-                    "Players": 0,
-                    "ConnectionFailures": 0
-                }
-            ],
-            "TranslateName": 1003
-        },
-        {
-            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
-            "Name":"<color=#FF97FF>小鹿服</color>",
-            "PingServer":"http://ah.rainplay.cn",
-            "Servers":
-            [
-                {
-                    "Name":"http-1",
-                    "Ip":"http://ah.rainplay.cn",
-                    "Port":50751,
-                    "UseDtls":false,
-                    "Players":0,
-                    "ConnectionFailures":0
-                }
-            ],
-            "TranslateName":1003
-        },
-        {
-            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
             "Name":"Modded EU (MEU)",
             "PingServer":"https://au-eu.duikbo.at",
             "Servers":
@@ -299,23 +181,6 @@
                     "Name":"Http-1",
                     "Ip":"https://au-as.duikbo.at",
                     "Port":443,
-                    "UseDtls":false,
-                    "Players":0,
-                    "ConnectionFailures":0
-                }
-            ],
-            "TranslateName":1003
-        },
-        {
-            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
-            "Name":"空白[香港]",
-            "PingServer":"http://154.21.201.194",
-            "Servers":
-            [
-                {
-                    "Name":"Http-1",
-                    "Ip":"http://154.21.201.194",
-                    "Port":22023,
                     "UseDtls":false,
                     "Players":0,
                     "ConnectionFailures":0

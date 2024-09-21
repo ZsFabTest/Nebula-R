@@ -147,15 +147,16 @@ public class ChainShifter : DefinedRoleTemplate, HasCitation, DefinedRole
                     if (targetGuess != -1) MyPlayer.Unbox().RpcInvokerSetModifier(GuesserModifier.MyRole, new int[] { targetGuess }).InvokeSingle();
 
                     // 矿工的隐藏附加的交换
-                    if (player.TryGetModifier<Crewmate.MinerModifier.Instance>(out _))
-                    {
-                        MyPlayer.Unbox().RpcInvokerSetModifier(Crewmate.MinerModifier.MyRole, null!);
-                    }
-                    if (player.TryGetModifier<AmnesiacModifier.Instance>(out var am))
-                    {
-                        player.RpcInvokerUnsetModifier(AmnesiacModifier.MyRole).InvokeSingle();
-                        MyPlayer.Unbox().RpcInvokerSetModifier(AmnesiacModifier.MyRole, null!);
-                    }
+                    // if (player.TryGetModifier<Crewmate.MinerModifier.Instance>(out _))
+                    // {
+                    //     MyPlayer.Unbox().RpcInvokerSetModifier(Crewmate.MinerModifier.MyRole, null!);
+                    // }
+                    // if (player.TryGetModifier<AmnesiacModifier.Instance>(out var am))
+                    // {
+                    //     player.RpcInvokerUnsetModifier(AmnesiacModifier.MyRole).InvokeSingle();
+                    //     MyPlayer.Unbox().RpcInvokerSetModifier(AmnesiacModifier.MyRole, null!);
+                    // }
+                    // GameOperatorManager.Instance?.Run(new RequestEvent("TryExchangeAmnesiac", [player.PlayerId, MyPlayer.PlayerId]));
                 }
 
                 //会議終了からすぐにゲームが終了すればよい

@@ -805,6 +805,7 @@ class NebulaRPCHandlerPatch
         int id = reader.ReadInt32();
         if (RemoteProcessBase.AllNebulaProcess.TryGetValue(id,out var rpc))
         {
+            Debug.Log(rpc.Name);
             rpc.Receive(reader);
         }
         else

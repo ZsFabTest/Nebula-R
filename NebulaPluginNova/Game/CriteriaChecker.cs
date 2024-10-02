@@ -268,7 +268,7 @@ public class NebulaEndCriteria
             var roleData = GetRoleData();
             if (roleData.allEvil - roleData.pavlov > 0) return;
 
-            foreach (var pavlov in NebulaGameManager.Instance!.AllPlayerInfo().Where(p => !p.IsDead && p.Role.Role == Roles.Neutral.Pavlov.MyRole))
+            foreach (var pavlov in NebulaGameManager.Instance!.AllPlayerInfo().Where((p) => p.Role.Role == Roles.Neutral.Pavlov.MyRole))
             {
                 var pRole = (pavlov.Role as Roles.Neutral.Pavlov.Instance);
 

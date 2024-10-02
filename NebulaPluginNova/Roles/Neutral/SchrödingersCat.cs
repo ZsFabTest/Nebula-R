@@ -190,14 +190,13 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
         public InstanceImpostor(GamePlayer player) : base(player) { }
         DefinedRole RuntimeRole.Role => MyRoleImpostor;
         bool RuntimeRole.HasVanillaKillButton => false;
-        private bool hasRegistered = false;
 
         int CheckImpostorNum()
         {
             int count = 0;
-            foreach(var playerControl in PlayerControl.AllPlayerControls.GetFastEnumerator())
+            foreach(var player in NebulaGameManager.Instance!.AllPlayerInfo())
             {
-                if (playerControl.GetModInfo()!.IsImpostor)
+                if (!player.IsDead && player.IsImpostor)
                     count++;
             }
             return count;
@@ -205,32 +204,13 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
 
         void RuntimeAssignable.OnActivated()
         {
-            if (AmOwner && CheckImpostorNum() <=NumOfLeftImpostorToBeAllowedToKillOption)
-            {
-                RegisterKillButton();
-                hasRegistered = true;
-            }
-        }
-
-        [Local]
-        void OnPlayerDied(PlayerDieEvent ev)
-        {
-            if (AmOwner && !hasRegistered && CheckImpostorNum() <= NumOfLeftImpostorToBeAllowedToKillOption)
-            {
-                RegisterKillButton();
-                hasRegistered = true;
-            }
-        }
-
-        void RegisterKillButton()
-        {
             if (AmOwner)
             {
                 var killTracker = Bind(ObjectTrackers.ForPlayer(null, MyPlayer, ObjectTrackers.ImpostorKillPredicate));
 
-                var killButton = Bind(new Modules.ScriptComponents.ModAbilityButton(isArrangedAsKillButton: true)).KeyBind(Virial.Compat.VirtualKeyInput.Kill);
+                var killButton = Bind(new ModAbilityButton(isArrangedAsKillButton: true)).KeyBind(Virial.Compat.VirtualKeyInput.Kill);
                 killButton.Availability = (button) => killTracker.CurrentTarget != null && MyPlayer.CanMove;
-                killButton.Visibility = (button) => !MyPlayer.IsDead;
+                killButton.Visibility = (button) => !MyPlayer.IsDead && CheckImpostorNum() <= NumOfLeftImpostorToBeAllowedToKillOption;
                 killButton.OnClick = (button) => {
                     MyPlayer.MurderPlayer(killTracker.CurrentTarget!, PlayerState.Dead, EventDetail.Kill, KillParameter.NormalKill);
                     killButton.StartCoolDown();
@@ -238,15 +218,6 @@ public class SchrödingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
                 killButton.CoolDownTimer = Bind(new Timer(ImpostorKillCoolDownOption.CoolDown).SetAsKillCoolDown().Start());
                 killButton.SetLabelType(Virial.Components.ModAbilityButton.LabelType.Impostor);
                 killButton.SetLabel("kill");
-            }
-        }
-
-        [Local]
-        void OnGameEnd(GameEndEvent ev)
-        {
-            if (!MyPlayer.IsDead && ev.EndState.EndCondition == NebulaGameEnds.ImpostorGameEnd)
-            {
-                new StaticAchievementToken("schrödingersCat.challenge");
             }
         }
     }

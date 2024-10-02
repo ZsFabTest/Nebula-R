@@ -48,7 +48,6 @@ public class GhostEngineer : DefinedGhostRoleTemplate, HasCitation, DefinedGhost
                     RpcFixSabotage.Invoke(MyPlayer.PlayerId);
                     leftFix--;
                     repairButton.ShowUsesIcon(3).text = $"{leftFix}";
-                    repairButton.ReleaseIt();
                 };
                 repairButton.ShowUsesIcon(3).text = $"{ leftFix }";
                 repairButton.CoolDownTimer = Bind(new Timer(0f).SetAsAbilityCoolDown().Start());

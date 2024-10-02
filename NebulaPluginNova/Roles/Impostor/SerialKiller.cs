@@ -57,8 +57,8 @@ public class SerialKiller : DefinedRoleTemplate, HasCitation, DefinedRole
         [Local]
         void SetKillTimer(PlayerSetKillTimerEvent ev)
         {
-            if (!PlayerControl.AllPlayerControls.GetFastEnumerator().Any((p) => !p.Data.IsDead && p.PlayerId != MyPlayer.PlayerId && p.GetModInfo()?.Role.Role.Category == RoleCategory.ImpostorRole))
-                ev.SetTime(AmongUsUtil.VanillaKillCoolDown * killCoolDownOption);
+            //if (!PlayerControl.AllPlayerControls.GetFastEnumerator().Any((p) => !p.Data.IsDead && p.PlayerId != MyPlayer.PlayerId && p.GetModInfo()?.Role.Role.Category == RoleCategory.ImpostorRole))
+            ev.SetTime(AmongUsUtil.VanillaKillCoolDown * killCoolDownOption);
         }
 
         [Local]

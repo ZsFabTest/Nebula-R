@@ -101,42 +101,45 @@ public class FireWorks : DefinedRoleTemplate, HasCitation, DefinedRole
 
         void RuntimeAssignable.OnActivated() 
         {
-            // 标记按钮
-            var killButton = Bind(new ModAbilityButton()).KeyBind(Virial.Compat.VirtualKeyInput.Ability);
-            killButton.SetSprite(buttonSprite.GetSprite());
-            killButton.Availability = (button) => MyPlayer.CanMove;
-            killButton.Visibility = (button) => !MyPlayer.IsDead;
-            killButton.OnClick = (button) => {
-                var mark = Bind(NebulaSyncObject.RpcInstantiate(FireWorkMark.MyTag, [
-                            PlayerControl.LocalPlayer.transform.localPosition.x,
-                    PlayerControl.LocalPlayer.transform.localPosition.y - 0.25f
-                        ]).SyncObject) as FireWorkMark;
-                Marks.Add(mark!);
-                if (mapLayer) mapLayer.AddMark(mark!, () => Marks.Remove(mark!));
-
-                killButton.StartCoolDown();
-            };
-            killButton.CoolDownTimer = Bind(new Timer(PlaceFireWorkCoolDownOption).SetAsAbilityCoolDown().Start());
-            killButton.SetLabelType(Virial.Components.ModAbilityButton.LabelType.Standard);
-            killButton.SetLabel("mark");
-
-            // 地图按钮
-            var mapButton = Bind(new ModAbilityButton(isArrangedAsKillButton: true)).KeyBind(Virial.Compat.VirtualKeyInput.Kill);
-            mapButton.SetSprite(mapButtonSprite.GetSprite());
-            mapButton.Availability = (button) => Marks.Count > 0;
-            mapButton.Visibility = (button) => !MyPlayer.IsDead;
-            mapButton.OnClick = (button) =>
+            if (AmOwner)
             {
-                NebulaManager.Instance.ScheduleDelayAction(() =>
+                // 标记按钮
+                var killButton = Bind(new ModAbilityButton()).KeyBind(Virial.Compat.VirtualKeyInput.Ability);
+                killButton.SetSprite(buttonSprite.GetSprite());
+                killButton.Availability = (button) => MyPlayer.CanMove;
+                killButton.Visibility = (button) => !MyPlayer.IsDead;
+                killButton.OnClick = (button) => {
+                    var mark = Bind(NebulaSyncObject.RpcInstantiate(FireWorkMark.MyTag, [
+                                PlayerControl.LocalPlayer.transform.localPosition.x,
+                        PlayerControl.LocalPlayer.transform.localPosition.y - 0.25f
+                            ]).SyncObject) as FireWorkMark;
+                    Marks.Add(mark!);
+                    if (mapLayer) mapLayer.AddMark(mark!, () => Marks.Remove(mark!));
+
+                    killButton.StartCoolDown();
+                };
+                killButton.CoolDownTimer = Bind(new Timer(PlaceFireWorkCoolDownOption).SetAsAbilityCoolDown().Start());
+                killButton.SetLabelType(Virial.Components.ModAbilityButton.LabelType.Standard);
+                killButton.SetLabel("mark");
+
+                // 地图按钮
+                var mapButton = Bind(new ModAbilityButton(isArrangedAsKillButton: true)).KeyBind(Virial.Compat.VirtualKeyInput.Kill);
+                mapButton.SetSprite(mapButtonSprite.GetSprite());
+                mapButton.Availability = (button) => Marks.Count > 0;
+                mapButton.Visibility = (button) => !MyPlayer.IsDead;
+                mapButton.OnClick = (button) =>
                 {
-                    HudManager.Instance.InitMap();
-                    MapBehaviour.Instance.ShowNormalMap();
-                    MapBehaviour.Instance.taskOverlay.gameObject.SetActive(false);
-                });
-            };
-            mapButton.SetLabel("fireWork");
-            mapButton.CoolDownTimer = Bind(new Timer(ExplodeCoolDownOption.CoolDown).SetAsKillCoolDown().Start());
-            GameOperatorManager.Instance?.Register<FireWorkExplodeLocalEvent>(_ => mapButton.StartCoolDown(), mapButton);
+                    NebulaManager.Instance.ScheduleDelayAction(() =>
+                    {
+                        HudManager.Instance.InitMap();
+                        MapBehaviour.Instance.ShowNormalMap();
+                        MapBehaviour.Instance.taskOverlay.gameObject.SetActive(false);
+                    });
+                };
+                mapButton.SetLabel("fireWork");
+                mapButton.CoolDownTimer = Bind(new Timer(ExplodeCoolDownOption.CoolDown).SetAsKillCoolDown().Start());
+                GameOperatorManager.Instance?.Register<FireWorkExplodeLocalEvent>(_ => mapButton.StartCoolDown(), mapButton);
+            }
         }
 
         [Local]

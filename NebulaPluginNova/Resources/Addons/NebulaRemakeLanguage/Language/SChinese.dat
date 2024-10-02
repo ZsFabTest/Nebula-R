@@ -35,6 +35,14 @@
 "options.role.evilAce.detail" : "密命王牌可以知晓伪装者们所击杀的玩家的职业。<br>密命王牌作为最后一人时其cd减少。"
 "options.role.evilAce.killCoolDown" : "作为最后一名伪装者时的击杀冷却倍率"
 
+"role.fireWorks.name" : "烟花商人"
+"role.fireWorks.short" : "烟"
+"role.fireWorks.blurb" : "让他们消失在绚丽的烟火中"
+"options.role.fireWorks.detail" : "烟花商人没有普通击杀能力。<br>烟花商人类似于二营长，但他的标记所有人可见。<br>烟花爆炸留下的痕迹整局游戏存在。"
+"options.role.fireWork.placeFireWorkCoolDown" : "烟花放置冷却时间"
+"options.role.fireWork.explodeCoolDown" : "烟花引燃冷却时间"
+"options.role.fireWork.explodeRatioCoolDown" : "烟花爆炸半径"
+
 "role.ghostEngineer.name" : "灵魂工程师"
 "role.ghostEngineer.blurb" : "永无止境的工作"
 "role.ghostEngineer.short" : "魂工"
@@ -162,6 +170,7 @@
 
 "button.label.block" : "格挡"
 "button.label.feed" : "喂养"
+"button.label.fireWork" : "点燃"
 "button.label.layMines" : "埋雷"
 "button.label.recall" : "回忆"
 "button.label.repair" : "修理"
@@ -243,6 +252,18 @@
 "achievement.evilAce.challenge.title" : "墓地管理员"
 "achievement.evilAce.challenge.goal" : "获取所有已死亡玩家的身份信息。"
 "achievement.evilAce.challenge.cond" : "死亡玩家在五人及以上" 
+
+"achievement.fireWorks.another1.title" : "演出事故"
+"achievement.fireWorks.another1.goal" : "烟花商人被烟花炸死。"
+"achievement.fireWorks.another1.cond" : ""
+
+"achievement.fireWorks.another2.title" : "哑炮"
+"achievement.fireWorks.another2.goal" : "烟花没有炸死任何人。"
+"achievement.fireWorks.another2.cond" : ""
+
+"achievement.fireWorks.challenge.title" : "精彩演出"
+"achievement.fireWorks.challenge.goal" : "烟花一次性炸死5人及以上（自己不算）。"
+"achievement.fireWorks.challenge.cond" : ""
 
 "achievement.ghostEngineer.challenge.title" : "永不停歇的工作"
 "achievement.ghostEngineer.challenge.goal" : "使用完全部的修理次数并且船员阵营取得胜利。"

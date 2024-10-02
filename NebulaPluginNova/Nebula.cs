@@ -42,10 +42,10 @@ public class NebulaPlugin : BasePlugin
     public const string PluginVersion = "2.0.2";
 
     //public const string VisualVersion = "v2.0.2.2";
-    public const string VisualVersion = "Snapshot 24w39a";
+    public const string VisualVersion = "Snapshot 24w40a";
 
-    public const string PluginEpochStr = "103";
-    public const string PluginBuildNumStr = "1122";
+    public const string PluginEpochStr = "104";
+    public const string PluginBuildNumStr = "1123";
     public static readonly int PluginEpoch = int.Parse(PluginEpochStr);
     public static readonly int PluginBuildNum = int.Parse(PluginBuildNumStr);
     public const bool GuardVanillaLangData = false;
@@ -78,6 +78,7 @@ public class NebulaPlugin : BasePlugin
 
     public bool IsPreferential => Log.IsPreferential;
     public static NebulaPlugin MyPlugin { get; private set; } = null!;
+    public static BasePlugin LoaderPlugin = null!;
 
     public override void Load()
     {

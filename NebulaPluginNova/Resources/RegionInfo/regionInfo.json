@@ -53,21 +53,72 @@
             "TranslateName":291
         },
         {
-            "$type":"StaticHttpRegionInfo, Assembly-CSharp",
-            "Name":"<color=#00CCFF>新猫服</color><color=#ffff00>[宿迁]</color>",
-            "PingServer":"http://www.45yun.cn",
-            "Servers":
+            "$type": "StaticHttpRegionInfo, Assembly-CSharp",
+            "Name": "<color=#00FF66>新猫服</color><color=#ffff00>[宁波]</color>",
+            "PingServer": "http://fungle.icu",
+            "Servers": 
             [
                 {
-                    "Name":"http-1",
-                    "Ip":"http://www.45yun.cn",
-                    "Port":22020,
-                    "UseDtls":false,
-                    "Players":0,
-                    "ConnectionFailures":0
+                    "Name": "http-1",
+                    "Ip": "http://fungle.icu",
+                    "Port": 22000,
+                    "UseDtls": false,
+                    "Players": 0,
+                    "ConnectionFailures": 0
                 }
             ],
-            "TranslateName":1003
+            "TranslateName": 1003
+        },
+        {
+            "$type": "StaticHttpRegionInfo, Assembly-CSharp",
+            "Name": "<color=#CC00CC>新猫服</color><color=#ffff00>[北京]</color>",
+            "PingServer": "http://45yun.cn",
+            "Servers": 
+            [
+                {
+                    "Name": "http-1",
+                    "Ip": "http://45yun.cn",
+                    "Port": 4766,
+                    "UseDtls": false,
+                    "Players": 0,
+                    "ConnectionFailures": 0
+                }
+            ],
+            "TranslateName": 1003
+        },
+        {
+            "$type": "StaticHttpRegionInfo, Assembly-CSharp",
+            "Name": "<color=#00CCFF>新猫服</color><color=#ffff00>[宿迁]</color>",
+            "PingServer": "http://www.45yun.cn",
+            "Servers": 
+            [
+                {
+                    "Name": "http-1",
+                    "Ip": "http://www.45yun.cn",
+                    "Port": 22020,
+                    "UseDtls": false,
+                    "Players": 0,
+                    "ConnectionFailures": 0
+                }
+            ],
+            "TranslateName": 1003
+        },
+        {
+            "$type": "StaticHttpRegionInfo, Assembly-CSharp",
+            "Name": "<color=#6C6C6C>胖猫服</color><color=#ffff00>[香港]</color>",
+            "PingServer": "http://cat.v0.ink",
+            "Servers": 
+            [
+                {
+                    "Name": "http-1",
+                    "Ip": "http://cat.v0.ink",
+                    "Port": 22000,
+                    "UseDtls": false,
+                    "Players": 0,
+                    "ConnectionFailures": 0
+                }
+            ],
+            "TranslateName": 1003
         },
         {
             "$type":"StaticHttpRegionInfo, Assembly-CSharp",

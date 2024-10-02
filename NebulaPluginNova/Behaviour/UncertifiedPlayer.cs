@@ -17,7 +17,6 @@ namespace Nebula.Behaviour
         private static RemoteProcess<(byte playerId, int epoch, int build, int addonHash)> RpcHandshake = new(
             "Handshake", (message, calledByMe) => {
                 var player = Helpers.GetPlayer(message.playerId);
-                //Debug.Log(1);
                 if (player?.gameObject.TryGetComponent<UncertifiedPlayer>(out var certification) ?? false)
                 {
                     if (message.epoch != NebulaPlugin.PluginEpoch)
@@ -53,13 +52,8 @@ namespace Nebula.Behaviour
         {
             IEnumerator CoWaitAndRequireHandshake()
             {
-                //yield return new WaitForSeconds((float)System.Random.Shared.NextDouble());
                 yield return new WaitForSeconds(0.5f);
                 RpcRequireHandshake.Invoke();
-                yield return new WaitForSeconds(0.5f);
-                RpcRequireHandshake.Invoke();
-                //yield return new WaitForSeconds(1f + (float)System.Random.Shared.NextDouble());
-                //RpcRequireHandshake.Invoke();
             }
 
             AmongUsClient.Instance.StartCoroutine(CoWaitAndRequireHandshake().WrapToIl2Cpp());
@@ -97,10 +91,24 @@ namespace Nebula.Behaviour
                 NebulaManager.Instance.SetHelpWidget(button, new MetaWidgetOld.VariableText(TextAttributeOld.ContentAttr) { Alignment = IMetaWidgetOld.AlignmentOption.Left, TranslationKey = ReasonToTranslationKey(State) + (AmongUsClient.Instance.AmHost ? ".detail" : ".client") });
             });
             button.OnMouseOut.AddListener(() => NebulaManager.Instance.HideHelpWidgetIf(button));
+            OnStateChanged();
 
             IEnumerator CoWaitAndUpdate()
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.8f);
+
+                int tried = 0;
+
+                do
+                {
+                    if (tried > 0)
+                    {
+                        Certification.RequireHandshake();
+                    }
+                    yield return new WaitForSeconds(0.5f);
+                    tried++;
+                } while (tried < 10 && State == UncertifiedReason.Waiting);
+
                 if (State == UncertifiedReason.Waiting) Reject(UncertifiedReason.Uncertified);
             }
             StartCoroutine(CoWaitAndUpdate().WrapToIl2Cpp());
@@ -124,18 +132,7 @@ namespace Nebula.Behaviour
                 widget.Append(new MetaWidgetOld.Button(() => AmongUsClient.Instance.ExitGame(DisconnectReasons.ExitGame), new(TextAttributeOld.BoldAttr) { Size = new(1f,0.26f)}) { TranslationKey = "ui.dialog.exit", Alignment = IMetaWidgetOld.AlignmentOption.Center });
                 screen.SetWidget(widget);
             }
-
-            IEnumerator CoKickPlayer()
-            {
-                yield return new WaitForSeconds(1f);
-                if (!(MyControl?.AmOwner ?? false) && GeneralConfigurations.KickIfDismatchedOption && State == UncertifiedReason.Uncertified)
-                {
-                    GameData.Instance.HandleDisconnect(MyControl, DisconnectReasons.IncorrectVersion);
-                    if (AmongUsClient.Instance.AmHost) AmongUsClient.Instance.KickPlayer(MyControl!.NetTransform.OwnerId, false);
-                }
-            }
-
-            StartCoroutine(CoKickPlayer().WrapToIl2Cpp());
+            
         }
 
         private void OnStateChanged()
@@ -145,7 +142,7 @@ namespace Nebula.Behaviour
 
         public void Update()
         {
-            myShower.SetActive((AmongUsClient.Instance.AmHost || (MyControl?.AmOwner ?? false)) && State != UncertifiedReason.Waiting);
+            myShower.SetActive((AmongUsClient.Instance.AmHost || (MyControl?.AmHost() ?? false) || (MyControl?.AmOwner ?? false)));
         }
 
         public void OnDestroy()

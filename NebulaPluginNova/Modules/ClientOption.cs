@@ -24,7 +24,7 @@ public class ClientOption
         ShowNoSLogoInLobby,
         ShowOnlySpawnableAssignableOnFilter,
         ForcefullyUsePlus25Protocol,
-        UseStandaloneServerList,
+        //UseStandaloneServerList,
     }
 
     static private DataSaver ClientOptionSaver = new("ClientOption");
@@ -82,7 +82,7 @@ public class ClientOption
                 onDetermine?.Invoke();
                 window.CloseScreen();
             })
-        ),new(0.5f,0.5f), out _);
+        ),new Vector2(0.5f,0.5f), out _);
 
         
     }
@@ -142,7 +142,7 @@ public class ClientOption
         new ClientOption(ClientOptionType.ShowNoSLogoInLobby, "showNebulaLogoInLobby", new string[] { "options.switch.off", "options.switch.on" }, 1);
         new ClientOption(ClientOptionType.ShowOnlySpawnableAssignableOnFilter, "showOnlySpawnableAssignableOnFilter", new string[] { "options.switch.off", "options.switch.on" }, 0) { ShowOnClientSetting = false };
         new ClientOption(ClientOptionType.ForcefullyUsePlus25Protocol, "forcefullyUsePlus25Protocol", new string[] { "options.switch.off", "options.switch.on" }, 1);
-        new ClientOption(ClientOptionType.UseStandaloneServerList, "useStandaloneServerList", new string[] { "options.switch.off", "options.switch.on" }, 1);
+        //new ClientOption(ClientOptionType.UseStandaloneServerList, "useStandaloneServerList", new string[] { "options.switch.off", "options.switch.on" }, 1);
         ReflectProcessorAffinity();
     }
 

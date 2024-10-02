@@ -187,7 +187,11 @@ public class Necromancer : DefinedRoleTemplate, HasCitation, DefinedRole
         }
 
         [OnlyMyPlayer, Local]
-        void ReleaseDeadBodyOnNecromancerDead(PlayerDieEvent ev) => draggable?.OnDead(this);
+        void ReleaseDeadBodyOnNecromancerDead(PlayerDieEvent ev)
+        {
+            if (MyPlayer.HoldingAnyDeadBody) new StaticAchievementToken("necromancer.another2");
+            draggable?.OnDead(this);
+        }
 
 
         void RuntimeAssignable.OnInactivated()

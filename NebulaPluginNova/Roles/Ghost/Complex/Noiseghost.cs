@@ -47,6 +47,7 @@ public class Noiseghost : DefinedGhostRoleTemplate, HasCitation, DefinedGhostRol
                 noiseButton.OnClick = (button) =>
                 {
                     new StaticAchievementToken("noiseghost.common1");
+                    new StaticAchievementToken("noiseghost.common2");
                     RpcGhostNoise.Invoke((MyPlayer, MyPlayer.VanillaPlayer.transform.position));
                     left--;
 

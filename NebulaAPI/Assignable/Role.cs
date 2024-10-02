@@ -126,6 +126,7 @@ public interface DefinedAssignable : IRoleID
     internal UnityEngine.Color UnityColor { get; }
 
     IConfigurationHolder? ConfigurationHolder { get; }
+    IEnumerable<DefinedAssignable> AchievementGroups => [this];
 }
 
 public interface DefinedCategorizedAssignable : DefinedAssignable

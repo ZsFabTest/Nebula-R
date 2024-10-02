@@ -2,6 +2,7 @@
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Nebula.Behaviour;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Nebula.Patches;
 
@@ -108,7 +109,7 @@ public static class RegionMenuOnEnablePatch
 {
     public static void Postfix(RegionMenu __instance)
     {
-        DestroyableSingleton<ServerManager>.Instance.LoadServers();
+        // DestroyableSingleton<ServerManager>.Instance.LoadServers();
         foreach (var button in __instance.ButtonPool.activeChildren)
         {
             var serverButton = button.CastFast<ServerListButton>();
@@ -140,6 +141,8 @@ public static class RegionMenuOnEnablePatch
     }
 }
 
+
+/*
 [HarmonyPatch(typeof(ServerManager), nameof(ServerManager.LoadServers))]
 public static class LoadServersPatch
 {
@@ -158,3 +161,4 @@ public static class LoadServersPatch
         // __instance.serverInfoFileJson = ClientOption.AllOptions[ClientOption.ClientOptionType.UseStandaloneServerList].Value == 1 ?
     }
 }
+*/

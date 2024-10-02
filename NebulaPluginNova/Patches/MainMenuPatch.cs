@@ -123,7 +123,7 @@ public static class MainMenuSetUpPatch
         var discordButton = discordRenderer.gameObject.SetUpButton(true, discordRenderer);
         discordButton.OnMouseOver.AddListener(() => NebulaManager.Instance.SetHelpWidget(discordButton, Language.Translate("title.label.discord")));
         discordButton.OnMouseOut.AddListener(() => NebulaManager.Instance.HideHelpWidgetIf(discordButton));
-        discordButton.OnClick.AddListener(() => Application.OpenURL("https://discord.gg/kHNZD4pq9E"));
+        discordButton.OnClick.AddListener(() => Application.OpenURL(Helpers.ConvertUrl("https://discord.gg/kHNZD4pq9E")));
         discordButton.gameObject.AddComponent<CircleCollider2D>().radius = 0.25f;
 
         void CreateAddonsScreen()
@@ -266,7 +266,7 @@ public static class MainMenuSetUpPatch
                             {
                                 var button = text.gameObject.SetUpButton(true);
                                 button.gameObject.AddComponent<BoxCollider2D>().size = text.rectTransform.sizeDelta;
-                                button.OnClick.AddListener(() => Application.OpenURL("https://github.com/ZsFabTest/Nebula-R/releases/tag/" + version.RawTag));
+                                button.OnClick.AddListener(() => Application.OpenURL(Helpers.ConvertUrl("https://github.com/Dolly1016/Nebula/releases/tag/" + version.RawTag)));
                                 button.OnMouseOver.AddListener(() =>
                                 {
                                     text.color = Color.green;
@@ -327,18 +327,19 @@ public static class MainMenuClearScreenPatch
     }
 }
 
+/*
 [HarmonyPatch(typeof(Constants), nameof(Constants.GetBroadcastVersion))]
 public class ServerVersionPatch
 {
     private static bool IsCustomServer()
     {
-        //return false;
-        return ClientOption.AllOptions[ClientOption.ClientOptionType.ForcefullyUsePlus25Protocol].Value == 1 ? false : ServerManager.Instance?.CurrentRegion.TranslateName is StringNames.NoTranslation or null;
+        return ServerManager.Instance?.CurrentRegion.TranslateName is StringNames.NoTranslation or null;
     }
 
     static void Postfix(ref int __result)
     {
-        if(!MainMenuSetUpPatch.IsLocalGame && !IsCustomServer()) __result += 25;
+        //if(!MainMenuSetUpPatch.IsLocalGame && !IsCustomServer()) __result += 25;
+        __result += 25;
     }
 }
 
@@ -347,9 +348,9 @@ class IsVersionModdedPatch
 {
     static bool Prefix(ref bool __result)
     {
-        //int broadcastVersion = Constants.GetBroadcastVersion();
-        //__result = Constants.GetVersionComponents(broadcastVersion).Item4 >= 25;
-        __result = true;
+        int broadcastVersion = Constants.GetBroadcastVersion();
+        __result = Constants.GetVersionComponents(broadcastVersion).Item4 >= 25;
         return false;
     }
 }
+*/

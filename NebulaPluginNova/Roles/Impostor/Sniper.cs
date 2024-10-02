@@ -153,7 +153,7 @@ public class Sniper : DefinedRoleTemplate, HasCitation, DefinedRole
                 {
                     if (MyRifle == null)
                     {
-                        NebulaAsset.PlaySE(NebulaAudioClip.SniperEquip);
+                        NebulaAsset.PlaySE(NebulaAudioClip.SniperEquip, true);
                         equipButton.SetLabel("unequip");
                     }
                     else
@@ -179,14 +179,16 @@ public class Sniper : DefinedRoleTemplate, HasCitation, DefinedRole
                 killButton.Visibility = (button) => !MyPlayer.IsDead;
                 killButton.OnClick = (button) =>
                 {
-                    NebulaAsset.PlaySE(NebulaAudioClip.SniperShot);
+                    NebulaAsset.PlaySE(NebulaAudioClip.SniperShot, true);
                     var target = MyRifle?.GetTarget(ShotSizeOption, ShotEffectiveRangeOption);
                     if (target != null)
                     {
+                        bool isBlown = target.IsBlown;
                         if (MyPlayer.MurderPlayer(target, PlayerState.Sniped, EventDetail.Kill, KillParameter.RemoteKill) == KillResult.Kill)
                         {
                             if (target.VanillaPlayer.inMovingPlat && Helpers.CurrentMonth == 7) new StaticAchievementToken("tanabata");
                             acTokenCommon ??= new("sniper.common1");
+                            if (isBlown) new StaticAchievementToken("sniper.common2");
                             if (MyPlayer.VanillaPlayer.GetTruePosition().Distance(target!.VanillaPlayer.GetTruePosition()) > 20f) acTokenChallenge.Value++;
                         }
                     }

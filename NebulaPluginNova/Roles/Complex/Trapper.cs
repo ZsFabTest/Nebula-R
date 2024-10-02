@@ -80,7 +80,7 @@ file static class TrapperSystem
     {
         foreach (var lTrap in localTraps)
         {
-            var gTrap = NebulaSyncObject.RpcInstantiate(Trapper.Trap.MyGlobalTag, new float[] { lTrap.TypeId, lTrap.Position.x, lTrap.Position.y }) as Trapper.Trap;
+            var gTrap = NebulaSyncObject.RpcInstantiate(Trapper.Trap.MyGlobalTag, new float[] { lTrap.TypeId, lTrap.Position.x, lTrap.Position.y })?.SyncObject as Trapper.Trap;
             if (gTrap != null) gTrap.SetAsOwner();
             NebulaSyncObject.LocalDestroy(lTrap.ObjectId);
             if (gTrap?.TypeId is KillTrapId or CommTrapId) specialTraps?.Add(gTrap!);
@@ -98,7 +98,7 @@ file static class TrapperSystem
 }
 
 [NebulaRPCHolder]
-public class Trapper : DefinedRoleTemplate, HasCitation, DefinedRole
+public class Trapper : DefinedRoleTemplate, DefinedRole
 {
     private Trapper(bool isEvil) : base(
         isEvil ? "evilTrapper" : "niceTrapper",
@@ -109,9 +109,9 @@ public class Trapper : DefinedRoleTemplate, HasCitation, DefinedRole
     {
         IsEvil = isEvil;
 
+        if(IsEvil) ConfigurationHolder?.AppendConfiguration(KillTrapSoundDistanceOption);
         ConfigurationHolder?.ScheduleAddRelated(() => [isEvil ? MyNiceRole.ConfigurationHolder! : MyEvilRole.ConfigurationHolder!]);
     }
-    Citation? HasCitation.Citaion => Citations.NebulaOnTheShip_Old;
 
 
     public bool IsEvil { get; private set; }
@@ -174,7 +174,7 @@ public class Trapper : DefinedRoleTemplate, HasCitation, DefinedRole
 
         static public Trap GenerateTrap(int type,Vector2 pos)
         {
-            return (NebulaSyncObject.LocalInstantiate(MyLocalTag, new float[] { (float)type, pos.x, pos.y }) as Trap)!;
+            return (NebulaSyncObject.LocalInstantiate(MyLocalTag, new float[] { (float)type, pos.x, pos.y }).SyncObject as Trap)!;
         }
 
         public void SetSpriteAsUsedKillTrap()

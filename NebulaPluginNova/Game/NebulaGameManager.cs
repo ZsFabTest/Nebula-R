@@ -499,7 +499,9 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
         if (VoiceChatManager == null && GeneralConfigurations.UseVoiceChatOption) VoiceChatManager = new();
         VoiceChatManager?.Update();
 
+        GameEntityManager.Run(new GameHudUpdateFasterEvent(this));
         GameEntityManager.Run(new GameHudUpdateEvent(this));
+        GameEntityManager.Run(new GameHudUpdateLaterEvent(this));
 
         if (!PlayerControl.LocalPlayer) return;
         //バニラボタンの更新
@@ -542,7 +544,8 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
 
         if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started && HudManager.Instance.KillButton.gameObject.active)
         {
-            if (NebulaGameManager.Instance?.LocalPlayerInfo?.IsDived ?? false)
+            var info = NebulaGameManager.Instance?.LocalPlayerInfo;
+            if (info != null && (info.IsDived || info.IsBlown))
             {
                 HudManager.Instance.KillButton.SetTarget(null);
             }
@@ -605,6 +608,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
                 new StaticAchievementToken("challenge.impostor");
         }
 
+        if (Helpers.CurrentMonth == 9 && NebulaGameManager.Instance!.RoleHistory.Count(h => !h.IsModifier && h.PlayerId == NebulaGameManager.Instance.LocalPlayerInfo.PlayerId) >= 6) new StaticAchievementToken("autumnSky");
         //Patches.AddChat.CleanUp();
     }
 

@@ -94,8 +94,8 @@ public class Raider : DefinedRoleTemplate, HasCitation, DefinedRole
 
                             var modInfo = p.GetModInfo()!;
 
-                            //ベント内および地底のプレイヤーを無視
-                            if (modInfo.IsDived || p.inVent) continue;
+                            //ベント内、吹っ飛ばされ中、および地底のプレイヤーを無視
+                            if (modInfo.IsDived || p.inVent || modInfo.IsBlown) continue;
 
                             if ((tryKillMask & (1 << p.PlayerId)) != 0) continue;//一度キルを試行しているならなにもしない。
 
@@ -165,10 +165,7 @@ public class Raider : DefinedRoleTemplate, HasCitation, DefinedRole
             MyRenderer.color = Color.white;
         }
 
-        static RaiderAxe()
-        {
-            NebulaSyncObject.RegisterInstantiater(MyTag, (args) => new RaiderAxe(Helpers.GetPlayer((byte)args[0])!));
-        }
+        static RaiderAxe() => NebulaSyncObject.RegisterInstantiater(MyTag, (args) => new RaiderAxe(Helpers.GetPlayer((byte)args[0])!));
     }
 
     public class Instance : RuntimeAssignableTemplate, RuntimeRole
@@ -218,7 +215,7 @@ public class Raider : DefinedRoleTemplate, HasCitation, DefinedRole
                     if (MyAxe != null)
                     {
                         RpcThrow.Invoke((MyAxe!.ObjectId, MyAxe!.Position, MyPlayer.Unbox().MouseAngle));
-                        NebulaAsset.PlaySE(NebulaAudioClip.ThrowAxe);
+                        NebulaAsset.PlaySE(NebulaAudioClip.ThrowAxe, true);
                     }
                     MyAxe = null;
                     button.StartCoolDown();
@@ -262,7 +259,7 @@ public class Raider : DefinedRoleTemplate, HasCitation, DefinedRole
 
         void EquipAxe()
         {
-            MyAxe = (NebulaSyncObject.RpcInstantiate(RaiderAxe.MyTag, new float[] { (float)PlayerControl.LocalPlayer.PlayerId }) as RaiderAxe);
+            MyAxe = (NebulaSyncObject.RpcInstantiate(RaiderAxe.MyTag, new float[] { (float)PlayerControl.LocalPlayer.PlayerId }).SyncObject as RaiderAxe);
         }
 
         void UnequipAxe()

@@ -234,7 +234,7 @@ public class NebulaEndCriteria
         void OnUpdate(GameUpdateEvent ev)
         {
             int totalAlive = GetRoleData().totalAlive;
-            if (totalAlive != 3) return;
+            if (totalAlive > 3) return;
 
             foreach (var p in NebulaGameManager.Instance!.AllPlayerInfo())
             {

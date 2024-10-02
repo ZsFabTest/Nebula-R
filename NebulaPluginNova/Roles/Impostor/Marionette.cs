@@ -96,7 +96,7 @@ public class Marionette : DefinedRoleTemplate, HasCitation, DefinedRole
                         PlayerControl.LocalPlayer.transform.localPosition.x,
                         PlayerControl.LocalPlayer.transform.localPosition.y,
                         PlayerControl.LocalPlayer.cosmetics.FlipX ? -1f : 1f 
-                        ]) as Decoy);
+                        ]).SyncObject as Decoy);
 
                         destroyButton!.ActivateEffect();
                         destroyButton.EffectTimer?.Start();

@@ -85,7 +85,7 @@ public class ModUpdater
 
         private async Task UpdateAsync()
         {
-            string url = $"https://gh.con.sh/https://github.com/ZsFabTest/Nebula-R/releases/download/{rawTag}/Nebula.dll";
+            string url = Helpers.ConvertUrl($"https://gh.con.sh/https://github.com/ZsFabTest/Nebula-R/releases/download/{rawTag}/Nebula.dll");
             var response = await NebulaPlugin.HttpClient.GetAsync(url);
             if (response.StatusCode != HttpStatusCode.OK) return;
             var dllStream = await response.Content.ReadAsStreamAsync();
@@ -115,7 +115,7 @@ public class ModUpdater
         }
     }
 
-    static string GetTagsUrl(int page) => "https://api.github.com/repos/ZsFabTest/Nebula-R/tags?per_page=100&page=" + (page);
+    static string GetTagsUrl(int page) => Helpers.ConvertUrl("https://api.github.com/repos/ZsFabTest/Nebula-R/tags?per_page=100&page=" + (page));
     private static async Task FetchAsync()
     {
         List<ReleasedInfo> releases = new();

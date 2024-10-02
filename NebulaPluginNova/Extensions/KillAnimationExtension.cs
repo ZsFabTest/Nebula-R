@@ -39,7 +39,8 @@ public static class KillAnimationExtension
         target.GetModInfo()!.Unbox().relatedDeadBodyCache = deadBody;
 
         target.Die(DeathReason.Kill, false);
-        yield return source.MyPhysics.Animations.CoPlayCustomAnimation(killAnim.BlurAnim);
+
+        if(!source.Data.IsDead) yield return source.MyPhysics.Animations.CoPlayCustomAnimation(killAnim.BlurAnim);
 
         if (blink)
         {
@@ -49,6 +50,7 @@ public static class KillAnimationExtension
 
         KillAnimation.SetMovement(source, true);
         KillAnimation.SetMovement(target, true);
+
         deadBody.enabled = true;
         if (isParticipant)
         {

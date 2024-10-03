@@ -77,6 +77,10 @@ public class Pavlov : DefinedRoleTemplate, HasCitation, DefinedRole
             PavlovsDog.Instance.RpcSetOwnerDied.Invoke(hasDog);
         }
 
+        [OnlyMyPlayer]
+        void CheckWins(PlayerCheckWinEvent ev) => ev.SetWinIf(ev.GameEnd == NebulaGameEnd.PavlovWin 
+            && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && IsSameTeam(p)));
+
         public bool IsSameTeam(Virial.Game.Player player)
         {
             return (player.Role is PavlovsDog.Instance dog && dog.pavlovTeamId == pavlovTeamId) ||
@@ -176,6 +180,10 @@ public class PavlovsDog : DefinedRoleTemplate, HasCitation, DefinedRole
             }
         }
 
+        [OnlyMyPlayer]
+        void CheckWins(PlayerCheckWinEvent ev) => ev.SetWinIf(ev.GameEnd == NebulaGameEnd.PavlovWin
+            && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && IsSameTeam(p)));
+
         private bool IsSameTeam(Virial.Game.Player player)
         {
             return (player.Role is Instance dog && dog.pavlovTeamId == pavlovTeamId) ||
@@ -234,7 +242,12 @@ public class PavlovsDog : DefinedRoleTemplate, HasCitation, DefinedRole
             }
         }
 
-        private void SetMad() => hasMad = 1;
+        private void SetMad()
+        {
+            hasMad = 1;
+            killTimer?.SetRange(0f, KillCoolDownWhenOwnerDiedOption.CoolDown);
+            killTimer?.SetTime(0f);
+        }
 
         public static readonly RemoteProcess<byte> RpcSetOwnerDied = new(
             "SetOwnerDied",

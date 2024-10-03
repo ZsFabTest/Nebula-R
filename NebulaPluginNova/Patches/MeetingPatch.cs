@@ -3,6 +3,7 @@ using Nebula.Behaviour;
 using static MeetingHud;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Virial.Events.Game.Meeting;
+using Nebula.Roles.Complex;
 
 namespace Nebula.Patches;
 
@@ -585,6 +586,11 @@ static class CheckForEndVotingPatch
 
         NebulaPlugin.Log.Print("Voting Result\n" + log.Join(null,"\n"));
 
+        var CatchModCalcuateVote = new ModCalcuateVotesEvent(__instance, dictionary);
+        GameOperatorManager.Instance?.Run(CatchModCalcuateVote);
+        dictionary = CatchModCalcuateVote.VoteResult;
+        GameOperatorManager.Instance?.Run(new VoteCalcuationEndEvent(dictionary));
+
         return dictionary;
     }
 
@@ -756,12 +762,19 @@ class PopulateResultPatch
         Debug.Log("Called PopulateResults");
 
         GameOperatorManager.Instance?.Run(new MeetingVoteEndEvent());
+        GameOperatorManager.Instance?.Run(new MeetingPopulateResultEvent(__instance));
 
         __instance.TitleText.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.MeetingVotingResults);
         foreach (var voteArea in __instance.playerStates)
         {
             voteArea.ClearForResults();
             MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId]= voteArea.VotedFor;
+            if (SwapSystem.WillSwap &&
+                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] == SwapSystem.targetId1)
+                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] = SwapSystem.targetId2;
+            else if (SwapSystem.WillSwap &&
+                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] == SwapSystem.targetId2)
+                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] = SwapSystem.targetId1;
         }
 
         int lastVoteFor = -1;
@@ -775,6 +788,12 @@ class PopulateResultPatch
             {
                 lastVoteFor = state.VotedForId;
                 num = 0;
+                if (SwapSystem.WillSwap &&
+                    lastVoteFor == SwapSystem.targetId1)
+                    lastVoteFor = SwapSystem.targetId2;
+                else if (SwapSystem.WillSwap &&
+                    lastVoteFor == SwapSystem.targetId2)
+                    lastVoteFor = SwapSystem.targetId1;
                 if (state.SkippedVote)
                     voteFor = __instance.SkippedVoting.transform;
                 else

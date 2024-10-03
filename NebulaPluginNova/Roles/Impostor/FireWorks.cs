@@ -1,13 +1,10 @@
 ﻿using Il2CppInterop.Runtime.Injection;
-using Nebula.Behaviour;
 using Nebula.Game.Statistics;
 using Virial;
 using Virial.Assignable;
 using Virial.Configuration;
 using Virial.Events.Game.Minimap;
 using Virial.Game;
-using static Nebula.Roles.Impostor.Cannon;
-using static Nebula.Roles.Impostor.Marionette;
 
 namespace Nebula.Roles.Impostor;
 

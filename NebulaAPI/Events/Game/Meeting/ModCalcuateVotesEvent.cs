@@ -8,15 +8,11 @@ namespace Virial.Events.Game.Meeting;
 
 public class ModCalcuateVotesEvent : Event
 {
-    private Dictionary<byte, int> VoteResult;
-
-    public Dictionary<byte, int> CalVoteResult()
+    internal Dictionary<byte, int> VoteResult;
+    internal MeetingHud Instance;
+    internal ModCalcuateVotesEvent(MeetingHud instance, Dictionary<byte,int> dic)
     {
-        return VoteResult;
-    }
-
-    internal ModCalcuateVotesEvent(Dictionary<byte,int> dic)
-    {
+        this.Instance = instance;
         this.VoteResult = dic;
     }
 }

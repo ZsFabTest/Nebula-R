@@ -42,10 +42,10 @@ public class NebulaPlugin : BasePlugin
     public const string PluginVersion = "2.0.2";
 
     //public const string VisualVersion = "v2.0.2.2";
-    public const string VisualVersion = "Snapshot 24w40c";
+    public const string VisualVersion = "Snapshot 24w40d";
 
     public const string PluginEpochStr = "104";
-    public const string PluginBuildNumStr = "1125";
+    public const string PluginBuildNumStr = "1127";
     public static readonly int PluginEpoch = int.Parse(PluginEpochStr);
     public static readonly int PluginBuildNum = int.Parse(PluginBuildNumStr);
     public const bool GuardVanillaLangData = false;

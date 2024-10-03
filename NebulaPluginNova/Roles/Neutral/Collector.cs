@@ -40,7 +40,7 @@ public class Collector : DefinedRoleTemplate, HasCitation, DefinedRole
         }
 
         [Local]
-        void OnModCalcuateVotes(ModCalcuateVotesEvent ev)
+        void OnVotesCalcuationEnd(VoteCalcuationEndEvent ev)
         {
             var dictionary = ev.CalVoteResult();
             collection += dictionary[voteFor];

@@ -35,6 +35,11 @@
 "options.role.evilAce.detail" : "密命王牌可以知晓伪装者们所击杀的玩家的职业。<br>密命王牌作为最后一人时其cd减少。"
 "options.role.evilAce.killCoolDown" : "作为最后一名伪装者时的击杀冷却倍率"
 
+"role.evilSwapper.name" : "邪恶的换票师"
+"role.evilSwapper.short" : "坏换"
+"role.evilSwapper.blurb" : "也许是无辜的替罪羊"
+"options.role.evilSwapper.detail" : "邪恶的换票师可以通过换票能力保护队友及叛徒。"
+
 "role.fireWorks.name" : "烟花商人"
 "role.fireWorks.short" : "烟"
 "role.fireWorks.blurb" : "让他们消失在绚丽的烟火中"
@@ -90,6 +95,11 @@
 "options.role.miner.layingMineCooldown" : "埋雷冷却时间"
 "options.role.miner.numOfMines" : "最大埋雷次数"
 "role.minerModifier.name" : "埋雷兵[判定]"
+
+"role.niceSwapper.name" : "正义的换票师"
+"role.niceSwapper.short" : "好换"
+"role.niceSwapper.blurb" : "I DO NOT think so..."
+"options.role.niceSwapper.detail" : "正义的换票师通过换票能力改变投票结果。"
 
 "role.oracle.name" : "占卜师"
 "role.oracle.short" : "占"
@@ -149,6 +159,11 @@
 "role.schrödingersCatJackal.short" : "猫"
 "role.schrödingersCatJackal.blurb" : "墙头草，两边倒"
 "options.role.schrödingersCatJackal.detail" : "你现在加入了豺狼阵营。<br>击杀所有人并与豺狼共同胜利。"
+
+"role.swapper.name" : "换票师"
+"role.swapper.blurb" : "啊？"
+"options.role.swapper.numOfSwap" : "换票次数"
+"options.role.swapper.canCallEmergencyMeeting" : "可以发起紧急会议"
 
 "role.tianMengLucky.name" : "天寸"
 "role.tianMengLucky.short" : "Yee"
@@ -360,6 +375,18 @@
 "achievement.schrödingersCat.challenge.title" : "有一份热 发一分光"
 "achievement.schrödingersCat.challenge.goal" : "更换阵营后跟随该阵营胜利。"
 "achievement.schrödingersCat.challenge.cond" : ""
+
+"achievement.swapper.common.title" : "矫揉造作"
+"achievement.swapper.common.goal" : "通过换票成功改变放逐结果。"
+"achievement.swapper.common.cond" : ""
+
+"achievement.swapper.another.title" : "会议事故"
+"achievement.swapper.another.goal" : "换票师被放逐。"
+"achievement.swapper.another.cond" : ""
+
+"achievement.swapper.challenge.title" : "大难临头"
+"achievement.swapper.challenge.goal" : "被换票师交换投票并被放逐。"
+"achievement.swapper.challenge.cond" : ""
 
 "achievement.unyielding.common1.title" : "我重生了"
 "achievement.unyielding.common1.goal" : "通过玩家的尸体复活一次。"

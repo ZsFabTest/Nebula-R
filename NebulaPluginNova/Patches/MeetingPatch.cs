@@ -152,6 +152,34 @@ public static class MeetingModRpc
         ControllerManager.Instance.CloseOverlayMenu(meetingHud.name);
         ControllerManager.Instance.OpenOverlayMenu(meetingHud.name, null, meetingHud.ProceedButtonUi);
     }
+
+
+    internal static readonly RemoteProcess<Dictionary<byte, int>> RpcCalcuationEvent = new(
+        "Calcuation",
+        (writer, dic) =>
+        {
+            writer.Write(dic.Count);
+            foreach (var kvp in dic)
+            {
+                writer.Write(kvp.Key);
+                writer.Write(kvp.Value);
+            }
+        },
+        (reader) =>
+        {
+            var count = reader.ReadInt32();
+            Dictionary<byte, int> result = new();
+            while (count-- > 0)
+            {
+                result[reader.ReadByte()] = reader.ReadInt32();
+            }
+            return result;
+        },
+        (message, isCalledByMe) =>
+        {
+            if (isCalledByMe) return;
+            GameOperatorManager.Instance?.Run(new VoteCalcuationEndEvent(message));
+        });
 }
 
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.ServerStart))]
@@ -603,37 +631,10 @@ static class CheckForEndVotingPatch
             (dictionary[info.Item1], dictionary[info.Item2]) = (dictionary[info.Item2], dictionary[info.Item1]);
         }
         GameOperatorManager.Instance?.Run(new VoteCalcuationEndEvent(dictionary));
-        RpcCalcuationEvent.Invoke(dictionary);
+        MeetingModRpc.RpcCalcuationEvent.Invoke(dictionary);
 
         return dictionary;
     }
-
-    private static readonly RemoteProcess<Dictionary<byte, int>> RpcCalcuationEvent = new(
-        "Calcuation",
-        (writer, dic) =>
-        {
-            writer.Write(dic.Count);
-            foreach (var kvp in dic)
-            {
-                writer.Write(kvp.Key);
-                writer.Write(kvp.Value);
-            }
-        },
-        (reader) =>
-        {
-            var count = reader.ReadInt32();
-            Dictionary<byte, int> result = new();
-            while (count-- > 0)
-            {
-                result[reader.ReadByte()] = reader.ReadInt32();
-            }
-            return result;
-        },
-        (message, isCalledByMe) =>
-        {
-            if (isCalledByMe) return;
-            GameOperatorManager.Instance?.Run(new VoteCalcuationEndEvent(message));
-        }); 
 
     public static KeyValuePair<byte, int> MaxPair(this Dictionary<byte, int> self, out bool tie)
     {

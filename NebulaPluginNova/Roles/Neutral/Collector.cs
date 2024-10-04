@@ -60,9 +60,9 @@ public class Collector : DefinedRoleTemplate, HasCitation, DefinedRole
         }
 
         [Local]
-        void OnMeedtingEnd(MeetingEndEvent ev)
+        void OnMeetingEnd(MeetingEndEvent ev)
         {
-            if(!MyPlayer.IsDead && collection >= CollectedVotesToWinOption)
+            if (!MyPlayer.IsDead && collection >= CollectedVotesToWinOption)
                 NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.CollectorWin, 1 << MyPlayer.PlayerId);
         }
 

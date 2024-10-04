@@ -1,5 +1,6 @@
 ﻿using Nebula.Behaviour;
 using Nebula.Game.Statistics;
+using Nebula.Roles.Complex;
 using Virial;
 using Virial.Events.Game;
 using Virial.Events.Game.Meeting;
@@ -16,8 +17,8 @@ public static class ModPreSpawnInPatch
         {
             NebulaPreSpawnMinigame spawnInMinigame = UnityHelper.CreateObject<NebulaPreSpawnMinigame>("PreSpawnInMinigame", minigameParent, new Vector3(0, 0, -600f), LayerExpansion.GetUILayer());
             spawnInMinigame.Begin(null!);
-            yield return NebulaAPI.CurrentGame.GetModule<Synchronizer>()?.CoSync(Modules.SynchronizeTag.PreSpawnMinigame, true, false, false);
-            NebulaAPI.CurrentGame.GetModule<Synchronizer>()?.ResetSync(Modules.SynchronizeTag.PreSpawnMinigame);
+            yield return NebulaAPI.CurrentGame?.GetModule<Synchronizer>()?.CoSync(Modules.SynchronizeTag.PreSpawnMinigame, true, false, false);
+            NebulaAPI.CurrentGame?.GetModule<Synchronizer>()?.ResetSync(Modules.SynchronizeTag.PreSpawnMinigame);
             spawnInMinigame.CloseSpawnInMinigame();
 
             NebulaGameManager.Instance?.GameStatistics.RecordEvent(new GameStatistics.Event(eventVariation, null, 0, GameStatisticsGatherTag.Spawn) { RelatedTag = tag });
@@ -56,6 +57,7 @@ public static class NebulaExileWrapUp
 
                         //Entityイベント発火
                         GameOperatorManager.Instance?.Run(new PlayerExiledEvent(info), true);
+                        if (!SwapSystem.SwapInfos.IsEmpty() && NebulaAPI.CurrentGame?.LocalPlayer.Role is Swapper.NiceInstance or Swapper.EvilInstance && PlayerControl.LocalPlayer.PlayerId == info.PlayerId) new StaticAchievementToken("swapper.another");
                     }
                 }
 

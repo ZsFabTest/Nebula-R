@@ -1,5 +1,6 @@
 ﻿using Il2CppInterop.Runtime.Injection;
 using Nebula.Game.Statistics;
+using Nebula.Roles.Abilities;
 using Virial;
 using Virial.Assignable;
 using Virial.Configuration;
@@ -10,7 +11,10 @@ namespace Nebula.Roles.Impostor;
 
 public class FireWorks : DefinedRoleTemplate, HasCitation, DefinedRole
 {
-    private FireWorks() : base("fireWorks", Impostor.MyTeam.Color, RoleCategory.ImpostorRole, Impostor.MyTeam, [ExplodeCoolDownOption, PlaceFireWorkCoolDownOption]) { }
+    private FireWorks() : base("fireWorks", Impostor.MyTeam.Color, RoleCategory.ImpostorRole, Impostor.MyTeam, [ExplodeCoolDownOption, PlaceFireWorkCoolDownOption])
+    {
+        MetaAbility.RegisterCircle(new("role.fireWorks.explodeRatio", () => ExplodeRatioOption, () => null, UnityColor));
+    }
     Citation? HasCitation.Citaion => Citations.TownOfHost;
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(Virial.Game.Player player, int[] arguments) => new Instance(player);

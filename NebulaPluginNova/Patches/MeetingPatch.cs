@@ -4,6 +4,7 @@ using static MeetingHud;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Virial.Events.Game.Meeting;
 using Nebula.Roles.Complex;
+using Virial;
 
 namespace Nebula.Patches;
 
@@ -14,7 +15,8 @@ public static class MeetingModRpc
     static private (int x, int y)[] VotingAreaSize = [(3, 5), (3, 6), (4, 6)];
     static private Vector3[] VotingAreaOffset = [Vector3.zero, new(0.1f, 0.145f, 0f), new(-0.355f, 0f, 0f)];
     static private (float x, float y)[] VotingAreaMultiplier = [(1f, 1f), (1f, 0.89f), (0.974f, 1f)];
-    static private int GetVotingAreaType(int players) => players <= 15 ? 0 : players <= 18 ? 1 : 2;
+    //static private int GetVotingAreaType(int players) => players <= 15 ? 0 : players <= 18 ? 1 : 2;
+    static private int GetVotingAreaType(int players) => 2;
     private static Vector3 ToVoteAreaPos(int index, int arrangeType)
     {
         int x = index % VotingAreaSize[arrangeType].x;
@@ -157,7 +159,9 @@ class MeetingHudServerStartPatch
 {
     public static void Postfix(MeetingHud __instance)
     {
-        MeetingHud.Instance.SortVotingArea(p => p.IsDead ? 2 : 1, 10f);
+        //MeetingHud.Instance.SortVotingArea(p => p.IsDead ? 2 : 1, 10f);
+        //MeetingModRpc.RpcChangeVotingStyle.Invoke();
+        //Debug.LogError("MeetingHudServerStart");
     }
 
 }
@@ -255,6 +259,8 @@ class MeetingStartPatch
 
     static void Postfix(MeetingHud __instance)
     {
+        MeetingHud.Instance.SortVotingArea(p => p.IsDead ? 2 : 1, 10f);
+
         MeetingHudExtension.LeftContents.Clear();
         MeetingHudExtension.Reset();
         MeetingHudExtension.InitMeetingTimer();
@@ -329,6 +335,7 @@ class MeetingStartPatch
                 catch { }
             };
         }
+        SwapSystem.SwapInfos.Clear();
     }
 }
 
@@ -589,10 +596,44 @@ static class CheckForEndVotingPatch
         var CatchModCalcuateVote = new ModCalcuateVotesEvent(__instance, dictionary);
         GameOperatorManager.Instance?.Run(CatchModCalcuateVote);
         dictionary = CatchModCalcuateVote.VoteResult;
+        foreach(var info in SwapSystem.SwapInfos)
+        {
+            if (!dictionary.ContainsKey(info.Item1)) dictionary[info.Item1] = 0;
+            if (!dictionary.ContainsKey(info.Item2)) dictionary[info.Item2] = 0;
+            (dictionary[info.Item1], dictionary[info.Item2]) = (dictionary[info.Item2], dictionary[info.Item1]);
+        }
         GameOperatorManager.Instance?.Run(new VoteCalcuationEndEvent(dictionary));
+        RpcCalcuationEvent.Invoke(dictionary);
 
         return dictionary;
     }
+
+    private static readonly RemoteProcess<Dictionary<byte, int>> RpcCalcuationEvent = new(
+        "Calcuation",
+        (writer, dic) =>
+        {
+            writer.Write(dic.Count);
+            foreach (var kvp in dic)
+            {
+                writer.Write(kvp.Key);
+                writer.Write(kvp.Value);
+            }
+        },
+        (reader) =>
+        {
+            var count = reader.ReadInt32();
+            Dictionary<byte, int> result = new();
+            while (count-- > 0)
+            {
+                result[reader.ReadByte()] = reader.ReadInt32();
+            }
+            return result;
+        },
+        (message, isCalledByMe) =>
+        {
+            if (isCalledByMe) return;
+            GameOperatorManager.Instance?.Run(new VoteCalcuationEndEvent(message));
+        }); 
 
     public static KeyValuePair<byte, int> MaxPair(this Dictionary<byte, int> self, out bool tie)
     {
@@ -762,19 +803,26 @@ class PopulateResultPatch
         Debug.Log("Called PopulateResults");
 
         GameOperatorManager.Instance?.Run(new MeetingVoteEndEvent());
-        GameOperatorManager.Instance?.Run(new MeetingPopulateResultEvent(__instance));
+        foreach(var info in SwapSystem.SwapInfos)
+        {
+            PlayerVoteArea? swapped1 = __instance.playerStates.FirstOrDefault(area => area.TargetPlayerId == info.Item1);
+            PlayerVoteArea? swapped2 = __instance.playerStates.FirstOrDefault(area => area.TargetPlayerId == info.Item2);
+            if (swapped1 != null && swapped2 != null)
+            {
+                __instance.StartCoroutine(Effects.Slide3D(swapped1.transform, swapped1.transform.localPosition, swapped2.transform.localPosition, 1.5f));
+                __instance.StartCoroutine(Effects.Slide3D(swapped2.transform, swapped2.transform.localPosition, swapped1.transform.localPosition, 1.5f));
+            }
+        }
 
         __instance.TitleText.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.MeetingVotingResults);
         foreach (var voteArea in __instance.playerStates)
         {
             voteArea.ClearForResults();
             MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId]= voteArea.VotedFor;
-            if (SwapSystem.WillSwap &&
-                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] == SwapSystem.targetId1)
-                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] = SwapSystem.targetId2;
-            else if (SwapSystem.WillSwap &&
-                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] == SwapSystem.targetId2)
-                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] = SwapSystem.targetId1;
+            if (SwapSystem.SwapInfos.Any(info => MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] == info.Item1))
+                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] = SwapSystem.SwapInfos.FirstOrDefault(info => MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] == info.Item1).Item2;
+            else if (SwapSystem.SwapInfos.Any(info => MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] == info.Item2))
+                MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] = SwapSystem.SwapInfos.FirstOrDefault(info => MeetingHudExtension.LastVotedForMap[voteArea.TargetPlayerId] == info.Item2).Item1;
         }
 
         int lastVoteFor = -1;
@@ -788,12 +836,10 @@ class PopulateResultPatch
             {
                 lastVoteFor = state.VotedForId;
                 num = 0;
-                if (SwapSystem.WillSwap &&
-                    lastVoteFor == SwapSystem.targetId1)
-                    lastVoteFor = SwapSystem.targetId2;
-                else if (SwapSystem.WillSwap &&
-                    lastVoteFor == SwapSystem.targetId2)
-                    lastVoteFor = SwapSystem.targetId1;
+                if (SwapSystem.SwapInfos.Any(info => info.Item1 == lastVoteFor))
+                    lastVoteFor = SwapSystem.SwapInfos.FirstOrDefault(info => info.Item1 == lastVoteFor).Item2;
+                else if (SwapSystem.SwapInfos.Any(info => info.Item2 == lastVoteFor))
+                    lastVoteFor = SwapSystem.SwapInfos.FirstOrDefault(info => info.Item2 == lastVoteFor).Item1;
                 if (state.SkippedVote)
                     voteFor = __instance.SkippedVoting.transform;
                 else

@@ -1,4 +1,6 @@
-﻿using Nebula.Behaviour;
+﻿using Epic.OnlineServices.Presence;
+using Il2CppSystem.Reflection;
+using Nebula.Behaviour;
 using Nebula.Compat;
 using Virial;
 using Virial.Assignable;
@@ -12,20 +14,18 @@ namespace Nebula.Roles.Complex;
 static internal class SwapSystem
 {
     static Virial.Game.Player? temp_target = null;
-    internal static bool WillSwap = false;
-    internal static byte targetId1, targetId2;
+    internal static List<(byte, byte)> SwapInfos = new();
+    static bool hasSwapped = false;
 
     static private SpriteLoader targetSprite = SpriteLoader.FromResource("Nebula.Resources.SwapIcon.png", 115f);
     static public void OnMeetingStart(int leftSwap, Action ExtraAction)
     {
         //Debug.LogError("SetUpSwapSystem");
         temp_target = null;
-        WillSwap = false;
-        targetId1 = byte.MaxValue;
-        targetId2 = byte.MaxValue;
+        hasSwapped = false;
         NebulaAPI.CurrentGame?.GetModule<MeetingPlayerButtonManager>()?.RegisterMeetingAction(new(targetSprite,
             state => {
-                if (WillSwap) return;
+                if (hasSwapped) return;
                 if (temp_target == null)
                 {
                     temp_target = state.MyPlayer;
@@ -39,61 +39,30 @@ static internal class SwapSystem
                 else
                 {
                     state.MyButton.renderer.color = Color.green;
-                    targetId1 = temp_target.PlayerId;
-                    targetId2 = state.MyPlayer.PlayerId;
-                    WillSwap = true;
+                    RpcSetSwap.Invoke((temp_target.PlayerId, state.MyPlayer.PlayerId));
+                    hasSwapped = true;
                     temp_target = null;
                     leftSwap--;
                     ExtraAction.Invoke();
-                    RpcSetSwap.Invoke((targetId1, targetId2));
                 }
             },
             p => !p.MyPlayer.IsDead && leftSwap > 0
-                && (!WillSwap || p.MyPlayer.PlayerId == targetId1 || p.MyPlayer.PlayerId == targetId2)
+                && (!hasSwapped || SwapInfos.Any((info) => info.Item1 == p.MyPlayer.PlayerId || info.Item2 == p.MyPlayer.PlayerId))
                 && !PlayerControl.LocalPlayer.Data.IsDead
             ));
     }
 
-    public static void OnModCalcuateVotes(ModCalcuateVotesEvent ev)
-    {
-        if(WillSwap && !(NebulaAPI.CurrentGame?.LocalPlayer.IsDead ?? true))
-        {
-            if (!ev.VoteResult.ContainsKey(targetId1)) ev.VoteResult[targetId1] = 0;
-            if (!ev.VoteResult.ContainsKey(targetId2)) ev.VoteResult[targetId2] = 0;
-            (ev.VoteResult[targetId1], ev.VoteResult[targetId2]) = (ev.VoteResult[targetId2], ev.VoteResult[targetId1]);
-        }
-    }
-
-    public static void OnPopulateResult(MeetingPopulateResultEvent ev)
-    {
-        if (WillSwap && !(NebulaAPI.CurrentGame?.LocalPlayer.IsDead ?? true))
-        {
-            PlayerVoteArea? swapped1 = ev.Instance.playerStates.FirstOrDefault(area => area.TargetPlayerId == targetId1);
-            PlayerVoteArea? swapped2 = ev.Instance.playerStates.FirstOrDefault(area => area.TargetPlayerId == targetId2);
-            if (swapped1 == null || swapped2 == null) return;
-            ev.Instance.StartCoroutine(Effects.Slide3D(swapped1.transform, swapped1.transform.localPosition, swapped2.transform.localPosition, 1.5f));
-            ev.Instance.StartCoroutine(Effects.Slide3D(swapped2.transform, swapped2.transform.localPosition, swapped1.transform.localPosition, 1.5f));
-        }
-    }
-
     public static void OnExiled(Virial.Game.Player MyPlayer, Virial.Game.Player Exiled)
     {
-        if (MyPlayer.AmOwner)
-        {
-            if (MyPlayer.PlayerId == Exiled.PlayerId) new StaticAchievementToken("swapper.another");
-            if (WillSwap && Exiled.PlayerId == targetId1 || Exiled.PlayerId == targetId2) new StaticAchievementToken("swapper.common");
-        }
-        if (WillSwap && Exiled.AmOwner) new StaticAchievementToken("swapper.challenge");
+        if (SwapInfos.Any((info) => info.Item1 == Exiled.PlayerId || info.Item2 == Exiled.PlayerId)) new StaticAchievementToken("swapper.common");
+        if (Exiled.AmOwner) new StaticAchievementToken("swapper.challenge");
     }
 
     private static readonly RemoteProcess<(byte, byte)> RpcSetSwap = new(
-        "SetSwap",
-        (message, isCalledByMe) =>
+    "SetSwap",
+        (message, _) =>
         {
-            if (isCalledByMe) return;
-            WillSwap = true;
-            targetId1 = message.Item1;
-            targetId2 = message.Item2;
+            SwapInfos.Add(message);
         });
 }
 
@@ -141,14 +110,9 @@ public class Swapper : DefinedRoleTemplate, HasCitation, DefinedRole
         [Local]
         void OnMeetingStart(MeetingStartEvent ev) => SwapSystem.OnMeetingStart(leftSwap, () => leftSwap--);
 
-        [Local]
-        void OnModCalculateVotes(ModCalcuateVotesEvent ev) => SwapSystem.OnModCalcuateVotes(ev);
-        [Local]
-        void OnPopulateResult(MeetingPopulateResultEvent ev) => SwapSystem.OnPopulateResult(ev);
-
         void RuntimeAssignable.DecorateNameConstantly(ref string name, bool canSeeAllInfo)
         {
-            if (AmOwner || canSeeAllInfo) name += $" ({leftSwap})".Color(MyNiceRole.RoleColor.ToUnityColor());
+            if (AmOwner) name += $" ({leftSwap})".Color(MyNiceRole.RoleColor.ToUnityColor());
         }
 
         [Local]
@@ -173,19 +137,15 @@ public class Swapper : DefinedRoleTemplate, HasCitation, DefinedRole
         [Local]
         void OnMeetingStart(MeetingStartEvent ev) => SwapSystem.OnMeetingStart(leftSwap, () => leftSwap--);
 
-        [Local]
-        void OnModCalculateVotes(ModCalcuateVotesEvent ev) => SwapSystem.OnModCalcuateVotes(ev);
-        [Local]
-        void OnPopulateResult(MeetingPopulateResultEvent ev) => SwapSystem.OnPopulateResult(ev);
-
         void RuntimeAssignable.DecorateNameConstantly(ref string name, bool canSeeAllInfo)
         {
-            if (AmOwner || canSeeAllInfo) name += $" ({leftSwap})".Color(MyNiceRole.RoleColor.ToUnityColor());
+            if (AmOwner) name += $" ({leftSwap})".Color(MyNiceRole.RoleColor.ToUnityColor());
         }
 
         [Local]
         void OnExiled(PlayerExiledEvent ev) => SwapSystem.OnExiled(MyPlayer, ev.Player);
 
         bool RuntimeAssignable.CanCallEmergencyMeeting => CanCallEmergencyMeetingOption;
+
     }
 }

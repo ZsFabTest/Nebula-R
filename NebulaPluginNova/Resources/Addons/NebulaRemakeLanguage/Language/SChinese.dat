@@ -96,6 +96,26 @@
 "options.role.miner.numOfMines" : "最大埋雷次数"
 "role.minerModifier.name" : "埋雷兵[判定]"
 
+"role.moran.name" : "莫兰上校"
+"role.moran.short" : "兰"
+"role.moran.blurb" : "是时候拿起气步枪了"
+"options.role.moran.detail" : "莫兰上校拥有和狙击手相近的能力。<br>莫兰上校狙击时无提示与声音。"
+"options.role.moran.snipeCoolDown" : "狙击冷却时间"
+"options.role.moran.shotSize" : "子弹大小"
+"options.role.moran.shotEffectiveRange" : "最大狙击距离"
+"options.role.moran.storeRifleOnFire" : "射击后自动收枪"
+"options.role.moran.storeRifleOnUsingUtility" : "使用互动面板时自动收枪"
+"options.role.moran.canSeeRifleInShadow" : "可以在阴影中看到狙击枪"
+"options.role.moran.canKillHidingPlayer" : "可以击杀隐藏在管道中的玩家"
+"options.role.moran.aimAssist" : "瞄准辅助"
+"options.role.moran.delayInAimAssistActivation" : "瞄准辅助激活延迟"
+
+"role.moriarty.name" : "莫里亚蒂"
+"role.moriarty.short" : "莫"
+"role.moriarty.blurb" : "邪恶团队的大脑"
+"options.role.moriarty.detail" : "莫里亚蒂可以招募莫兰上校。<br>莫里亚蒂可以与别人同归于尽。<br>任一莫里亚蒂团队成员击杀福尔摩斯将直接胜利。"
+"options.role.moriarty.suicideCoolDown" : "同归于尽冷却时间"
+
 "role.niceSwapper.name" : "正义的换票师"
 "role.niceSwapper.short" : "好换"
 "role.niceSwapper.blurb" : "I DO NOT think so..."
@@ -160,6 +180,17 @@
 "role.schrödingersCatJackal.blurb" : "墙头草，两边倒"
 "options.role.schrödingersCatJackal.detail" : "你现在加入了豺狼阵营。<br>击杀所有人并与豺狼共同胜利。"
 
+"role.sherlock.name" : "福尔摩斯"
+"role.sherlock.short" : "福"
+"role.sherlock.blurb" : "拨开迷雾 看清真相"
+"options.role.sherlock.detail" : "福尔摩斯可获得玩家的阵营（或职业）。<br>福尔摩斯被任一莫里亚蒂团队成员击杀，莫里亚蒂团队直接胜利。"
+"options.role.sherlock.numOfInvestigation" : "最大调查次数"
+"options.role.sherlock.investiateCoolDown" : "调查冷却时间"
+"options.role.sherlock.canKnowExactlyRole" : "可以获得具体职业"
+"role.sherlock.investigation.crewmate" : "船员"
+"role.sherlock.investigation.impostor" : "伪装者"
+"role.sherlock.investigation.neutral" : "中立"
+
 "role.swapper.name" : "换票师"
 "role.swapper.blurb" : "啊？"
 "options.role.swapper.numOfSwap" : "换票次数"
@@ -175,6 +206,11 @@
 "role.unyielding.blurb" : "我还不想死"
 "options.role.unyielding.detail" : "你在死后可以通过其他玩家的尸体复活。<br>复活后你将继承该玩家的职业。<br>不复活时你可以跟随原阵营胜利。<br>死亡后你看不到其他玩家的职业信息。"
 
+# Meta
+
+"role.moran.shotRange" : "显示狙击范围"
+"role.moran.shotSize" : "显示子弹大小"
+
 # States
 
 "state.exploded" : "爆炸"
@@ -186,8 +222,11 @@
 "button.label.block" : "格挡"
 "button.label.feed" : "喂养"
 "button.label.fireWork" : "点燃"
+"button.label.investigate" : "调查"
 "button.label.layMines" : "埋雷"
+"button.label.moriartySuicide" : "同归于尽"
 "button.label.recall" : "回忆"
+"button.label.recruit" : "招募"
 "button.label.repair" : "修理"
 "button.label.oracle" : "占卜"
 "button.label.quickStart" : "快速开始"
@@ -196,6 +235,7 @@
 # Teams
 
 "teams.collector" : "集票者"
+"teams.moriarty" : "莫里亚蒂"
 "teams.schrödingersCat" : "薛定谔的猫"
 "teams.pavlov" : "巴普洛夫团队"
 
@@ -203,6 +243,7 @@
 
 "end.collector" : "集票者获胜"
 "end.pavlov" : "巴普洛夫团队胜利"
+"end.moriarty" : "莫里亚蒂团队胜利"
 
 # Chat
 
@@ -316,6 +357,22 @@
 "achievement.miner.challenge.goal" : "在同一局游戏中炸死除自己外的3人。"
 "achievement.miner.challenge.cond" : ""
 
+"achievement.moriarty.common.title" : "二人幸终"
+"achievement.moriarty.common.goal" : "与船员同归于尽。"
+"achievement.moriarty.common.cond" : ""
+
+"achievement.moriarty.challenge.title" : "真正的恐怖分子"
+"achievement.moriarty.challenge.goal" : "与福尔摩斯同归于尽并取得胜利。"
+"achievement.moriarty.challenge.cond" : ""
+
+"achievement.moran.another.title" : "猪队友"
+"achievement.moran.another.goal" : "狙杀莫里亚蒂。"
+"achievement.moran.another.cond" : ""
+
+"achievement.moran.challenge.title" : "终于等到你"
+"achievement.moran.challenge.goal" : "狙杀福尔摩斯并取得胜利。"
+"achievement.moran.challenge.cond" : ""
+
 "achievement.oracle.common1.title" : "让我看看"
 "achievement.oracle.common1.goal" : "使用一次占卜。"
 "achievement.oracle.common1.cond" : ""
@@ -375,6 +432,10 @@
 "achievement.schrödingersCat.challenge.title" : "有一份热 发一分光"
 "achievement.schrödingersCat.challenge.goal" : "更换阵营后跟随该阵营胜利。"
 "achievement.schrödingersCat.challenge.cond" : ""
+
+"achievement.sherlock.common.title" : "蛛丝马迹"
+"achievement.sherlock.common.goal" : "发现伪装者。"
+"achievement.sherlock.common.cond" : ""
 
 "achievement.swapper.common.title" : "矫揉造作"
 "achievement.swapper.common.goal" : "通过换票成功改变放逐结果。"

@@ -109,6 +109,21 @@ public class Pavlov : DefinedRoleTemplate, HasCitation, DefinedRole
             if (ev.Player.PlayerId == MyPlayer.PlayerId)
                 PavlovsDog.Instance.RpcSetOwnerDied.Invoke(hasDog);
         }
+
+        [Local]
+        void DecorateSidekickColor(PlayerDecorateNameEvent ev)
+        {
+            if (IsSameTeam(ev.Player)) ev.Color = MyRole.RoleColor;
+        }
+
+        [OnlyMyPlayer]
+        void DecorateJackalColor(PlayerDecorateNameEvent ev)
+        {
+            var myInfo = PlayerControl.LocalPlayer.GetModInfo();
+            if (myInfo == null) return;
+
+            if (IsSameTeam(myInfo)) ev.Color = MyRole.RoleColor;
+        }
     }
 }
 

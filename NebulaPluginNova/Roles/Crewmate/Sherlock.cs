@@ -30,7 +30,7 @@ public class Sherlock : DefinedRoleTemplate, HasCitation, DefinedRole
         {
             investigationResult = new();
         }
-        static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.SheriffKillButton.png", 100f);
+        static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.InvestigateButton.png", 115f);
         Dictionary<byte, string> investigationResult;
         int leftNum = 0;
 

@@ -39,13 +39,13 @@ public class NebulaPlugin : BasePlugin
     public const string AmongUsVersion = "2024.9.4s";
     public const string PluginGuid = "com.github.zsfabtest.nebular";
     public const string PluginName = "NebulaOnTheShip-Remake";
-    public const string PluginVersion = "2.0.2";
+    public const string PluginVersion = "2.0.3";
 
-    //public const string VisualVersion = "v2.0.2.2";
-    public const string VisualVersion = "Snapshot 24w40e";
+    public const string VisualVersion = "v2.0.3";
+    //public const string VisualVersion = "Snapshot 24w40e";
 
     public const string PluginEpochStr = "104";
-    public const string PluginBuildNumStr = "1130";
+    public const string PluginBuildNumStr = "1131";
     public static readonly int PluginEpoch = int.Parse(PluginEpochStr);
     public static readonly int PluginBuildNum = int.Parse(PluginBuildNumStr);
     public const bool GuardVanillaLangData = false;

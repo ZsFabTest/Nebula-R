@@ -42,8 +42,8 @@ public class Moriarty : DefinedRoleTemplate, HasCitation, DefinedRole
         public byte moriartyTeamId { get; private init; }
         bool hasRecruited;
         int[]? RuntimeAssignable.RoleArguments => [moriartyTeamId, hasRecruited ? 1 : 0];
-        private static Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.MoriartySuicideButton.png", 115f);
-        private static Image suicideButtonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.RecruitButton.png", 115f);
+        private static Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.RecruitButton.png", 115f);
+        private static Image suicideButtonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.MoriartySuicideButton.png", 115f);
 
         void RuntimeAssignable.OnActivated()
         {
@@ -77,7 +77,7 @@ public class Moriarty : DefinedRoleTemplate, HasCitation, DefinedRole
                     if (target.Role.Role == Crewmate.Sherlock.MyRole)
                     {
                         new StaticAchievementToken("moriarty.challenge");
-                        NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.VultureWin, 1 << MyPlayer.PlayerId);
+                        NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.MoriartyWin, 1 << MyPlayer.PlayerId);
                     }
                     new StaticAchievementToken("moriarty.common");
                     button.ReleaseIt();
@@ -215,7 +215,7 @@ public class Moran : DefinedRoleTemplate, HasCitation, DefinedRole
                         MyPlayer.MurderPlayer(target, PlayerState.Sniped, EventDetail.Kill, KillParameter.RemoteKill);
                         if (target.Role.Role == Crewmate.Sherlock.MyRole)
                         {
-                            NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.VultureWin, 1 << MyPlayer.PlayerId);
+                            NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.MoriartyWin, 1 << MyPlayer.PlayerId);
                             new StaticAchievementToken("moran.challenge");
                         }
                         else if (IsSameTeam(target)) new StaticAchievementToken("moran.another");

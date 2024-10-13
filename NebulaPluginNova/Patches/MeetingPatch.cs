@@ -5,6 +5,7 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Virial.Events.Game.Meeting;
 using Nebula.Roles.Complex;
 using Virial;
+using Nebula.Roles.Modifier;
 
 namespace Nebula.Patches;
 
@@ -15,8 +16,8 @@ public static class MeetingModRpc
     static private (int x, int y)[] VotingAreaSize = [(3, 5), (3, 6), (4, 6)];
     static private Vector3[] VotingAreaOffset = [Vector3.zero, new(0.1f, 0.145f, 0f), new(-0.355f, 0f, 0f)];
     static private (float x, float y)[] VotingAreaMultiplier = [(1f, 1f), (1f, 0.89f), (0.974f, 1f)];
-    //static private int GetVotingAreaType(int players) => players <= 15 ? 0 : players <= 18 ? 1 : 2;
-    static private int GetVotingAreaType(int players) => 2;
+    static private int GetVotingAreaType(int players) => players <= 15 ? 0 : players <= 18 ? 1 : 2;
+    //static private int GetVotingAreaType(int players) => 2;
     private static Vector3 ToVoteAreaPos(int index, int arrangeType)
     {
         int x = index % VotingAreaSize[arrangeType].x;
@@ -611,7 +612,8 @@ static class CheckForEndVotingPatch
             {
                 if (!MeetingHudExtension.WeightMap.TryGetValue((byte)playerVoteArea.TargetPlayerId, out var vote)) vote = 1;
 
-                dictionary.AddValue(playerVoteArea.VotedFor, vote);
+                //Debug.LogError(AssassinSystem.isAssassinMeeting);
+                dictionary.AddValue(playerVoteArea.VotedFor, /*AssassinSystem.isAssassinMeeting ? 0 : */vote);
 
                 string logText = $"Voter({i}) -> VoteFor({playerVoteArea.VotedFor}) x{vote}";
                 Debug.Log(logText);
@@ -621,9 +623,9 @@ static class CheckForEndVotingPatch
 
         NebulaPlugin.Log.Print("Voting Result\n" + log.Join(null,"\n"));
 
-        var CatchModCalcuateVote = new ModCalcuateVotesEvent(__instance, dictionary);
-        GameOperatorManager.Instance?.Run(CatchModCalcuateVote);
-        dictionary = CatchModCalcuateVote.VoteResult;
+        //var CatchModCalcuateVote = new ModCalcuateVotesEvent(__instance, dictionary);
+        //GameOperatorManager.Instance?.Run(CatchModCalcuateVote);
+        //dictionary = CatchModCalcuateVote.VoteResult;
         foreach(var info in SwapSystem.SwapInfos)
         {
             if (!dictionary.ContainsKey(info.Item1)) dictionary[info.Item1] = 0;
@@ -804,6 +806,7 @@ class PopulateResultPatch
         Debug.Log("Called PopulateResults");
 
         GameOperatorManager.Instance?.Run(new MeetingVoteEndEvent());
+        //if (AssassinSystem.isAssassinMeeting) return false;
         foreach(var info in SwapSystem.SwapInfos)
         {
             PlayerVoteArea? swapped1 = __instance.playerStates.FirstOrDefault(area => area.TargetPlayerId == info.Item1);

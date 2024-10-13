@@ -65,7 +65,7 @@ public class LastImpostor : DefinedModifierTemplate, DefinedAllocatableModifier,
         {
             if(MyPlayer.IsDead || MyPlayer.Role.Role.Category != RoleCategory.ImpostorRole
                  || PlayerControl.AllPlayerControls.GetFastEnumerator().Count(
-                   (p) => p.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole) > 1)
+                   (p) => !p.Data.IsDead && p.GetModInfo()?.Role.Role.Category == Virial.Assignable.RoleCategory.ImpostorRole) > 1)
                 MyPlayer.Unbox().RpcInvokerUnsetModifier(MyRole).InvokeSingle();
         }
     }

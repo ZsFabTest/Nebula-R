@@ -142,7 +142,13 @@ public static class EnableChat
 
 */
 
+using AmongUs.Data;
+using Nebula.Compat;
 using Nebula.Roles.Modifier;
+using UnityEngine;
+using Virial.Assignable;
+using Virial.Events.Game;
+using Virial.Events.Game.Meeting;
 
 namespace Nebula.Patches;
 
@@ -156,6 +162,15 @@ public class MeetingStart
     }
 }
 
+[HarmonyPatch(typeof(ChatController), nameof(ChatController.AddChatNote))]
+public static class ChatControllerAddChatNotePatch
+{
+    public static bool Prefix([HarmonyArgument(0)] NetworkedPlayerInfo srcPlayer, [HarmonyArgument(1)] ChatNoteTypes noteType)
+    {
+        return noteType != ChatNoteTypes.DidVote;
+    }
+}
+
 [HarmonyPatch(typeof(ChatController), nameof(ChatController.AddChat))]
 public static class AddChat
 {
@@ -163,22 +178,86 @@ public static class AddChat
     {
         var MyPlayer = PlayerControl.LocalPlayer.GetModInfo();
         if (MyPlayer == null) return false;
-        Lover.Instance LoverModifier = null!;
-        return MyPlayer.TryGetModifier<Lover.Instance>(out LoverModifier!) && (sourcePlayer?.TryGetModifier<Lover.Instance>(out _) ?? false) && LoverModifier.MyLover?.PlayerId == sourcePlayer.PlayerId;
+        return MyPlayer.TryGetModifier<Lover.Instance>(out var LoverModifier) && (sourcePlayer?.TryGetModifier<Lover.Instance>(out _) ?? false) && LoverModifier.MyLover?.PlayerId == sourcePlayer.PlayerId;
+    }
+
+    private static void CreateChatBubble(ChatController __instance, PlayerControl sourcePlayer, string chatText)
+    {
+        ChatBubble chatBubble = __instance.GetPooledBubble();
+        try
+        {
+            chatBubble.transform.SetParent(__instance.scroller.Inner);
+            chatBubble.transform.localScale = Vector3.one;
+            bool isSamePlayer = sourcePlayer.PlayerId == PlayerControl.LocalPlayer.PlayerId;
+            if (isSamePlayer)
+            {
+                chatBubble.SetRight();
+            }
+            else
+            {
+                chatBubble.SetLeft();
+            }
+
+            Color seeColor = (sourcePlayer.GetModInfo().IsImpostor && PlayerControl.LocalPlayer.GetModInfo().IsImpostor) ? NebulaTeams.ImpostorTeam.Color.ToUnityColor() : Color.white;
+
+            bool didVote = MeetingHud.Instance && MeetingHud.Instance.DidVote(sourcePlayer.PlayerId);
+
+            chatBubble.SetCosmetics(sourcePlayer.Data);
+
+            __instance.SetChatBubbleName(
+                chatBubble, sourcePlayer.Data, sourcePlayer.GetModInfo().IsDead,
+                didVote, seeColor, null);
+            chatBubble.SetText(chatText);
+
+            chatBubble.AlignChildren();
+            __instance.AlignAllBubbles();
+
+            if (!__instance.IsOpenOrOpening && __instance.notificationRoutine == null)
+            {
+                __instance.notificationRoutine = __instance.StartCoroutine(__instance.BounceDot());
+            }
+            if (!isSamePlayer)
+            {
+                SoundManager.Instance.PlaySound(
+                    __instance.messageSound, false, 1f).pitch = 0.5f + (float)sourcePlayer.PlayerId / 15f;
+                __instance.chatNotification.SetUp(sourcePlayer, chatText);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError(ex.Message);
+            Debug.LogError(ex.StackTrace);
+            __instance.chatBubblePool.Reclaim(chatBubble);
+        }
+    }
+
+    private static void CheckIfNeedToAdd(ChatController __instance, PlayerControl sourcePlayer, string chatText)
+    {
+        Debug.LogError(1);
+        var questEvent = new PlayerAddChatEvent(sourcePlayer.GetModInfo()!, chatText, false);
+        GameOperatorManager.Instance?.Run(questEvent);
+        if (questEvent.isVanillaShow)
+        {
+            CreateChatBubble(__instance, sourcePlayer, questEvent.chatText);
+        }
     }
 
     public static bool Prefix(ChatController __instance, [HarmonyArgument(0)] PlayerControl sourcePlayer, [HarmonyArgument(1)] ref string chatText)
     {
+        //if (AssassinSystem.isAssassinMeeting && (!PlayerControl.LocalPlayer.GetModInfo()!.IsImpostor || !(sourcePlayer.GetModInfo()?.IsImpostor ?? false))) return false;
         if (__instance != HudManager.Instance.Chat || !GeneralConfigurations.UseBubbleChatOption) return true;
         var MyPlayer = PlayerControl.LocalPlayer.GetModInfo();
         if (MyPlayer == null || sourcePlayer.GetModInfo() == null) return true;
         bool shouldSeeMessage = (NebulaGameManager.Instance?.CanSeeAllInfo ?? false) || sourcePlayer.PlayerId == MyPlayer.PlayerId;
 
         shouldSeeMessage = GetExtraMessageChecker(sourcePlayer.GetModInfo()!) || shouldSeeMessage;
+        if (!MyPlayer.IsDead && sourcePlayer.Data.IsDead) CheckIfNeedToAdd(__instance, sourcePlayer, chatText);
         if (DateTime.UtcNow - MeetingStart.MeetingStartTime < TimeSpan.FromSeconds(1))
         {
             return shouldSeeMessage;
+            //return false;
         }
+        //return false;
         return MeetingHud.Instance != null || LobbyBehaviour.Instance != null || shouldSeeMessage;
     }
 }
@@ -188,6 +267,13 @@ public static class EnableChat
 {
     public static void Postfix(HudManager __instance)
     {
+        /*
+        if (AmongUsUtil.InMeeting && AssassinSystem.isAssassinMeeting && !PlayerControl.LocalPlayer.GetModInfo()!.IsImpostor)
+        {
+            __instance.Chat.SetVisible(false);
+            return;
+        }
+        */
         if (!GeneralConfigurations.UseBubbleChatOption || !(PlayerControl.LocalPlayer.GetModInfo()?.TryGetModifier<Lover.Instance>(out _) ?? false)) return;
 
         if (!__instance.Chat.isActiveAndEnabled)

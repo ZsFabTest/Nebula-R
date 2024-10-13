@@ -191,6 +191,14 @@
 "role.sherlock.investigation.impostor" : "伪装者"
 "role.sherlock.investigation.neutral" : "中立"
 
+"role.spiritualist.name" : "招魂师"
+"role.spiritualist.short" : "魂"
+"role.spiritualist.blurb" : "你好啊 古老的亡魂"
+"options.role.spiritualist.detail" : "招魂师拥有和本轮被报告尸体对应玩家对话的能力。<br>被招魂玩家仅有一次回答机会。<br>根据设置限制回答。<br>若无可提取的回答内容，不算作回答。"
+"options.role.spiritualist.charCount" : "回答最大字符数"
+"options.role.spiritualist.onlyLetters" : "仅提取数字与拉丁字母"
+"role.spiritualist.seleted" : "招魂师在召唤你"
+
 "role.swapper.name" : "换票师"
 "role.swapper.blurb" : "啊？"
 "options.role.swapper.numOfSwap" : "换票次数"

@@ -1,4 +1,5 @@
 ﻿using Nebula.Modules.GUIWidget;
+using Nebula.Roles.Modifier;
 using Virial;
 using Virial.DI;
 using Virial.Events.Game;
@@ -82,6 +83,8 @@ public class MeetingPlayerButtonManager : AbstractModule<Virial.Game.Game>, IGam
     void OnMeetingStart(MeetingStartEvent ev)
     {
         allButtons.Clear();
+
+        //if (AssassinSystem.isAssassinMeeting) return;
 
         foreach (var playerVoteArea in MeetingHud.Instance.playerStates)
         {

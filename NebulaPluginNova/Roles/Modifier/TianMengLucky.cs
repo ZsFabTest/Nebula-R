@@ -1,4 +1,5 @@
-﻿using Virial.Assignable;
+﻿/*
+using Virial.Assignable;
 using Virial.Events.Game;
 using Virial.Events.Player;
 
@@ -68,3 +69,4 @@ public class TianMengLucky : DefinedAllocatableModifierTemplate, DefinedAllocata
         }
     }
 }
+*/

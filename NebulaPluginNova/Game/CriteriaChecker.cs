@@ -327,6 +327,8 @@ public class CriteriaManager
     {
         if (!AmongUsClient.Instance.AmHost) return;
 
+        //if (AssassinSystem.isAssassinMeeting) return;
+
         //終了条件が確定済みなら何もしない
         if (NebulaGameManager.Instance?.EndState != null) return;
 

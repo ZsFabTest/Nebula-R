@@ -77,7 +77,8 @@ public class Moriarty : DefinedRoleTemplate, HasCitation, DefinedRole
                     if (target.Role.Role == Crewmate.Sherlock.MyRole)
                     {
                         new StaticAchievementToken("moriarty.challenge");
-                        NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.MoriartyWin, 1 << MyPlayer.PlayerId);
+                        //NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.MoriartyWin, 1 << MyPlayer.PlayerId);
+                        NebulaGameManager.Instance?.RpcInvokeForcelyWin(NebulaGameEnd.MoriartyWin, 1 << MyPlayer.PlayerId);
                     }
                     new StaticAchievementToken("moriarty.common");
                     button.ReleaseIt();
@@ -90,9 +91,11 @@ public class Moriarty : DefinedRoleTemplate, HasCitation, DefinedRole
         [OnlyMyPlayer]
         void CheckWins(PlayerCheckWinEvent ev) => ev.SetWinIf(ev.GameEnd == NebulaGameEnd.MoriartyWin 
             && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && IsSameTeam(p)));
+        /*
         [OnlyMyPlayer]
         void CheckExtraWin(PlayerCheckExtraWinEvent ev) => ev.SetWin(ev.GameEnd == NebulaGameEnd.MoriartyWin
             && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && ev.WinnersMask.Test(p) && IsSameTeam(p)));
+        */
 
         public bool IsSameTeam(Virial.Game.Player player)
         {
@@ -172,9 +175,11 @@ public class Moran : DefinedRoleTemplate, HasCitation, DefinedRole
         [OnlyMyPlayer]
         void CheckWins(PlayerCheckWinEvent ev) => ev.SetWinIf(ev.GameEnd == NebulaGameEnd.MoriartyWin
             && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && IsSameTeam(p)));
+        /*
         [OnlyMyPlayer]
         void CheckExtraWin(PlayerCheckExtraWinEvent ev) => ev.SetWin(ev.GameEnd == NebulaGameEnd.MoriartyWin
             && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && ev.WinnersMask.Test(p) && IsSameTeam(p)));
+        */
 
         public bool IsSameTeam(Virial.Game.Player player)
         {
@@ -215,7 +220,8 @@ public class Moran : DefinedRoleTemplate, HasCitation, DefinedRole
                         MyPlayer.MurderPlayer(target, PlayerState.Sniped, EventDetail.Kill, KillParameter.RemoteKill);
                         if (target.Role.Role == Crewmate.Sherlock.MyRole)
                         {
-                            NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.MoriartyWin, 1 << MyPlayer.PlayerId);
+                            //NebulaGameManager.Instance?.RpcInvokeSpecialWin(NebulaGameEnd.MoriartyWin, 1 << MyPlayer.PlayerId);
+                            NebulaGameManager.Instance?.RpcInvokeForcelyWin(NebulaGameEnd.MoriartyWin, 1 << MyPlayer.PlayerId);
                             new StaticAchievementToken("moran.challenge");
                         }
                         else if (IsSameTeam(target)) new StaticAchievementToken("moran.another");

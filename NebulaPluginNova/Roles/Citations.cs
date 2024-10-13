@@ -17,4 +17,5 @@ public static class Citations
     static public Citation TownOfHostY { get; private set; } = new("townOfHostY", null, new ColorTextComponent(new(1f, 1f, 13f / 255f), new RawTextComponent("TownOfHost_Y")), "https://github.com/Yumenopai/TownOfHost_Y");
     static public Citation TownOfHost { get; private set; } = new("townOfHost", null, new ColorTextComponent(new(0f, 254f / 255f, 254f / 255f), new RawTextComponent("TownOfHost")), "https://github.com/tukasa0001/TownOfHost");
     static public Citation Project_Lotus { get; private set; } = new("projectLotus", null, new ColorTextComponent(new(198f / 255f, 128f / 255f, 66f / 255f), new RawTextComponent("Project Lotus")), "https://github.com/ImaMapleTree/Lotus");
+    static public Citation ExtremeRoles { get; private set; } = new("extremeRoles", null, new ColorTextComponent(Color.white, new RawTextComponent("Extreme Roles")), "https://github.com/yukieiji/ExtremeRoles");
 }

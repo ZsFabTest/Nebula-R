@@ -1,6 +1,7 @@
 ﻿using Nebula.Behaviour;
 using Nebula.Game.Statistics;
 using Nebula.Roles.Complex;
+using Nebula.Roles.Modifier;
 using Virial;
 using Virial.Events.Game;
 using Virial.Events.Game.Meeting;
@@ -161,6 +162,14 @@ class ExileControllerBeginPatch
         //MeetingHudがなぜか真になってしまうので、nullに書き換え
         MeetingHud.Instance = null;
         var exiled = Helpers.GetPlayer(init.networkedPlayer.PlayerId);
+
+        /*
+        if(AssassinSystem.isAssassinMeeting && AssassinSystem.targetId < 24)
+        {
+            __instance.completeString = Language.Translate("game.meeting.assassinFailed").Replace("%PLAYER%", Helpers.GetPlayer(AssassinSystem.targetId)?.name ?? string.Empty);
+            return;
+        }
+        */
 
         if (exiled == null) return;
 

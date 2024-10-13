@@ -307,6 +307,7 @@ internal class NebulaGameManager : AbstractModuleContainer, IRuntimePropertyHold
     public bool CanBeSpectator { get; private set; }
     Func<bool> checkCanSeeAllInfo = () =>
     {
+        //return false;
         var re = new RequestEvent("checkCanSeeAllInfo");
         GameOperatorManager.Instance?.Run(re);
         return (Instance?.CanBeSpectator ?? false) && (ClientOption.AllOptions[ClientOption.ClientOptionType.SpoilerAfterDeath].Value == 1 || !HudManager.InstanceExists) && !re.requestResult;

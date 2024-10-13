@@ -54,6 +54,14 @@
 "options.role.ghostEngineer.detail" : "灵魂工程师拥有秒修破坏的能力。"
 "options.role.ghostEngineer.numOfRepairing" : "可使用修理次数"
 
+"role.grenadier.name" : "掷弹兵"
+"role.grenadier.short" : "掷"
+"role.grenadier.blurb" : "眼前一亮"
+"options.role.grenadier.detail" : "掷弹兵可以使玩家屏幕覆盖白色图层遮挡视线。"
+"options.role.grenadier.flashCoolDown" : "闪光冷却时间"
+"options.role.grenadier.flashDuration" : "闪光持续时间"
+"options.role.grenadier.flashRadius" : "闪光弹半径"
+
 "role.judge.name" : "法官"
 "role.judge.short" : "法"
 "role.judge.blurb" : "无情地执行正义"

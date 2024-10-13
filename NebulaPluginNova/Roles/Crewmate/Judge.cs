@@ -13,7 +13,7 @@ namespace Nebula.Roles.Crewmate;
 static file class JudgeSystem
 {
     static private SpriteLoader targetSprite = SpriteLoader.FromResource("Nebula.Resources.JudgeIcon.png", 115f);
-    static public void OnMeetingStart(int leftGuess, bool canJudgeNeutralRoles, bool canJudgeMadmate, bool canJudgeLovers, bool canJudgeAnyone)
+    static public void OnMeetingStart(int leftGuess, bool canJudgeNeutralRoles, bool canJudgeMadmate, bool canJudgeLovers, bool canJudgeAnyone, Action JudgeAction)
     {
         bool hasGuessed = false;
 
@@ -35,7 +35,8 @@ static file class JudgeSystem
                     NebulaAPI.CurrentGame?.LocalPlayer.MurderPlayer(NebulaAPI.CurrentGame.LocalPlayer, PlayerState.Misjudged, EventDetail.Missed, KillParameter.MeetingKill);
                     new StaticAchievementToken("judge.another1");
                 }
-                    
+
+                JudgeAction.Invoke();
                 hasGuessed = true;
                 leftGuess--;
             },
@@ -82,7 +83,7 @@ public class Judge : DefinedRoleTemplate, HasCitation, DefinedRole
         private int leftGuess = NumOfGuessOption.GetValue();
 
         [Local]
-        void OnMeetingStart(MeetingStartEvent ev) => JudgeSystem.OnMeetingStart(leftGuess, CanJudgeNeutralRolesOption, CanJudgeMadmateOption, CanJudgeLoversOption, CanJudgeAnyoneWhenBecomeMadmateOption && MyPlayer.IsMadmate());
+        void OnMeetingStart(MeetingStartEvent ev) => JudgeSystem.OnMeetingStart(leftGuess, CanJudgeNeutralRolesOption, CanJudgeMadmateOption, CanJudgeLoversOption, CanJudgeAnyoneWhenBecomeMadmateOption && MyPlayer.IsMadmate(), () => leftGuess--);
 
         [Local]
         void OnGameEnd(GameEndEvent ev) => JudgeSystem.OnGameEnd(MyPlayer);

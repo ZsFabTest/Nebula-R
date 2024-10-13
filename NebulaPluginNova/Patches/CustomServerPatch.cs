@@ -142,7 +142,6 @@ public static class RegionMenuOnEnablePatch
 }
 
 
-/*
 [HarmonyPatch(typeof(ServerManager), nameof(ServerManager.LoadServers))]
 public static class LoadServersPatch
 {
@@ -161,4 +160,3 @@ public static class LoadServersPatch
         // __instance.serverInfoFileJson = ClientOption.AllOptions[ClientOption.ClientOptionType.UseStandaloneServerList].Value == 1 ?
     }
 }
-*/

@@ -22,7 +22,7 @@ public class Grenadier : DefinedRoleTemplate, HasCitation, DefinedRole
     {
         DefinedRole RuntimeRole.Role => MyRole;
 
-        static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.CleanButton.png", 115f);
+        static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.GrenadierFlashButton.png", 115f);
 
         public Instance(GamePlayer player) : base(player) { }
 

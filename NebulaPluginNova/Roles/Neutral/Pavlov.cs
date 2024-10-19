@@ -72,11 +72,6 @@ public class Pavlov : DefinedRoleTemplate, HasCitation, DefinedRole
             }
         }
 
-        void RuntimeAssignable.OnInactivated()
-        {
-            PavlovsDog.Instance.RpcSetOwnerDied.Invoke(hasDog);
-        }
-
         [OnlyMyPlayer]
         void CheckWins(PlayerCheckWinEvent ev) => ev.SetWinIf(ev.GameEnd == NebulaGameEnd.PavlovWin 
             && NebulaGameManager.Instance!.AllPlayerInfo().Any(p => !p.IsDead && IsSameTeam(p)));
@@ -104,20 +99,13 @@ public class Pavlov : DefinedRoleTemplate, HasCitation, DefinedRole
         }
 
         [Local]
-        void OnDied(PlayerDieEvent ev)
-        {
-            if (ev.Player.PlayerId == MyPlayer.PlayerId)
-                PavlovsDog.Instance.RpcSetOwnerDied.Invoke(hasDog);
-        }
-
-        [Local]
-        void DecorateSidekickColor(PlayerDecorateNameEvent ev)
+        void DecorateDogColor(PlayerDecorateNameEvent ev)
         {
             if (IsSameTeam(ev.Player)) ev.Color = MyRole.RoleColor;
         }
 
         [OnlyMyPlayer]
-        void DecorateJackalColor(PlayerDecorateNameEvent ev)
+        void DecoratePavlovColor(PlayerDecorateNameEvent ev)
         {
             var myInfo = PlayerControl.LocalPlayer.GetModInfo();
             if (myInfo == null) return;

@@ -2,31 +2,31 @@
 using Virial.Configuration;
 using Virial.Events.Game.Meeting;
 using Virial;
-using System.Text.RegularExpressions;
 using Virial.Events.Game;
-using Nebula.Compat;
 
 namespace Nebula.Roles.Crewmate;
 
 public class Spiritualist : DefinedRoleTemplate, DefinedRole
 {
-    private Spiritualist() : base("spiritualist", new(200, 191, 231), RoleCategory.CrewmateRole, Crewmate.MyTeam, [CharCountOption, OnlyLettersOption]) { }
+    private Spiritualist() : base("spiritualist", new(200, 191, 231), RoleCategory.CrewmateRole, Crewmate.MyTeam, [CharCountOption, LettersEachMeetingOption]) { }
 
     RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 
     private static IntegerConfiguration CharCountOption = NebulaAPI.Configurations.Configuration("options.role.spiritualist.charCount", (1, 100), 5);
-    private static BoolConfiguration OnlyLettersOption = NebulaAPI.Configurations.Configuration("options.role.spiritualist.onlyLetters", true);
+    private static IntegerConfiguration LettersEachMeetingOption = NebulaAPI.Configurations.Configuration("options.role.spiritualist.lettersEachMeeting", (1, 36), 5);
 
     static public Spiritualist MyRole = new Spiritualist();
     [NebulaRPCHolder]
     public class Instance : RuntimeAssignableTemplate, RuntimeRole
     {
+        const string letterTab = "qwertyuiopasdfghjklzxcvbnm1234567890";
         DefinedRole RuntimeRole.Role => MyRole;
         public Instance(GamePlayer player) : base(player) { }
 
         void RuntimeAssignable.OnActivated() { }
 
         GamePlayer? lastReported = null;
+        string subTab = string.Empty;
 
         void OnMeetingEnd(MeetingEndEvent ev) => lastReported = null;
 
@@ -38,7 +38,16 @@ public class Spiritualist : DefinedRoleTemplate, DefinedRole
             if (ev.Reported != null)
             {
                 lastReported = ev.Reported;
-                RpcNoticeSeleted.Invoke(ev.Reported.PlayerId);
+                var tab = letterTab.ToList();
+                while (subTab.Length < LettersEachMeetingOption)
+                {
+                    char c = tab.Random();
+                    subTab += c;
+                    tab.Remove(c);
+                }
+                var tmp = subTab.OrderBy(x => x).ToList();
+                subTab = tmp.Join();
+                RpcNoticeSeleted.Invoke((ev.Reported.PlayerId, subTab));
             }
         }
 
@@ -50,7 +59,9 @@ public class Spiritualist : DefinedRoleTemplate, DefinedRole
             if (lastReported != null && ev.source.PlayerId == lastReported.PlayerId)
             {
                 //Debug.LogError(1);
-                if (OnlyLettersOption) ev.chatText = Regex.Replace(ev.chatText, "[^0-9A-Za-z]", "", RegexOptions.IgnoreCase);
+                ev.chatText = ev.chatText.ToLower();
+                //ev.chatText = Regex.Replace(ev.chatText, subTab, "", RegexOptions.IgnoreCase);
+                ev.chatText = ev.chatText.RemoveAll(letterTab.RemoveAll(subTab.ToCharArray()).ToCharArray());
                 ev.chatText = ev.chatText.Substring(0, Math.Min(CharCountOption, ev.chatText.Length));
                 if (ev.chatText == string.Empty) return;
                 ev.SetExtraShow();
@@ -66,11 +77,11 @@ public class Spiritualist : DefinedRoleTemplate, DefinedRole
         }
         */
 
-        private static readonly RemoteProcess<byte> RpcNoticeSeleted = new(
+        private static readonly RemoteProcess<(byte, string)> RpcNoticeSeleted = new(
             "NoticeSeleted",
             (message, _) =>
             {
-                if (message == PlayerControl.LocalPlayer.PlayerId)
+                if (message.Item1 == PlayerControl.LocalPlayer.PlayerId)
                 {
                     var Message = GameObject.Instantiate(VanillaAsset.StandardTextPrefab, HudManager.Instance.transform);
                     new TextAttributeOld(TextAttributeOld.NormalAttr) { Size = new Vector2(4f, 0.72f) }.EditFontSize(2.7f, 2.7f, 2.7f).Reflect(Message);
@@ -78,11 +89,25 @@ public class Spiritualist : DefinedRoleTemplate, DefinedRole
                     Message.color = MyRole.UnityColor;
                     Message.text = Language.Translate("role.spiritualist.seleted");
                     float duration = 5f;
-                    var timer = new FunctionalLifespan(() => duration > 0);
+                    bool flag = true;
+                    var timer = new GameObjectLifespan(Message.gameObject);
                     GameOperatorManager.Instance?.Register<GameUpdateEvent>(ev =>
                     {
                         duration -= Time.deltaTime;
-                        if (duration < 0f) UnityEngine.GameObject.Destroy(Message);
+                        if (flag && duration <= 0f)
+                        {
+                            Message.text = message.Item2;
+                            flag = false;
+                        }
+                        //if (duration <= 0f) UnityEngine.GameObject.Destroy(Message);
+                    }, timer);
+                    GameOperatorManager.Instance?.Register<MeetingVoteEndEvent>(ev =>
+                    {
+                        if(Message != null)
+                        {
+                            UnityEngine.GameObject.Destroy(Message);
+                            Message = null;
+                        }
                     }, timer);
                 }
             });

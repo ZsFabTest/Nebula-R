@@ -221,7 +221,8 @@
 "role.spiritualist.blurb" : "你好啊 古老的亡魂"
 "options.role.spiritualist.detail" : "招魂师拥有和本轮被报告尸体对应玩家对话的能力。<br>被招魂玩家仅有一次回答机会。<br>根据设置限制回答。<br>若无可提取的回答内容，不算作回答。"
 "options.role.spiritualist.charCount" : "回答最大字符数"
-"options.role.spiritualist.onlyLetters" : "仅提取数字与拉丁字母"
+"options.role.spiritualist.onlyLetters" : "仅提取拉丁字母"
+"options.role.spiritualist.lettersEachMeeting" : "每轮会议获得的可用字符数"
 "role.spiritualist.seleted" : "招魂师在召唤你"
 
 "role.swapper.name" : "换票师"

@@ -136,7 +136,11 @@ public class Assassin : DefinedRoleTemplate, HasCitation, DefinedRole
         }
 
         [Local]
-        void OnMeetingStart(MeetingStartEvent ev) => Target = null;
+        void OnMeetingStart(MeetingStartEvent ev)
+        {
+            Target = null;
+            AmongUsUtil.SetCamTarget();
+        }
 
         [Local]
         void OnDied(PlayerDieEvent ev)

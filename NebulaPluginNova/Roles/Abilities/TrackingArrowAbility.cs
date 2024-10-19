@@ -53,6 +53,6 @@ public class TrackingArrowAbility : ComponentHolder, IGameOperator
     internal void Reset(Virial.Game.Player player, UnityEngine.Color color)
     {
         target = player;
-        this.color = color;
+        arrow.SetSmallColor(color);
     }
 }

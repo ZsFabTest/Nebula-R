@@ -102,12 +102,12 @@ public class Spectre : DefinedRoleTemplate, HasCitation, DefinedRole
             Virial.Game.Player[] players = NebulaGameManager.Instance?.AllPlayerInfo().Where(p => 
                 !p.IsDead && 
                 !p.AmOwner &&
-                p.IsImpostor || 
-                p.Role.Role == Crewmate.Sheriff.MyRole || 
-                p.Role.Role == Jackal.MyRole || 
-                p.Role.Role == PavlovsDog.MyRole || 
+                (p.IsImpostor ||
+                p.Role.Role == Crewmate.Sheriff.MyRole ||
+                p.Role.Role == Jackal.MyRole ||
+                p.Role.Role == PavlovsDog.MyRole ||
                 p.Role.Role == Moriarty.MyRole ||
-                p.Role.Role == Moran.MyRole).ToArray() ?? new Virial.Game.Player[0];
+                p.Role.Role == Moran.MyRole)).ToArray() ?? new Virial.Game.Player[0];
             for(int i = 0;i < Math.Min(players.Length, arrows.Count); i++)
                 arrows[i].Reset(players[i], players[i].Role.Role.Color.ToUnityColor());
             for (int i = players.Length; i < arrows.Count; i++)

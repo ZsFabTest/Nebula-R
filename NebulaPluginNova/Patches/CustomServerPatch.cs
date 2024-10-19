@@ -109,7 +109,7 @@ public static class RegionMenuOnEnablePatch
 {
     public static void Postfix(RegionMenu __instance)
     {
-        // DestroyableSingleton<ServerManager>.Instance.LoadServers();
+        DestroyableSingleton<ServerManager>.Instance.LoadServers();
         foreach (var button in __instance.ButtonPool.activeChildren)
         {
             var serverButton = button.CastFast<ServerListButton>();
@@ -153,7 +153,7 @@ public static class LoadServersPatch
             if (ClientOption.AllOptions[ClientOption.ClientOptionType.UseStandaloneServerList].Value == 1)
                 __instance.serverInfoFileJson = Path.Combine(Paths.GameRootPath, "RegionInfo", "regionInfo.json");
             else
-                __instance.serverInfoFileJson = "%AppData%\\..\\LocalLow\\Innersloth\\Among Us\\regionInfo.json";
+                __instance.serverInfoFileJson = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\..\\LocalLow\\Innersloth\\Among Us\\regionInfo.json";
         }
         catch { }
         // C:\Users\a1234\AppData\LocalLow\Innersloth\Among Us\regionInfo.json

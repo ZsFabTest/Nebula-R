@@ -105,7 +105,7 @@ public class FireWorks : DefinedRoleTemplate, HasCitation, DefinedRole
             if (AmOwner)
             {
                 // 标记按钮
-                var killButton = Bind(new ModAbilityButton()).KeyBind(Virial.Compat.VirtualKeyInput.Ability);
+                var killButton = Bind(new ModAbilityButton(isArrangedAsKillButton: true)).KeyBind(Virial.Compat.VirtualKeyInput.Ability);
                 killButton.SetSprite(buttonSprite.GetSprite());
                 killButton.Availability = (button) => MyPlayer.CanMove;
                 killButton.Visibility = (button) => !MyPlayer.IsDead;

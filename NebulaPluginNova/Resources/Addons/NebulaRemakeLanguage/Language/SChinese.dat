@@ -12,6 +12,13 @@
 "role.amnesiac.postfix" : " (失忆)"
 "role.amnesiacModifier.name" : "失忆者[判定]"
 
+"role.assassin.name" : "刺客"
+"role.assassin.short" : "刺"
+"role.assassin.blurb" : "刺杀即是艺术"
+"options.role.assassin.detail" : "刺客可以标记一个玩家并实现瞬移击杀。<br>刺杀完成后刺客会在地上留下树叶"
+"options.role.assassin.assassinCoolDown" : "刺杀冷却时间"
+"options.role.assassin.leavesDuration" : "树叶存在时间"
+
 "role.avenger.becomeAvengerTitle" : "是时候复仇了..."
 
 "role.baitModifier.name" : "诱饵"
@@ -199,6 +206,16 @@
 "role.sherlock.investigation.impostor" : "伪装者"
 "role.sherlock.investigation.neutral" : "中立"
 
+"role.spectre.name" : "狐妖"
+"role.spectre.short" : "狐"
+"role.spectre.blurb" : "在暗中观察一切"
+"options.role.spectre.detail" : "狐妖可以抢夺船员、伪装者、邪恶中立阵营的正常胜利。"
+"options.role.spectre.hideMaxCount" : "隐藏最大次数"
+"options.role.spectre.hideCoolDown" : "隐藏冷却时间"
+"options.role.spectre.hideDuration" : "隐藏持续时间"
+"options.role.spectre.LongTaskCount" : "长任务数"
+"options.role.spectre.ShortTaskCount" : "短任务数"
+
 "role.spiritualist.name" : "招魂师"
 "role.spiritualist.short" : "魂"
 "role.spiritualist.blurb" : "你好啊 古老的亡魂"
@@ -238,6 +255,8 @@
 "button.label.block" : "格挡"
 "button.label.feed" : "喂养"
 "button.label.fireWork" : "点燃"
+"button.label.flash" : "闪光"
+"button.label.hide" : "隐藏"
 "button.label.investigate" : "调查"
 "button.label.layMines" : "埋雷"
 "button.label.moriartySuicide" : "同归于尽"
@@ -253,6 +272,7 @@
 "teams.collector" : "集票者"
 "teams.moriarty" : "莫里亚蒂"
 "teams.schrödingersCat" : "薛定谔的猫"
+"teams.spectre" : "狐妖" 
 "teams.pavlov" : "巴普洛夫团队"
 
 # Endings
@@ -260,6 +280,7 @@
 "end.collector" : "集票者获胜"
 "end.pavlov" : "巴普洛夫团队胜利"
 "end.moriarty" : "莫里亚蒂团队胜利"
+"end.spectre" : "狐妖胜利"
 
 # Chat
 
@@ -300,6 +321,14 @@
 "config.client.useStandaloneServerList" : "使用独立服务器列表"
 
 # Achievements
+
+"achievement.assassin.common.title" : "善变"
+"achievement.assassin.common.goal" : "在已有刺杀目标时更换目标。"
+"achievement.assassin.common.cond" : ""
+
+"achievement.assassin.challenge.title" : "善变"
+"achievement.assassin.challenge.goal" : "在已有刺杀目标时更换目标。"
+"achievement.assassin.challenge.cond" : ""
 
 "achievement.collector.common1.title" : "收藏癖"
 "achievement.collector.common1.goal" : "一次性收集5张票。"
@@ -452,6 +481,14 @@
 "achievement.sherlock.common.title" : "蛛丝马迹"
 "achievement.sherlock.common.goal" : "发现伪装者。"
 "achievement.sherlock.common.cond" : ""
+
+"achievement.spectre.common.title" : "隐身于人群中"
+"achievement.spectre.common.goal" : "狐妖使用隐藏技能。"
+"achievement.spectre.common.cond" : ""
+
+"achievement.spectre.challenge.title" : "篡夺"
+"achievement.spectre.challenge.goal" : "狐妖顶替胜利。"
+"achievement.spectre.challenge.cond" : ""
 
 "achievement.swapper.common.title" : "矫揉造作"
 "achievement.swapper.common.goal" : "通过换票成功改变放逐结果。"

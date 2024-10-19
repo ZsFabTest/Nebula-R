@@ -30,4 +30,5 @@ public static class NebulaTeams
     public static RoleTeam CollectorTeam { get; internal set; } = null!;
     public static RoleTeam PavlovTeam {  get; internal set; } = null!;
     public static RoleTeam MoriartyTeam { get; internal set; } = null!;
+    public static RoleTeam SpectreTeam { get; internal set; } = null!;
 }

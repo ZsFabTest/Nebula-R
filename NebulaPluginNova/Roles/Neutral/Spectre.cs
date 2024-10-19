@@ -1,11 +1,9 @@
-﻿using Nebula.Behaviour;
-using Nebula.Modules;
+﻿using Nebula.Compat;
+using Nebula.Roles.Abilities;
 using Virial;
 using Virial.Assignable;
 using Virial.Configuration;
 using Virial.Events.Game;
-using Virial.Events.Game.Meeting;
-using Virial.Events.Player;
 using Virial.Game;
 
 namespace Nebula.Roles.Neutral;
@@ -25,6 +23,7 @@ public class Spectre : DefinedRoleTemplate, HasCitation, DefinedRole
     private static IntegerConfiguration ShortTaskCountOption = NebulaAPI.Configurations.Configuration("options.role.spectre.ShortTaskCount", (0, 5), 2);
 
     public static Spectre MyRole = new Spectre();
+
     public class Instance : RuntimeAssignableTemplate, RuntimeRole
     {
         DefinedRole RuntimeRole.Role => MyRole;
@@ -35,29 +34,38 @@ public class Spectre : DefinedRoleTemplate, HasCitation, DefinedRole
         int left = 0;
         int[] RuntimeAssignable.RoleArguments => [left];
         static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.SpectreButton.png", 115f);
+        List<TrackingArrowAbility> arrows = new();
 
         void RuntimeAssignable.OnActivated()
         {
-            var button = Bind(new ModAbilityButton());
-            button.SetSprite(buttonSprite.GetSprite());
-            button.Availability = button => true;
-            button.Visibility = button => !MyPlayer.IsDead && left > 0;
-            button.OnClick = button => button.ActivateEffect();
-            button.OnEffectStart = button => PlayerModInfo.RpcAttrModulator.Invoke(new(MyPlayer.PlayerId, new AttributeModulator(PlayerAttributes.Invisible, HideDurationOption, false, 100), true));
-            button.OnEffectEnd = button =>
+            if (AmOwner)
             {
-                button.StartCoolDown();
-                left--;
+                var button = Bind(new ModAbilityButton());
+                button.SetSprite(buttonSprite.GetSprite());
+                button.Availability = button => true;
+                button.Visibility = button => !MyPlayer.IsDead && left > 0;
+                button.OnClick = button => button.ActivateEffect();
+                button.OnEffectStart = button => PlayerModInfo.RpcAttrModulator.Invoke(new(MyPlayer.PlayerId, new AttributeModulator(PlayerAttributes.Invisible, HideDurationOption, false, 100), true));
+                button.OnEffectEnd = button =>
+                {
+                    button.StartCoolDown();
+                    left--;
+                    button.ShowUsesIcon(2).text = left.ToString();
+                    new StaticAchievementToken("spectre.common");
+                };
                 button.ShowUsesIcon(2).text = left.ToString();
-                new StaticAchievementToken("spectre.common");
-            };
-            button.ShowUsesIcon(2).text = left.ToString();
-            button.CoolDownTimer = Bind(new Timer(HideCoolDownOption).SetAsAbilityCoolDown().Start());
-            button.EffectTimer = Bind(new Timer(HideDurationOption));
-            button.SetLabel("hide");
+                button.CoolDownTimer = Bind(new Timer(HideCoolDownOption).SetAsAbilityCoolDown().Start());
+                button.EffectTimer = Bind(new Timer(HideDurationOption));
+                button.SetLabel("hide");
 
-            MyPlayer.Tasks.Unbox().ReplaceTasksAndRecompute(ShortTaskCountOption, LongTaskCountOption, 0);
+                MyPlayer.Tasks.Unbox().ReplaceTasksAndRecompute(ShortTaskCountOption, LongTaskCountOption, 0);
+
+                ClearArrows();
+                UpdateArrows();
+            }
         }
+
+        void RuntimeAssignable.OnInactivated() => ClearArrows();
 
         [Local]
         void OverwriteEnd(EndCriteriaMetEvent ev)
@@ -75,6 +83,38 @@ public class Spectre : DefinedRoleTemplate, HasCitation, DefinedRole
                 ev.TryOverwriteEnd(NebulaGameEnd.SpectreWin, Virial.Game.GameEndReason.Special);
                 new StaticAchievementToken("spectre.challenge");
             }
+        }
+
+        [Local]
+        void OnUpdate(GameUpdateEvent ev) => UpdateArrows();
+
+        private void ClearArrows()
+        {
+            foreach(var arrow in arrows)
+            {
+                arrow.ReleaseIt();
+            }
+            arrows.Clear();
+        }
+
+        private void UpdateArrows()
+        {
+            Virial.Game.Player[] players = NebulaGameManager.Instance?.AllPlayerInfo().Where(p => 
+                !p.IsDead && 
+                !p.AmOwner &&
+                p.IsImpostor || 
+                p.Role.Role == Crewmate.Sheriff.MyRole || 
+                p.Role.Role == Jackal.MyRole || 
+                p.Role.Role == PavlovsDog.MyRole || 
+                p.Role.Role == Moriarty.MyRole ||
+                p.Role.Role == Moran.MyRole).ToArray() ?? new Virial.Game.Player[0];
+            for(int i = 0;i < Math.Min(players.Length, arrows.Count); i++)
+                arrows[i].Reset(players[i], players[i].Role.Role.Color.ToUnityColor());
+            for (int i = players.Length; i < arrows.Count; i++)
+                arrows[i].ReleaseIt();
+            if (arrows.Count > players.Length) arrows.RemoveRange(players.Length, arrows.Count - players.Length);
+            for (int i = arrows.Count;i < players.Length; i++)
+                arrows.Add(Bind(new TrackingArrowAbility(players[i], 2.5f, players[i].Role.Role.Color.ToUnityColor())).Register());
         }
 
         RoleTaskType RuntimeRole.TaskType => RoleTaskType.RoleTask;

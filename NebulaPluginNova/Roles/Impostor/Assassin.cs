@@ -121,7 +121,7 @@ public class Assassin : DefinedRoleTemplate, HasCitation, DefinedRole
                             }
                             else if (leaves != null && !leaves.MarkedRelease)
                             {
-                                SetLeavesColor(leaves.ObjectId, CalColor(Palette.PlayerColors[MyPlayer.PlayerId], Color.green, LeavesDurationOption - timer, LeavesDurationOption));
+                                SetLeavesColor(leaves.ObjectId, (Color.green - Palette.PlayerColors[MyPlayer.PlayerId]) * (1 - timer / LeavesDurationOption) + Palette.PlayerColors[MyPlayer.PlayerId]);
                             }
                         }, lifeSpan);
                     });
@@ -152,6 +152,12 @@ public class Assassin : DefinedRoleTemplate, HasCitation, DefinedRole
                 if (++killNum >= 5)
                     new StaticAchievementToken("assassin.challenge");
         }
+
+        [Local]
+        void Update(GameUpdateEvent ev)
+        {
+            if (Target != null && Target.IsDead) Target = null;
+        }
     }
 
     private static readonly RemoteProcess<(int, float, float, float)> RpcSetLeavesColor = new(
@@ -163,15 +169,5 @@ public class Assassin : DefinedRoleTemplate, HasCitation, DefinedRole
             leaves.MyRenderer.color = new UnityEngine.Color(message.Item2, message.Item3, message.Item4);
         });
     private static void SetLeavesColor(int ObjectId, UnityEngine.Color color) => RpcSetLeavesColor.Invoke((ObjectId, color.r, color.g, color.b));
-
-    private static Color CalColor(Color color1, Color color2, float step, float totalStep)
-    {
-        float redSpan = color1.r - color2.r;
-        float greenSpan = color1.g - color2.g;
-        float blueSpan = color1.b - color2.b;
-        return new UnityEngine.Color(color1.r + redSpan * step / totalStep,
-            color1.g + greenSpan * step / totalStep,
-            color1.b + blueSpan * step / totalStep);
-    }
 }
 

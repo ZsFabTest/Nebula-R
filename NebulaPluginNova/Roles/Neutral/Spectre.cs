@@ -97,24 +97,30 @@ public class Spectre : DefinedRoleTemplate, HasCitation, DefinedRole
             arrows.Clear();
         }
 
-        private void UpdateArrows()
-        {
-            Virial.Game.Player[] players = NebulaGameManager.Instance?.AllPlayerInfo().Where(p => 
-                !p.IsDead && 
+        private bool check(Virial.Game.Player p) => !p.IsDead &&
                 !p.AmOwner &&
                 (p.IsImpostor ||
                 p.Role.Role == Crewmate.Sheriff.MyRole ||
                 p.Role.Role == Jackal.MyRole ||
                 p.Role.Role == PavlovsDog.MyRole ||
                 p.Role.Role == Moriarty.MyRole ||
-                p.Role.Role == Moran.MyRole)).ToArray() ?? new Virial.Game.Player[0];
-            for(int i = 0;i < Math.Min(players.Length, arrows.Count); i++)
-                arrows[i].Reset(players[i], players[i].Role.Role.Color.ToUnityColor());
-            for (int i = players.Length; i < arrows.Count; i++)
-                arrows[i].ReleaseIt();
-            if (arrows.Count > players.Length) arrows.RemoveRange(players.Length, arrows.Count - players.Length);
-            for (int i = arrows.Count;i < players.Length; i++)
+                p.Role.Role == Moran.MyRole);
+
+        private void UpdateArrows()
+        {
+            Virial.Game.Player[] players = NebulaGameManager.Instance?.AllPlayerInfo().Where(p => 
+                check(p) && 
+                !arrows.Any(arrow => arrow.MyPlayer.PlayerId == p.PlayerId)).ToArray()
+                 ?? new Virial.Game.Player[0];
+            for (int i = 0;i < arrows.Count; i++)
                 arrows.Add(Bind(new TrackingArrowAbility(players[i], 2.5f, players[i].Role.Role.Color.ToUnityColor())).Register());
+            foreach (var arrow in arrows)
+            {
+                if (!arrow.IsDeadObject && !check(arrow.MyPlayer))
+                    arrow.ReleaseIt();
+                else
+                    arrow.Reset(null, arrow.MyPlayer.Role.Role.Color.ToUnityColor());
+            }
         }
 
         RoleTaskType RuntimeRole.TaskType => RoleTaskType.RoleTask;

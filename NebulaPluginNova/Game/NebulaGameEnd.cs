@@ -74,6 +74,8 @@ public class NebulaGameEnd
     static public CustomEndCondition PavlovWin = new(33, "pavlov", Roles.Neutral.Pavlov.MyRole.UnityColor, 18);
     static public CustomEndCondition MoriartyWin = new(34, "moriarty", Roles.Neutral.Moriarty.MyRole.UnityColor, 18);
     static public CustomEndCondition SpectreWin = new(35, "spectre", Roles.Neutral.Spectre.MyRole.UnityColor, 64);
+    static public CustomEndCondition YandereWin = new(36, "yandere", Roles.Neutral.Yandere.MyRole.UnityColor, 18);
+    static public CustomEndCondition ApocalypseWin = new(37, "apocalypse", Roles.Neutral.Apocalypse.MyRole.UnityColor, 18);
     static public CustomEndCondition NoGame = new(128, "nogame", InvalidColor, 256);
 
     static public CustomExtraWin ExtraLoversWin = new(0, "lover", Roles.Modifier.Lover.MyRole.UnityColor);
@@ -93,6 +95,8 @@ public class NebulaGameEnd
         Virial.Game.NebulaGameEnds.PavlovGameEnd = PavlovWin;
         Virial.Game.NebulaGameEnds.MoriartyGameEnd = MoriartyWin;
         Virial.Game.NebulaGameEnds.SpectreGameEnd = SpectreWin;
+        Virial.Game.NebulaGameEnds.YandereGameEnd = YandereWin;
+        Virial.Game.NebulaGameEnds.ApocalypseGameEnd = ApocalypseWin;
     }
 
     private readonly static RemoteProcess<(byte conditionId, int winnersMask,ulong extraWinMask, GameEndReason endReason)> RpcEndGame = new(

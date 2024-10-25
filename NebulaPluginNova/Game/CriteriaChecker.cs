@@ -3,6 +3,7 @@ using Nebula.Roles.Crewmate;
 using Nebula.Roles.Impostor;
 using Nebula.Roles.Modifier;
 using Nebula.Roles.Neutral;
+using System.Reflection.Metadata;
 using Virial;
 using Virial.DI;
 using Virial.Events.Game;
@@ -10,6 +11,8 @@ using Virial.Events.Player;
 using Virial.Game;
 
 namespace Nebula.Game;
+
+using CheckerResult = (int totalAlive, int allEvil, int impostor, int madmate, int jackal, int pavlov, int moriarty, int yandere, int apocalypse);
 
 [NebulaPreprocess(PreprocessPhase.PostBuildNoS)]
 public class NebulaEndCriteria
@@ -40,9 +43,9 @@ public class NebulaEndCriteria
         this.gameModeMask = gameModeMask;
     }
 
-    public static (int totalAlive, int allEvil, int impostor, int madmate, int jackal, int pavlov, int moriarty) GetRoleData()
+    public static CheckerResult GetRoleData()
     {
-        (int totalAlive, int allEvil, int impostor, int madmate, int jackal, int pavlov, int moriarty) result = new(0, 0, 0, 0, 0, 0, 0);
+        CheckerResult result = new();
         NebulaGameManager.Instance?.AllPlayerInfo().Do(p =>
         {
             if (p.IsDead) return;
@@ -70,6 +73,18 @@ public class NebulaEndCriteria
             {
                 result.allEvil++;
                 result.moriarty++;
+                return;
+            }
+            if (p.Role.Role == Yandere.MyRole)
+            {
+                result.allEvil++;
+                result.yandere++;
+                return;
+            }
+            if (p.Role.Role == Apocalypse.MyRole) 
+            {
+                result.allEvil++;
+                result.apocalypse++;
                 return;
             }
         });
@@ -297,7 +312,7 @@ public class NebulaEndCriteria
             if (criteriaUpdateEvent.blockWinning) return;
 
             var roleData = GetRoleData();
-            if (roleData.allEvil - roleData.pavlov > 0) return;
+            if (roleData.allEvil - roleData.moriarty > 0) return;
 
             foreach (var moriarty in NebulaGameManager.Instance!.AllPlayerInfo().Where((p) => p.Role.Role == Roles.Neutral.Moriarty.MyRole))
             {
@@ -309,6 +324,21 @@ public class NebulaEndCriteria
 
                 if (aliveMoriarty * 2 >= roleData.totalAlive) NebulaAPI.CurrentGame?.TriggerGameEnd(NebulaGameEnd.MoriartyWin, GameEndReason.Situation);
             }
+        }
+    }
+
+    private class ApocalypseCriteria : IModule, IGameOperator
+    {
+        void OnUpdate(GameUpdateEvent ev)
+        {
+            var criteriaUpdateEvent = new CriteriaUpdateEvent(NebulaGameEnd.ApocalypseWin, GameEndReason.Situation);
+            GameOperatorManager.Instance?.Run(criteriaUpdateEvent);
+            if (criteriaUpdateEvent.blockWinning) return;
+
+            var roleData = GetRoleData();
+            if (roleData.allEvil - roleData.apocalypse > 0) return;
+            if (roleData.apocalypse > 1) return;
+            if (roleData.apocalypse * 2 >= roleData.totalAlive) NebulaAPI.CurrentGame?.TriggerGameEnd(NebulaGameEnd.MoriartyWin, GameEndReason.Situation);
         }
     }
 }

@@ -50,9 +50,17 @@ public class TrackingArrowAbility : ComponentHolder, IGameOperator
         if (arrow != null) arrow.IsActive = !target.IsDead && !MeetingHud.Instance && !ExileController.Instance;
     }
 
-    internal void Reset(Virial.Game.Player player, UnityEngine.Color color)
+    internal void Reset(Virial.Game.Player? player, UnityEngine.Color? color)
     {
-        target = player;
-        arrow.SetSmallColor(color);
+        if (player != null)
+        {
+            target = player;
+            AmongUsUtil.GetPlayerIcon(target.DefaultOutfit.outfit, arrow.ArrowObject.transform, new(0f, 0f, -1f), new(0.24f, 0.24f, 1f));
+        }
+        if (color != null)
+        {
+            this.color = color.Value;
+            arrow.SetSmallColor(color.Value);
+        }
     }
 }

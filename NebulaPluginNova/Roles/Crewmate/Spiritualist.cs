@@ -54,28 +54,23 @@ public class Spiritualist : DefinedRoleTemplate, DefinedRole
         [Local]
         void CheckAddChat(PlayerAddChatEvent ev)
         {
-            //ev.SetExtraShow();
-            //Debug.LogError(1);
             if (lastReported != null && ev.source.PlayerId == lastReported.PlayerId)
             {
-                //Debug.LogError(1);
                 ev.chatText = ev.chatText.ToLower();
-                //ev.chatText = Regex.Replace(ev.chatText, subTab, "", RegexOptions.IgnoreCase);
-                ev.chatText = ev.chatText.RemoveAll(letterTab.RemoveAll(subTab.ToCharArray()).ToCharArray());
+                for(int i = 0;i < ev.chatText.Length;)
+                {
+                    if (!subTab.Contains(ev.chatText[i]))
+                    {
+                        ev.chatText.Remove(i);
+                    }
+                    else i++;
+                }
                 ev.chatText = ev.chatText.Substring(0, Math.Min(CharCountOption, ev.chatText.Length));
                 if (ev.chatText == string.Empty) return;
                 ev.SetExtraShow();
                 lastReported = null;
             }
         }
-
-        /*
-        [Local]
-        void CheckCanSeeAllInfo(RequestEvent ev)
-        {
-            if (ev.requestInfo == "checkCanSeeAllInfo") ev.Report(true);
-        }
-        */
 
         private static readonly RemoteProcess<(byte, string)> RpcNoticeSeleted = new(
             "NoticeSeleted",

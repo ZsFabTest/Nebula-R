@@ -233,7 +233,6 @@ public static class AddChat
 
     private static void CheckIfNeedToAdd(ChatController __instance, PlayerControl sourcePlayer, string chatText)
     {
-        Debug.LogError(1);
         var questEvent = new PlayerAddChatEvent(sourcePlayer.GetModInfo()!, chatText, false);
         GameOperatorManager.Instance?.Run(questEvent);
         if (questEvent.isVanillaShow)

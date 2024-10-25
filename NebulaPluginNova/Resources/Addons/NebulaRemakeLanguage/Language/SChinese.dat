@@ -12,6 +12,13 @@
 "role.amnesiac.postfix" : " (失忆)"
 "role.amnesiacModifier.name" : "失忆者[判定]"
 
+"role.apocalypse.name" : "天启"
+"role.apocalypse.short" : "天"
+"role.apocalypse.blurb" : "杀光所有人"
+"options.role.apocalypse.detail" : "天启的击杀冷却随击杀次数增加不断减少。"
+"options.role.apocalypse.originKillCoolDown" : "初始击杀冷却"
+"options.role.apocalypse.coolDownReduction" : "每次击杀减少的冷却"
+
 "role.assassin.name" : "刺客"
 "role.assassin.short" : "刺"
 "role.assassin.blurb" : "刺杀即是艺术"
@@ -240,6 +247,15 @@
 "role.unyielding.blurb" : "我还不想死"
 "options.role.unyielding.detail" : "你在死后可以通过其他玩家的尸体复活。<br>复活后你将继承该玩家的职业。<br>不复活时你可以跟随原阵营胜利。<br>死亡后你看不到其他玩家的职业信息。"
 
+"role.yandere.name" : "病娇"
+"role.yandere.short" : "娇"
+"role.yandere.blurb" : "你永远都是属于我的"
+"options.role.yandere.detail" : "病娇拥有一个爱慕对象。"
+"options.role.yandere.killCoolDown" : "击杀冷却"
+"options.role.yandere.protectTimeAfterMeeting" : "会议后保护时间"
+"options.role.yandere.checkMaxDistance" : "判定距离"
+"options.role.yandere.maxStandableTime" : "玩家最大停留于目标附近时间"
+
 # Meta
 
 "role.moran.shotRange" : "显示狙击范围"
@@ -270,11 +286,13 @@
 
 # Teams
 
+"teams.apocalypse" : "天启"
 "teams.collector" : "集票者"
 "teams.moriarty" : "莫里亚蒂"
 "teams.schrödingersCat" : "薛定谔的猫"
 "teams.spectre" : "狐妖" 
 "teams.pavlov" : "巴普洛夫团队"
+"teams.yandere" : "病娇"
 
 # Endings
 
@@ -282,6 +300,8 @@
 "end.pavlov" : "巴普洛夫团队胜利"
 "end.moriarty" : "莫里亚蒂团队胜利"
 "end.spectre" : "狐妖胜利"
+"end.yandere" : "病娇<color=#ffffffff>及其爱慕对象</color>胜利"
+"end.apocalypse" : "天启胜利"
 
 # Chat
 
@@ -322,6 +342,10 @@
 "config.client.useStandaloneServerList" : "使用独立服务器列表"
 
 # Achievements
+
+"achievement.apocalypse.challenge.title" : "末日预言家"
+"achievement.apocalypse.challenge.goal" : "将击杀冷却降至0。"
+"achievement.apocalypse.challenge.cond" : "初始击杀冷却大于等于25秒+每次减少的击杀冷却小于等于5秒"
 
 "achievement.assassin.common.title" : "善变"
 "achievement.assassin.common.goal" : "在已有刺杀目标时更换目标。"
@@ -514,3 +538,7 @@
 "achievement.unyielding.challenge2.title" : "重生(极速版)"
 "achievement.unyielding.challenge2.goal" : "目睹击杀现场。"
 "achievement.unyielding.challenge2.cond" : "尚未复活过"
+
+"achievement.yandere.common.title" : "过于极端"
+"achievement.yandere.common.goal" : "进行一次击杀。"
+"achievement.yandere.common.cond" : ""

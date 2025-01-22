@@ -111,7 +111,7 @@ public class Psychic : DefinedRoleTemplate, DefinedRole
                 cand.Add(("myRole",Language.Translate("options.role.psychic.message.myRole").Replace("%ROLE%", ev.Reported.Role.DisplayColoredName)));
                 //特殊な死因
                 if(ev.Reported.PlayerState != PlayerState.Dead) cand.Add(("myState", Language.Translate("options.role.psychic.message.myState").Replace("%STATE%", ev.Reported.PlayerState.Text)));
-
+                
                 (string tag, string rawText) = cand.Random();
                 NebulaAPI.CurrentGame?.GetModule<MeetingOverlayHolder>()?.RegisterOverlay(GUI.API.VerticalHolder(Virial.Media.GUIAlignment.Left,
                     new NoSGUIText(Virial.Media.GUIAlignment.Left, GUI.API.GetAttribute(Virial.Text.AttributeAsset.OverlayTitle), new TranslateTextComponent("options.role.psychic.message.header")),

@@ -17,28 +17,29 @@ public static class MainMenuSetUpPatch
 
     static void Postfix(MainMenuManager __instance)
     {
+
         __instance.PlayOnlineButton.OnClick.AddListener(() => IsLocalGame = false);
         __instance.playLocalButton.OnClick.AddListener(() => IsLocalGame = true);
 
         var leftPanel = __instance.mainMenuUI.transform.FindChild("AspectScaler").FindChild("LeftPanel");
-        leftPanel.GetComponent<SpriteRenderer>().size += new Vector2(0f,0.5f);
+        leftPanel.GetComponent<SpriteRenderer>().size += new Vector2(0f, 0.5f);
         var auLogo = leftPanel.FindChild("Sizer").GetComponent<AspectSize>();
         auLogo.PercentWidth = 0.14f;
         auLogo.DoSetUp();
         auLogo.transform.localPosition += new Vector3(-0.8f, 0.25f, 0f);
 
-        float height = __instance.newsButton.transform.localPosition.y-__instance.myAccountButton.transform.localPosition.y;
+        float height = __instance.newsButton.transform.localPosition.y - __instance.myAccountButton.transform.localPosition.y;
 
         //バニラのパネルからModのパネルに切り替え
         var reworkedPanel = UnityHelper.CreateObject<SpriteRenderer>("ReworkedLeftPanel", leftPanel, new Vector3(0f, height * 0.5f, 0f));
         var oldPanel = leftPanel.GetComponent<SpriteRenderer>();
         reworkedPanel.sprite = oldPanel.sprite;
-        reworkedPanel.tileMode= oldPanel.tileMode;
+        reworkedPanel.tileMode = oldPanel.tileMode;
         reworkedPanel.drawMode = oldPanel.drawMode;
         reworkedPanel.size = oldPanel.size;
         oldPanel.enabled = false;
 
-        
+
         //CreditsとQuit以外のボタンを上に寄せる
         foreach (var button in __instance.mainButtons.GetFastEnumerator())
             if (Math.Abs(button.transform.localPosition.x) < 0.1f) button.transform.localPosition += new Vector3(0f, height, 0f);
@@ -75,7 +76,7 @@ public static class MainMenuSetUpPatch
 
         var temp = NebulaScreen.transform.GetChild(3);
         int index = 0;
-        void SetUpButton(string button,Action clickAction)
+        void SetUpButton(string button, Action clickAction)
         {
             GameObject obj = temp.gameObject;
             if (index > 0) obj = GameObject.Instantiate(obj, obj.transform.parent);
@@ -106,7 +107,7 @@ public static class MainMenuSetUpPatch
         SetUpButton("title.buttons.marketplace", () => {
             Marketplace.Open(__instance);
         });
-        
+
         SetUpButton("title.buttons.addons", () => {
             __instance.ResetScreen();
             if (!AddonsScreen) CreateAddonsScreen();
@@ -117,12 +118,7 @@ public static class MainMenuSetUpPatch
             DevStudio.Open(__instance);
         });
 
-        SetUpButton("title.buttons.stats", () => {
-            StatsViewer.Open(__instance);
-        });
-
-
-        var discordRenderer = UnityHelper.CreateObject<SpriteRenderer>("DiscordButton", NebulaScreen.transform, new Vector3(2.8f,-1.4f));
+        var discordRenderer = UnityHelper.CreateObject<SpriteRenderer>("DiscordButton", NebulaScreen.transform, new Vector3(2.8f, -1.4f));
         discordRenderer.sprite = discordIconSprite.GetSprite();
         var discordButton = discordRenderer.gameObject.SetUpButton(true, discordRenderer);
         discordButton.OnMouseOver.AddListener(() => NebulaManager.Instance.SetHelpWidget(discordButton, Language.Translate("title.label.discord")));
@@ -137,9 +133,10 @@ public static class MainMenuSetUpPatch
 
             var screen = MetaScreen.GenerateScreen(new Vector2(6.2f, 4.1f), AddonsScreen.transform, new Vector3(-0.1f, 0, 0f), false, false, false);
 
-            TextAttributeOld NameAttribute = new(TextAttributeOld.BoldAttr) { 
+            TextAttributeOld NameAttribute = new(TextAttributeOld.BoldAttr)
+            {
                 FontMaterial = VanillaAsset.StandardMaskedFontMaterial,
-                Size = new Vector2(3.4f,0.3f),
+                Size = new Vector2(3.4f, 0.3f),
                 Alignment = TMPro.TextAlignmentOptions.Left
             };
 
@@ -156,11 +153,14 @@ public static class MainMenuSetUpPatch
                 Alignment = TMPro.TextAlignmentOptions.Left
             }.EditFontSize(1.4f, 1f, 1.4f);
 
-            TextAttributeOld DescAttribute = new TextAttributeOld(TextAttributeOld.NormalAttr) {
-                FontMaterial = VanillaAsset.StandardMaskedFontMaterial, 
+            TextAttributeOld DescAttribute = new TextAttributeOld(TextAttributeOld.NormalAttr)
+            {
+                FontMaterial = VanillaAsset.StandardMaskedFontMaterial,
                 Alignment = TMPro.TextAlignmentOptions.TopLeft,
-                Size = new Vector2(5.8f,0.4f),
-                FontSize = 1.2f, FontMaxSize = 1.2f, FontMinSize = 0.7f 
+                Size = new Vector2(5.8f, 0.4f),
+                FontSize = 1.2f,
+                FontMaxSize = 1.2f,
+                FontMinSize = 0.7f
             };
 
 
@@ -201,7 +201,7 @@ public static class MainMenuSetUpPatch
                 Size = new Vector2(0.8f, 0.3f),
                 Alignment = TMPro.TextAlignmentOptions.Center
             };
-            CategoryAttribute.EditFontSize(1.2f,0.6f,1.2f);
+            CategoryAttribute.EditFontSize(1.2f, 0.6f, 1.2f);
 
             TextAttributeOld ButtonAttribute = new(TextAttributeOld.BoldAttr)
             {
@@ -220,11 +220,11 @@ public static class MainMenuSetUpPatch
                 , 1, -1, 0, 0.6f);
 
             staticWidget.Append(new ParallelWidgetOld(
-                new(new MetaWidgetOld.HorizonalMargin(0.1f),0.1f),
-                new(menuWidget,1f),
                 new(new MetaWidgetOld.HorizonalMargin(0.1f), 0.1f),
-                new(new MetaWidgetOld.ScrollView(new Vector2(5f, 4f), new MetaWidgetOld(), true) { Alignment = IMetaWidgetOld.AlignmentOption.Center, InnerRef = innerRef },5f)));
-            
+                new(menuWidget, 1f),
+                new(new MetaWidgetOld.HorizonalMargin(0.1f), 0.1f),
+                new(new MetaWidgetOld.ScrollView(new Vector2(5f, 4f), new MetaWidgetOld(), true) { Alignment = IMetaWidgetOld.AlignmentOption.Center, InnerRef = innerRef }, 5f)));
+
             screen.SetWidget(staticWidget);
 
             innerRef.Value?.SetLoadingWidget();
@@ -243,27 +243,16 @@ public static class MainMenuSetUpPatch
                     placable.Add(new MetaWidgetOld.HorizonalMargin(0.15f));
                     placable.Add(new MetaWidgetOld.Text(NameAttribute) { TranslationKey = translationKey });
                     placable.Add(new MetaWidgetOld.HorizonalMargin(0.15f));
-                    if(!predicate.Invoke())
-                        placable.Add(new MetaWidgetOld.Button(() => { onSelected.Invoke(); UpdateContents(category);  MetaUI.ShowConfirmDialog(null, new TranslateTextComponent("ui.update.autoUpdate")); }, ButtonAttribute) { TranslationKey = "version.fetching.setAutoUpdate", PostBuilder = (_, renderer, _) => renderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask });
+                    if (!predicate.Invoke())
+                        placable.Add(new MetaWidgetOld.Button(() => { onSelected.Invoke(); UpdateContents(category); MetaUI.ShowConfirmDialog(null, new TranslateTextComponent("ui.update.autoUpdate")); }, ButtonAttribute) { TranslationKey = "version.fetching.setAutoUpdate", PostBuilder = (_, renderer, _) => renderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask });
                     else
                     {
                         placable.Add(new MetaWidgetOld.HorizonalMargin(0.13f));
                         placable.Add(new MetaWidgetOld.Text(ButtonAttribute) { TranslationKey = "version.fetching.applied" });
                     }
-                    
+
                     inner.Append(new CombinedWidgetOld(0.5f, placable.ToArray()) { Alignment = IMetaWidgetOld.AlignmentOption.Left });
                 }
-
-                if ((category ?? ModUpdater.ReleasedInfo.ReleaseCategory.Major) == ModUpdater.ReleasedInfo.ReleaseCategory.Major)
-                    AutoUpdateContent("version.fetching.autoUpdate.major", () => NebulaLoader.NebulaLoader.AutoUpdate.Value && !NebulaLoader.NebulaLoader.UseSnapshot.Value, () => {
-                        NebulaLoader.NebulaLoader.AutoUpdate.Value = true;
-                        NebulaLoader.NebulaLoader.UseSnapshot.Value = false;
-                    });
-                if ((category ?? ModUpdater.ReleasedInfo.ReleaseCategory.Snapshot) == ModUpdater.ReleasedInfo.ReleaseCategory.Snapshot)
-                    AutoUpdateContent("version.fetching.autoUpdate.snapshot", ()=> NebulaLoader.NebulaLoader.AutoUpdate.Value && NebulaLoader.NebulaLoader.UseSnapshot.Value, () => {
-                        NebulaLoader.NebulaLoader.AutoUpdate.Value = true;
-                        NebulaLoader.NebulaLoader.UseSnapshot.Value = true;
-                    });
 
                 foreach (var version in versions)
                 {
@@ -281,16 +270,14 @@ public static class MainMenuSetUpPatch
                             {
                                 var button = text.gameObject.SetUpButton(true);
                                 button.gameObject.AddComponent<BoxCollider2D>().size = text.rectTransform.sizeDelta;
-                                button.OnClick.AddListener(() => Application.OpenURL(Helpers.ConvertUrl("https://github.com/Dolly1016/Nebula/releases/tag/" + version.RawTag)));
+                                button.OnClick.AddListener(() => Application.OpenURL(Helpers.ConvertUrl("https://github.com/ZsFabTest/Nebula-R/releases/tag/" + version.RawTag)));
                                 button.OnMouseOver.AddListener(() =>
                                 {
                                     text.color = Color.green;
-                                    if(version.Body!=null) NebulaManager.Instance.SetHelpWidget(button, version.Body);
                                 });
                                 button.OnMouseOut.AddListener(() =>
                                 {
                                     text.color = Color.white;
-                                    NebulaManager.Instance.HideHelpWidgetIf(button);
                                 });
                             }
                         });
@@ -326,7 +313,8 @@ public static class MainMenuSetUpPatch
             }).WrapToIl2Cpp());
         }
 
-        foreach (var obj in GameObject.FindObjectsOfType<GameObject>(true)) {
+        foreach (var obj in GameObject.FindObjectsOfType<GameObject>(true))
+        {
             if (obj.name is "FreePlayButton" or "HowToPlayButton") GameObject.Destroy(obj);
         }
 

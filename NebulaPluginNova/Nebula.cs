@@ -32,19 +32,22 @@ using System.Reflection.Metadata;
 
 namespace Nebula;
 
-public class NebulaPlugin
+[BepInPlugin(PluginGuid, PluginName, PluginVersion)]
+[BepInProcess("Among Us.exe")]
+[BepInIncompatibility("jp.dreamingpig.amongus.nebula.loader")]
+public class NebulaPlugin : BasePlugin
 {
     public const string AmongUsVersion = "2023.7.12";
-    public const string PluginGuid = "jp.dreamingpig.amongus.nebula";
-    public const string PluginName = "NebulaOnTheShip";
-    public const string PluginVersion = "2.13.0.1";
+    public const string PluginGuid = "github.zsfabtest.nebular";
+    public const string PluginName = "NebulaOnTheShipRemake";
+    public const string PluginVersion = "2.0.4";
 
-    public const string VisualVersion = "v2.13.0.1";
+    public const string VisualVersion = "v2.0.4";
     //public const string VisualVersion = "Snapshot 24.12.24d";
     //public const string VisualVersion = "Costume Animation DEMO 2";
 
     public const string PluginEpochStr = "105";
-    public const string PluginBuildNumStr = "1279";
+    public const string PluginBuildNumStr = "1142";
     public static readonly int PluginEpoch = int.Parse(PluginEpochStr);
     public static readonly int PluginBuildNum = int.Parse(PluginBuildNumStr);
     public const bool GuardVanillaLangData = false;
@@ -69,7 +72,7 @@ public class NebulaPlugin
 
     public static string GetNebulaVersionString()
     {
-        return "NoS " + VisualVersion;
+        return "NoS-R " + VisualVersion;
     }
 
     static public Harmony Harmony = new Harmony(PluginGuid);
@@ -78,7 +81,7 @@ public class NebulaPlugin
     public bool IsPreferential => Log.IsPreferential;
     public static NebulaPlugin MyPlugin { get; private set; } = null!;
     public static BasePlugin LoaderPlugin = null!;
-    static public void Load()
+    override public void Load()
     {
         Assembly.Load(StreamHelper.OpenFromResource("Nebula.Resources.API.NAudio.Core.dll")!.ReadBytes());
         Assembly.Load(StreamHelper.OpenFromResource("Nebula.Resources.API.NAudio.Wasapi.dll")!.ReadBytes());

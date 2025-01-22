@@ -16,6 +16,7 @@
 		<Platforms>AnyCPU;x86;x64</Platforms>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<AmongUs>D:\SteamLibrary\steamapps\common\AUDE</AmongUs>
 	</PropertyGroup>
 	
 	
@@ -92,15 +93,12 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\NebulaAPI\NebulaAPI.csproj" />
-	  <ProjectReference Include="..\NebulaLoader\NebulaLoader.csproj" />
 	</ItemGroup>
 
 	<Target Name="CopyCustomContent" AfterTargets="AfterBuild">
 		<Message Text="Second occurrence" />
-		<Copy SourceFiles="bin\x86\Release\net6.0\Nebula.dll" DestinationFolder="$(AmongUsRelease)\" />
-		<Exec Command="rm -f $(AmongUsRelease)\Nebula.zip %26 cd $(AmongUsRelease)\Nebula %26 %22$(ZipArchiver)\7z.exe%22 a $(AmongUsRelease)\Nebula.zip" />
-		<Copy SourceFiles="bin\x86\Release\net6.0\Nebula.dll" DestinationFolder="$(AmongUsRelease)\Nebula\BepInEx\nebula" />
-		<Copy SourceFiles="bin\x86\Release\net6.0\Nebula.dll" DestinationFolder="$(AmongUsMod)\BepInEx\nebula\" />
+		<Copy SourceFiles="bin\x86\Release\net6.0\Nebula.dll" DestinationFolder="$(AmongUs)\" />
+		<Copy SourceFiles="bin\x86\Release\net6.0\Nebula.dll" DestinationFolder="$(AmongUs)\BepInEx\plugins" />
 	</Target>
 
 </Project>

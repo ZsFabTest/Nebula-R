@@ -59,7 +59,7 @@ public class ModUpdater
 
             switch (strings[0])
             {
-                case "v":
+                case "r":
                     Category = ReleaseCategory.Major;
                     break;
                 case "s":
@@ -90,7 +90,7 @@ public class ModUpdater
 
         private async Task UpdateAsync()
         {
-            string url = Helpers.ConvertUrl($"https://github.com/Dolly1016/Nebula/releases/download/{rawTag}/Nebula.dll");
+            string url = Helpers.ConvertUrl($"https://gh.con.sh/https://github.com/ZsFabTest/Nebula-R/releases/download/{rawTag}/Nebula.dll");
             var response = await NebulaPlugin.HttpClient.GetAsync(url);
             if (response.StatusCode != HttpStatusCode.OK) return;
             var dllStream = await response.Content.ReadAsStreamAsync();
@@ -110,9 +110,6 @@ public class ModUpdater
 
         public IEnumerator CoUpdateAndShowDialog()
         {
-            NebulaLoader.NebulaLoader.AutoUpdate.Value = false;
-            NebulaLoader.NebulaLoader.UseSnapshot.Value = false;
-
             var preWindow = MetaScreen.GenerateWindow(new Vector2(3f, 1.2f), null, new Vector3(0, 0, 0), true, true);
             preWindow.SetWidget(new MetaWidgetOld.Text(new(TextAttributeOld.NormalAttr) { Size = new(3f, 1.2f) }) { TranslationKey = "ui.update.waitFinishing" });
             yield return UpdateAsync().WaitAsCoroutine();
@@ -123,7 +120,7 @@ public class ModUpdater
         }
     }
 
-    static string GetTagsUrl(int page) => Helpers.ConvertUrl("https://api.github.com/repos/Dolly1016/Nebula/releases?per_page=100&page=" + (page));
+    static string GetTagsUrl(int page) => Helpers.ConvertUrl("https://api.github.com/repos/ZsFabTest/Nebula-R/releases?per_page=100&page=" + (page));
     private static async Task FetchAsync()
     {
         List<ReleasedInfo> releases = new();

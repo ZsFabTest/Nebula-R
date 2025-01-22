@@ -1,21 +1,21 @@
-# Nebula on the Ship
-<p align="center">
-This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.</p>
+# Nebula-Remake
+目标是在不破坏星云本家代码的基础上进行职业的添加 \
+已完成职业参考
+| 船员 Crewmate | 伪装者 Impostor | 中立 Neutral | 附加 Modifier | 灵魂 Ghost |
+| --- | --- | --- | --- | --- |
+| 正义的裁决者 Nice Decider | 邪恶的裁决者 Evil Decider | | 叛徒 Secondary Madmate | 灵魂工程师 Ghost Engineer |
+| 埋雷兵 Miner | 密命王牌 Evil Ace | | | |
+| 占卜师 Oracle | 掷弹兵 Grenadier | | | |
 
-# クレジットとリソース
 
-いずれも、敬称略
+## 参考项目
+[Nebula on the Ship](https://github.com/Dolly1016/Nebula) ([开源地址](https://github.com/Dolly1016/Nebula-Public)) \
+[BepInEx](https://github.com/BepInEx) \
+[The Other Roles](https://github.com/Eisbison/TheOtherRoles) \
+[TheOtherRoles: GM Edition](https://github.com/yukinogatari/TheOtherRoles-GM) \
+[Town Of Impostors](https://github.com/Town-of-Impostors/TownOfImpostors) \
+[Town Of Us Remake](https://github.com/eDonnes124/Town-Of-Us-R)
 
-[BepInEx](https://github.com/BepInEx) ゲームの関数をフックするために使用しています。\
-[The Other Roles](https://github.com/Eisbison/TheOtherRoles) このMODの着想の根源はすべてここからのものです。クレジット表記の為、画像データを一部借用しています。\
-[TheOtherRoles: GM Edition](https://github.com/yukinogatari/TheOtherRoles-GM) MadmateのアイデアはこのMODからのものです。\
-[Town Of Impostors](https://github.com/Town-of-Impostors/TownOfImpostors) Sniper,Necromancer,MayorのアイデアはこのMODからのものです。\
-
-**イラストのご提供**\
-かつどん\
-えのき
-
-**その他ロールアイデアのご提供等**\
-龍 : Reaper, Provocateur, Booster(現:Commet)\
-Alps : Guesser(Secondary)\
-p5p5next : Damned
+## 特别鸣谢
+Nebula翻译参考: \
+[Nebula-SChinese-Language-Pack](https://github.com/Khcell/Nebula-SChinese-Language-Pack)

@@ -18,6 +18,7 @@
     <NeutralLanguage>ja-JP</NeutralLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<AmongUs>D:\SteamLibrary\steamapps\common\AUDE</AmongUs>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -37,7 +38,7 @@
 	
   <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
 	<Message Text="Second occurrence" />
-	<Copy SourceFiles="bin\Release\net6.0\NebulaAPI.dll" DestinationFolder="$(AmongUsRelease)\" />
+	<Copy SourceFiles="bin\Release\net6.0\NebulaAPI.dll" DestinationFolder="$(AmongUs)\" />
 	<Copy SourceFiles="bin\Release\net6.0\NebulaAPI.dll" DestinationFolder="..\NebulaPluginNova\Resources\API\" />
   </Target>
 	

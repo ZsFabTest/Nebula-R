@@ -1,0 +1,81 @@
+# Roles
+
+"role.assassin.name" : "刺客"
+"role.assassin.short" : "刺"
+"role.assassin.blurb" : "刺杀即是艺术"
+"options.role.assassin.detail" : "刺客可以标记一个玩家并实现瞬移击杀。<br>刺杀完成后刺客会在地上留下树叶"
+"options.role.assassin.assassinCoolDown" : "刺杀冷却时间"
+"options.role.assassin.leavesDuration" : "树叶存在时间"
+
+"role.evilAce.name" : "密命王牌"
+"role.evilAce.short" : "王"
+"role.evilAce.blurb" : "无法被看透的王牌"
+"options.role.evilAce.detail" : "密命王牌可以知晓伪装者们所击杀的玩家的职业。<br>密命王牌作为最后一人时其cd减少。"
+"options.role.evilAce.killCoolDown" : "作为最后一名伪装者时的击杀冷却倍率"
+
+"role.ghostEngineer.name" : "灵魂工程师"
+"role.ghostEngineer.blurb" : "永无止境的工作"
+"role.ghostEngineer.short" : "魂工"
+"options.role.ghostEngineer.detail" : "灵魂工程师拥有秒修破坏的能力。"
+"options.role.ghostEngineer.numOfRepairing" : "可使用修理次数"
+
+"role.grenadier.name" : "掷弹兵"
+"role.grenadier.short" : "掷"
+"role.grenadier.blurb" : "眼前一亮"
+"options.role.grenadier.detail" : "掷弹兵可以使玩家屏幕覆盖白色图层遮挡视线。"
+"options.role.grenadier.flashCoolDown" : "闪光冷却时间"
+"options.role.grenadier.flashDuration" : "闪光持续时间"
+"options.role.grenadier.flashRadius" : "闪光弹半径"
+
+"role.evilDecider.name" : "邪恶的裁决者"
+"role.evilDecider.short" : "坏裁"
+"role.evilDecider.blurb" : "死亡，掌控之中"
+"options.role.evilDecider.detail" : "邪恶的裁决者可以任意裁决其他玩家。"
+"role.niceDecider.name" : "正义的裁决者"
+"role.niceDecider.short" : "好裁"
+"role.niceDecider.blurb" : "正义，情理之中"
+"options.role.niceDecider.detail" : "正义的裁决者可以裁决玩家。<br>若裁决对象不符合裁决条件，正义的裁决者死亡。"
+"options.role.judge.numOfGuess" : "处决次数"
+"options.role.judge.canJudgeNeutralRoles" : "可以处决中立阵营"
+"options.role.judge.canJudgeMadmate" : "可以处决叛徒"
+"options.role.judge.canJudgeLovers" : "可以处决恋人"
+"options.role.judge.canCallEmergencyMeeting" : "可以发起紧急会议"
+"options.role.judge.canJudgeAnyoneWhenBecomeMadmate" : "叛徒裁决乱杀"
+
+"role.madmateModifier.name" : "叛徒"
+"role.madmateModifier.short" : "叛"
+"role.madmateModifier.generalBlurb" : "帮助伪装者获得胜利"
+"options.role.madmateModifier.detail" : "叛徒属于伪装者阵营。<br>去背刺船员帮助伪装者！"
+"options.role.madmateModifier.numToSpawn" : "最大数量"
+"options.role.madmateModifier.roleChance" : "生成概率"
+"role.madmateModifier.prefix" : "叛变的"
+"role.madmateModifier.prefix.short" : "叛"
+
+"role.miner.name" : "埋雷兵"
+"role.miner.short" : "埋"
+"role.miner.blurb" : "在管道口放置地雷"
+"options.role.miner.detail" : "埋雷兵可以对管道使用技能。<br>一个管道技能只能同时存在一个。<br>任意跳入或跳出该管道的玩家将会被击杀，并消耗该管道的技能使埋雷兵可以再次对该管道使用技能。<br>技能不随埋雷兵职业改变而失效。"
+"options.role.miner.layingMineCooldown" : "埋雷冷却时间"
+"options.role.miner.numOfMines" : "最大埋雷次数"
+
+"role.oracle.name" : "占卜师"
+"role.oracle.short" : "占"
+"role.oracle.blurb" : "感受你的过往"
+"options.role.oracle.detail" : "你可以获取他人的职业。<br>你获取的信息会混杂着多个错误的干扰信息。"
+"options.role.oracle.oracleCoolDown" : "占卜冷却时间"
+"options.role.oracle.oracleDuration" : "占卜所需时间"
+"options.role.oracle.numOfInfo" : "占卜获得的职业数量"
+"role.oracle.message" : "%PLAYER%的职业是%DETAIL%其中之一"
+
+# States
+
+"state.exploded" : "爆炸"
+"state.judged" : "审判"
+"state.misjudged" : "误判"
+
+# Buttons
+
+"button.label.flash" : "闪光"
+"button.label.layMines" : "埋雷"
+"button.label.repair" : "修复"
+"button.label.oracle" : "占卜"

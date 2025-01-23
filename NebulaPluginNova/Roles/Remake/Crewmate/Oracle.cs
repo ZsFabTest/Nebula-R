@@ -29,7 +29,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
         {
             oracleResults = new();
         }
-        static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Remake.OracleButton.png", 100f);
+        static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Remake.OracleButton.png", 115f);
         private Dictionary<byte, string> oracleResults = new();
         private TMPro.TextMeshPro message = null!;
         private float duration = 0f;

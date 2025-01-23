@@ -28,6 +28,7 @@ internal static class RemakeInit
     internal static class GameEnd
     {
         static public CustomEndCondition SpectreWin = new(192, "spectre", Neutral.Spectre.MyRole.UnityColor, 64);
+        static public CustomEndCondition YandereWin = new(193, "yandere", Neutral.Yandere.MyRole.UnityColor, 64);
     }
 
     /*

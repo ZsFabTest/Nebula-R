@@ -121,6 +121,29 @@
 "options.role.hedgehog.defenceCoolDown" : "防御冷却时间"
 "options.role.hedgehog.defenceDuration" : "防御持续时间"
 
+"role.nightmare.name" : "梦魇"
+"role.nightmare.short" : "梦"
+"role.nightmare.blurb" : "沉醉如泥"
+"options.role.nightmare.detail" : "梦魇只能在电力破坏期间击杀。<br>电力破坏期间梦魇外观与名字发生变化。"
+"options.role.nightmare.killCoolDown" : "击杀冷却时间"
+"options.role.nightmare.speedRate" : "电力破坏期间速度"
+
+"role.lastImpostor.name" : "绝境者"
+"role.lastimpostor.short" : "LI"
+"role.lastImpostor.generalBlurb" : "赌上所拥有的一切"
+"options.role.lastImpostor.detail" : "绝境者拥有赌怪能力。<br>绝境者的赌杀总次数不限，每次会议次数不限。"
+"options.role.lastImpostor.canSpawn" : "在剩余最后一名伪装者时分配"
+"options.role.lastImpostor.canGuessAnyRole" : "绝境者无视赌怪可赌职业限制"
+
+"role.yandere.name" : "病娇"
+"role.yandere.short" : "娇"
+"role.yandere.blurb" : "你永远都是属于我的"
+"options.role.yandere.detail" : "病娇拥有一个爱慕对象。"
+"options.role.yandere.killCoolDown" : "击杀冷却"
+"options.role.yandere.protectTimeAfterMeeting" : "会议后保护时间"
+"options.role.yandere.checkMaxDistance" : "判定距离"
+"options.role.yandere.maxStandableTime" : "玩家最大停留于目标附近时间"
+
 # States
 
 "state.exploded" : "爆炸"

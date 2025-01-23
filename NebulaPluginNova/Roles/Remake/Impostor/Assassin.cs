@@ -122,10 +122,11 @@ public class Assassin : DefinedSingleAbilityRoleTemplate<Assassin.Ability>, HasC
                         }, lifeSpan);
                     });
                     Target = null;
-                    killButton.StartCoolDown();
+                    NebulaAPI.CurrentGame?.KillButtonLikeHandler.StartCooldown();
                 };
                 killButton.CoolDownTimer = Bind(new Timer(AssassinCoolDownOption.CoolDown).SetAsKillCoolDown().Start());
                 killButton.SetLabel("kill");
+                NebulaAPI.CurrentGame?.KillButtonLikeHandler.Register(killButton.GetKillButtonLike());
 
                 killNum = 0;
             }

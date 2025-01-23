@@ -41,7 +41,7 @@ public class GhostEngineer : DefinedGhostRoleTemplate, HasCitation, DefinedGhost
                 leftFix = NumOfRepairingOption;
                 var repairButton = Bind(new ModAbilityButton()).KeyBind(Virial.Compat.VirtualKeyInput.Ability);
                 repairButton.SetSprite(buttonSprite.GetSprite());
-                repairButton.Availability = (button) => MyPlayer.CanMove && leftFix > 0 && Utilities.AmongUsUtil.InAnySab;
+                repairButton.Availability = (button) => MyPlayer.CanMove && leftFix > 0 && AmongUsUtil.InAnySab;
                 repairButton.Visibility = (button) => MyPlayer.IsDead;
                 repairButton.OnClick = (button) =>
                 {

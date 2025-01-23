@@ -139,11 +139,11 @@ public class SchrodingersCat : DefinedRoleTemplate, HasCitation, DefinedRole
                 killButton.OnClick = button =>
                 {
                     MyPlayer.MurderPlayer(myTracker.CurrentTarget!, PlayerState.Dead, EventDetail.Kill, KillParameter.NormalKill);
-                    killButton.StartCoolDown();
+                    NebulaAPI.CurrentGame?.KillButtonLikeHandler.StartCooldown();
                 };
                 killButton.CoolDownTimer = Bind(new Timer(KillCoolDownOption.CoolDown).SetAsKillCoolDown().Start());
                 killButton.SetLabel("kill");
-                killButton.GetKillButtonLike();
+                NebulaAPI.CurrentGame?.KillButtonLikeHandler.Register(killButton.GetKillButtonLike());
             }
         }
 

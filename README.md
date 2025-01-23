@@ -5,8 +5,8 @@
 | --- | --- | --- | --- | --- |
 | 正义的裁决者 Nice Decider | 邪恶的裁决者 Evil Decider | 薛定谔的猫 Schrodinger‘s Cat | 叛徒 Secondary Madmate | 灵魂工程师 Ghost Engineer |
 | 埋雷兵 Miner | 密命王牌 Evil Ace | 狐妖 Spectre | 执灯人 Lighting | |
-| 占卜师 Oracle | 掷弹兵 Grenadier | 躺平者 Neet | | |
-| 反伤者 Hedgehog | | | | |
+| 占卜师 Oracle | 掷弹兵 Grenadier | 病娇 Yandere | 躺平者 Neet | |
+| 反伤者 Hedgehog | 梦魇 Nightmare | | 绝境者 Last Impostor | |
 
 
 ## 参考项目

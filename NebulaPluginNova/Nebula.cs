@@ -47,7 +47,7 @@ public class NebulaPlugin : BasePlugin
     //public const string VisualVersion = "Costume Animation DEMO 2";
 
     public const string PluginEpochStr = "105";
-    public const string PluginBuildNumStr = "1145";
+    public const string PluginBuildNumStr = "1146";
     public static readonly int PluginEpoch = int.Parse(PluginEpochStr);
     public static readonly int PluginBuildNum = int.Parse(PluginBuildNumStr);
     public const bool GuardVanillaLangData = false;

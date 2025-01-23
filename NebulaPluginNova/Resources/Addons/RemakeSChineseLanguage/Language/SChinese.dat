@@ -114,6 +114,13 @@
 "options.role.spectre.ShortTaskCount" : "短任务数"
 "options.role.spectre.arrowUpdateInterval" : "箭头更新间隔"
 
+"role.hedgehog.name" : "反伤者"
+"role.hedgehog.short" : "反"
+"role.hedgehog.blurb" : "禁止投喂"
+"options.role.hedgehog.detail" : "反伤者可以通过技能躲避击杀并反杀。<br>反伤者的技能持续时间很短。"
+"options.role.hedgehog.defenceCoolDown" : "防御冷却时间"
+"options.role.hedgehog.defenceDuration" : "防御持续时间"
+
 # States
 
 "state.exploded" : "爆炸"
@@ -131,3 +138,4 @@
 "button.label.repair" : "修复"
 "button.label.oracle" : "占卜"
 "button.label.hide" : "隐藏"
+"button.label.defend" : "防御"

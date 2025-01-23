@@ -42,7 +42,7 @@ public class Collator : DefinedRoleTemplate, HasCitation, DefinedRole
 
         static private SpriteLoader meetingSprite = SpriteLoader.FromResource("Nebula.Resources.CollatorIcon.png", 115f);
 
-        static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.CollatorSampleButton.png", 100f);
+        static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.CollatorSampleButton.png", 115f);
         static private IDividedSpriteLoader tubeSprite = DividedSpriteLoader.FromResource("Nebula.Resources.CollatorTube.png", 125f, 2, 1);
 
         public Instance(GamePlayer player, int[] arguments) : base(player){}

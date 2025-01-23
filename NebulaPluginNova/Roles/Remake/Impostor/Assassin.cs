@@ -13,7 +13,7 @@ using static Nebula.Roles.Impostor.Marionette;
 namespace Nebula.Roles.Impostor;
 
 [NebulaRPCHolder]
-public class Assassin : DefinedRoleTemplate, HasCitation, DefinedRole
+public class Assassin : DefinedSingleAbilityRoleTemplate<Assassin.Ability>, HasCitation, DefinedRole
 {
     private Assassin() : base("assassin", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [AssassinCoolDownOption, LeavesDurationOption])
     {
@@ -24,7 +24,10 @@ public class Assassin : DefinedRoleTemplate, HasCitation, DefinedRole
     private static IRelativeCoolDownConfiguration AssassinCoolDownOption = NebulaAPI.Configurations.KillConfiguration("options.role.assassin.assassinCoolDown", CoolDownType.Immediate, (2.5f, 60f, 2.5f), 25f, (-40f, 40f, 2.5f), 0f, (0.125f, 2f, 0.125f), 1f);
     private static FloatConfiguration LeavesDurationOption = NebulaAPI.Configurations.Configuration("options.role.assassin.leavesDuration", (0f, 20f, 0.5f), 5f, FloatConfigurationDecorator.Second);
 
-    RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
+    //RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
+    public override Ability CreateAbility(GamePlayer player, int[] arguments) => new Ability(player);
+
+    bool DefinedRole.IsJackalizable => true;
 
     static public Assassin MyRole = new Assassin();
 
@@ -49,17 +52,11 @@ public class Assassin : DefinedRoleTemplate, HasCitation, DefinedRole
         }
     }
 
-    public class Instance : RuntimeAssignableTemplate, RuntimeRole
+    public class Ability : AbstractPlayerAbility, IPlayerAbility
     {
-        DefinedRole RuntimeRole.Role => MyRole;
-
         static private Image monitorButtonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.DecoyMonitorButton.png", 115f);
         static private Image seleteButtonSprite = SpriteLoader.FromResource("Nebula.Resources.Buttons.TrackButton.png", 115f);
-        public Instance(GamePlayer player) : base(player) { }
-        private Virial.Game.Player? Target = null;
-        bool RuntimeRole.HasVanillaKillButton => false;
-
-        void RuntimeAssignable.OnActivated()
+        public Ability(GamePlayer player) : base(player) 
         {
             if (AmOwner)
             {
@@ -133,6 +130,8 @@ public class Assassin : DefinedRoleTemplate, HasCitation, DefinedRole
                 killNum = 0;
             }
         }
+        private Virial.Game.Player? Target = null;
+        bool IPlayerAbility.HideKillButton => true;
 
         [Local]
         void OnMeetingStart(MeetingStartEvent ev)

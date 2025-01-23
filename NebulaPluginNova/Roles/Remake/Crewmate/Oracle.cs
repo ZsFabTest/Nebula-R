@@ -79,7 +79,7 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
                         info = oracleResults[myTracker.CurrentTarget!.PlayerId];
                     } 
 
-                    string message = Language.Translate("role.oracle.message").Replace("%PLAYER%", myTracker.CurrentTarget.Name).Replace("%DETAIL%", info);
+                    string message = Language.Translate("role.oracle.message").Replace("%PLAYER%", myTracker.CurrentTarget.Unbox().ColoredDefaultName).Replace("%DETAIL%", info);
                     this.message.text = message;
                     this.message.gameObject.SetActive(true);
                     Debug.LogWarning($"Message: {message}\nMessage.IsActive: {this.message.gameObject.active}");
@@ -208,11 +208,11 @@ public class Oracle : DefinedRoleTemplate, HasCitation, DefinedRole
             message.gameObject.SetActive(false);
             string rawText = string.Empty;
             foreach(var kvpair in oracleResults)
-                rawText = $"{rawText}<b>{(Helpers.GetPlayer(kvpair.Key)?.name ?? "Unknown Player").Color(MyRole.UnityColor)}</b>: {kvpair.Value}\n";
+                rawText = $"{rawText}<b>{(Helpers.GetPlayer(kvpair.Key)?.GetModInfo()?.Unbox().ColoredDefaultName ?? "Unknown Player")}</b>: {kvpair.Value}\n";
             NebulaAPI.CurrentGame?.GetModule<MeetingOverlayHolder>()?.RegisterOverlay(GUI.API.VerticalHolder(Virial.Media.GUIAlignment.Left,
                 new NoSGUIText(Virial.Media.GUIAlignment.Left, GUI.API.GetAttribute(Virial.Text.AttributeAsset.OverlayTitle), new TranslateTextComponent("options.role.oracle.message.header")),
                 new NoSGUIText(Virial.Media.GUIAlignment.Left, GUI.API.GetAttribute(Virial.Text.AttributeAsset.OverlayContent), new RawTextComponent(rawText)))
-                , MeetingOverlayHolder.IconsSprite[1], MyRole.RoleColor);
+                , MeetingOverlayHolder.IconsSprite[4], MyRole.RoleColor);
         }
     }
 }

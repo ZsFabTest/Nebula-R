@@ -1,32 +1,31 @@
 using Virial;
 using Virial.Assignable;
 using Virial.Configuration;
+using Virial.Game;
 
 namespace Nebula.Roles.Impostor;
 
-public class Grenadier : DefinedRoleTemplate, HasCitation, DefinedRole
+public class Grenadier : DefinedSingleAbilityRoleTemplate<Grenadier.Ability>, HasCitation, DefinedRole
 {
     private Grenadier() : base("grenadier", new(Palette.ImpostorRed), RoleCategory.ImpostorRole, Impostor.MyTeam, [FlashCoolDownOption, FlashDurationOption, FlashRadiusOption]) { }
 
     Citation? HasCitation.Citaion => RemakeInit.Citations.TownOfUsR;
+    bool DefinedRole.IsJackalizable => true;
 
-    RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
+    //RuntimeRole RuntimeAssignableGenerator<RuntimeRole>.CreateInstance(GamePlayer player, int[] arguments) => new Instance(player);
 
     private static FloatConfiguration FlashCoolDownOption = NebulaAPI.Configurations.Configuration("options.role.grenadier.flashCoolDown", (5f, 60f, 2.5f), 30f, FloatConfigurationDecorator.Second);
     private static FloatConfiguration FlashDurationOption = NebulaAPI.Configurations.Configuration("options.role.grenadier.flashDuration", (1f, 20f, 0.5f), 7.5f, FloatConfigurationDecorator.Second);
     private static FloatConfiguration FlashRadiusOption = NebulaAPI.Configurations.Configuration("options.role.grenadier.flashRadius", (1f, 20f, 0.125f), 10f, FloatConfigurationDecorator.Ratio);
 
+    public override Ability CreateAbility(GamePlayer player, int[] arguments) => new Ability(player);
     static public Grenadier MyRole = new Grenadier();
     [NebulaRPCHolder]
-    public class Instance : RuntimeAssignableTemplate, RuntimeRole
+    public class Ability : AbstractPlayerAbility, IPlayerAbility
     {
-        DefinedRole RuntimeRole.Role => MyRole;
-
         static private Image buttonSprite = SpriteLoader.FromResource("Nebula.Resources.Remake.GrenadierFlashButton.png", 115f);
 
-        public Instance(GamePlayer player) : base(player) { }
-
-        void RuntimeAssignable.OnActivated()
+        public Ability(GamePlayer player) : base(player) 
         {
             if (AmOwner)
             {
@@ -36,7 +35,7 @@ public class Grenadier : DefinedRoleTemplate, HasCitation, DefinedRole
                 button.Visibility = button => !MyPlayer.IsDead;
                 button.OnClick = button =>
                 {
-                    RpcGrenadierFlash.Invoke(MyPlayer.PlayerId);
+                    RpcGrenadierFlash.Invoke((MyPlayer.PlayerId, MyPlayer.IsImpostor));
                     button.ActivateEffect();
                 };
                 button.OnEffectEnd = button => button.StartCoolDown();
@@ -46,23 +45,24 @@ public class Grenadier : DefinedRoleTemplate, HasCitation, DefinedRole
             }
         }
 
-        private static void Flash()
+        private static void Flash(bool flag)
         {
-            if (PlayerControl.LocalPlayer.GetModInfo()!.IsImpostor)
+            if ((flag && PlayerControl.LocalPlayer.GetModInfo()!.IsImpostor)
+                || (!flag && PlayerControl.LocalPlayer.GetModInfo()!.Role.Role.Team == Neutral.Jackal.MyTeam))
                 AmongUsUtil.PlayCustomFlash(Color.white, 0.2f, 0.2f, 0.5f, FlashDurationOption);
             else AmongUsUtil.PlayCustomFlash(Color.white, 0.2f, 0.2f, 1f, FlashDurationOption);
         }
 
-        private static readonly RemoteProcess<byte> RpcGrenadierFlash = new(
+        private static readonly RemoteProcess<(byte, bool)> RpcGrenadierFlash = new(
             "GrenadierFlash",
             (message, _) =>
             {
-                var Grenadier = Helpers.GetPlayer(message)!;
+                var Grenadier = Helpers.GetPlayer(message.Item1)!;
                 if (Vector2.Distance(
                     PlayerControl.LocalPlayer.transform.position,
                     Grenadier.GetTruePosition()) < FlashRadiusOption)
                 {
-                    Flash();
+                    Flash(message.Item2);
                 }
             });
     }

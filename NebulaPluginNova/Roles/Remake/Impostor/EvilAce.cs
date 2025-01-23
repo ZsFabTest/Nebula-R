@@ -7,10 +7,6 @@ using Virial.Events.Game;
 using Virial.Events.Game.Meeting;
 using Virial.Events.Player;
 using Virial.Game;
-using Virial.Text;
-using static Nebula.Roles.Impostor.Assassin;
-using static UnityEngine.GraphicsBuffer;
-
 namespace Nebula.Roles.Impostor;
 
 public class EvilAce : DefinedRoleTemplate, HasCitation, DefinedRole
@@ -95,11 +91,11 @@ public class EvilAce : DefinedRoleTemplate, HasCitation, DefinedRole
         {
             string rawText = string.Empty;
             foreach (var kvpair in roleTab)
-                rawText = $"{rawText}<b>{(Helpers.GetPlayer(kvpair.Key)?.name ?? "Unknown Player").Color(MyRole.UnityColor)}</b>: {kvpair.Value.DisplayColoredName}\n";
+                rawText = $"{rawText}<b>{Helpers.GetPlayer(kvpair.Key)?.GetModInfo()?.Unbox().ColoredDefaultName ?? "Unknown Player"}</b>: {kvpair.Value.DisplayColoredName}\n";
             NebulaAPI.CurrentGame?.GetModule<MeetingOverlayHolder>()?.RegisterOverlay(GUI.API.VerticalHolder(Virial.Media.GUIAlignment.Left,
                 new NoSGUIText(Virial.Media.GUIAlignment.Left, GUI.API.GetAttribute(Virial.Text.AttributeAsset.OverlayTitle), new TranslateTextComponent("options.role.evilAce.message.header")),
                 new NoSGUIText(Virial.Media.GUIAlignment.Left, GUI.API.GetAttribute(Virial.Text.AttributeAsset.OverlayContent), new RawTextComponent(rawText)))
-                , MeetingOverlayHolder.IconsSprite[1], MyRole.RoleColor);
+                , MeetingOverlayHolder.IconsSprite[5], MyRole.RoleColor);
         }
     }
 }
